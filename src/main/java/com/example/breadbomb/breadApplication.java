@@ -15,6 +15,7 @@ public class breadApplication extends Application {
         stage.setTitle("midbomb");
         stage.setScene(scene);
         stage.show();
+        //shdfjhsjdfhjsdf
     }
 
     public static void main(String[] args) {
