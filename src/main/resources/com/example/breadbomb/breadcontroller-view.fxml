@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="380.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.breadController">
+<VBox alignment="CENTER" prefHeight="380.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.breadController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -36,7 +36,7 @@
             </font>
          </Label>
          <TextField fx:id="inputfld" onAction="#check" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-         <Label fx:id="scorefld" text="0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+         <Label fx:id="scorefld" text="  " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          <Label fx:id="orderlbl" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="187.0" text="[order]" GridPane.columnSpan="3" GridPane.rowIndex="5" />
          <Button fx:id="giveUpBtn" mnemonicParsing="false" onAction="#giveUp" text="Give up" GridPane.columnIndex="2" GridPane.rowIndex="4" />
          <Label fx:id="timelbl" text="     " GridPane.columnIndex="2" GridPane.rowIndex="2" />
@@ -44,6 +44,7 @@
          <Label fx:id="liveslbl" text="&lt;3 &lt;3 &lt;3" GridPane.columnIndex="2" />
          <Label fx:id="prevlbl" text="    " textFill="#21dd00" GridPane.columnIndex="2" GridPane.rowIndex="3" />
          <Label fx:id="availlbl" alignment="CENTER" text="Time available:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+         <Button fx:id="restartbtn" alignment="CENTER" mnemonicParsing="false" onAction="#restartGame" text="Restart" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
       </children>
    </GridPane>
 </VBox>

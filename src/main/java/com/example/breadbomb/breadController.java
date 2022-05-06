@@ -40,6 +40,9 @@ public class breadController {
     @FXML
     private Button giveUpBtn;
 
+    @FXML
+    private Button restartbtn;
+
     private int score = 0;
     private int lives = 3;
 
@@ -80,6 +83,7 @@ public class breadController {
         readFile("dict.txt", dictionary);
         readFile("prompts.txt", possiblePrompts);
         readFile("orders.txt", possibleOrders);
+        restartbtn.setDisable(true);
         newPrompt();
         newOrder();
     }
@@ -101,8 +105,12 @@ public class breadController {
         availlbl.setText("Time available: "+ timeAvailable/1000 + " seconds");
     }
 
+    public void updateScore() {
+        scorefld.setText("Score: " + score);
+    }
+
     public void newOrder() {
-        int g = (int) (Math.random() * (possibleOrders.size()));
+        int g = (int) (Math.random() * (possibleOrders.size()) - 1);
         order = possibleOrders.get(g);
         System.out.println("order: " + order);
         orderlbl.setText("Order: " + order.toUpperCase());
@@ -110,10 +118,10 @@ public class breadController {
 
     @FXML
     public void giveUp() {
-        showInfo();
         lives--;
-        updateLives();
         timeAvailable = 30000;
+        updateLives();
+        showInfo();
         checkGameOver();
     }
 
@@ -133,18 +141,33 @@ public class breadController {
         }
         infolbl.setText("Words containing " + prompt.toUpperCase() + ":\n" + info);
         newPrompt();
-        scorefld.setText("Words: " + Integer.toString(score));
-        timelbl.setText("");
+
     }
 
     public void checkGameOver() {
-        if (lives == 0) {
+        if (lives <= 0) {
             scorefld.setText("GAME OVER");
             timelbl.setText("Time survived: " + ((System.currentTimeMillis() - startGameTime)/1000) + " seconds");
-            availlbl.setText("");
+            availlbl.setText("Prompts answered: " + score);
             orderlbl.setText("");
+            promptlbl.setText("---");
+            inputfld.setDisable(true);
+            giveUpBtn.setDisable(true);
+            restartbtn.setDisable(false);
             return;
         }
+    }
+
+    public void restartGame() {
+        score = 0;
+        lives = 3;
+        restartbtn.setDisable(true);
+        inputfld.setDisable(false);
+        giveUpBtn.setDisable(false);
+        infolbl.setText("");
+        startGameTime = System.currentTimeMillis();
+        newPrompt();
+        newOrder();
     }
 
     public long timeElapsed() {
@@ -195,13 +218,13 @@ public class breadController {
                     order = order.replaceFirst(ipt.substring(i,i+1), "");
                 }
             }
-            scorefld.setText("Words: " + score);
             if (order.replaceAll(" ", "").equals("")) {
                 scorefld.setText("Order complete! +1 life");
                 lives++;
                 newOrder();
             }
-            score++;
+            score += ipt.length();
+            updateScore();
             orderlbl.setText("Order: " + order.toUpperCase());
             timelbl.setText("Time taken: " + timeElapsed()/1000 + " seconds");
             if (timeAvailable >= 5000) {
