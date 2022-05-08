@@ -11,11 +11,11 @@ public class breadApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("breadcontroller-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        Scene scene = new Scene(fxmlLoader.load(), 1080, 700);
         stage.setTitle("midbomb");
         stage.setScene(scene);
         stage.show();
-        //shdfjhsjdfhjsdf
+        stage.setResizable(false);
     }
 
     public static void main(String[] args) {
