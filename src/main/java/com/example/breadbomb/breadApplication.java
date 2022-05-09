@@ -12,7 +12,7 @@ public class breadApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("breadcontroller-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1080, 700);
-        stage.setTitle("midbomb");
+        stage.setTitle("BreadBomb");
         stage.setScene(scene);
         stage.show();
         stage.setResizable(false);
