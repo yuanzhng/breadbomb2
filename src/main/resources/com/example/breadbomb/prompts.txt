@@ -1,4 +1,3 @@
-AA
 AB
 AC
 AD
@@ -28,7 +27,6 @@ CH
 CI
 CO
 CU
-CW
 DA
 DE
 DI

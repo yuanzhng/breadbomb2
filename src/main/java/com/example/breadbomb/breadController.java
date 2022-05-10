@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.Scanner;
 
 import java.util.*;
@@ -258,10 +257,6 @@ public class breadController {
     }
 
     public void check() {
-        if (checkGameOver()) {
-            giveGameOver();
-            return;
-        }
         if (timeElapsed() > timeAvailable) {
             scorefld.setText("Time's up!");
             lives--;
@@ -305,5 +300,9 @@ public class breadController {
             scorefld.setText("Invalid word!");
         }
         updateLives();
+        if (checkGameOver()) {
+            giveGameOver();
+            return;
+        }
     }
 }
