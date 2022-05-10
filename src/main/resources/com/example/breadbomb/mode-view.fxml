@@ -8,13 +8,13 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.MenuController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.ModeController">
    <children>
-      <GridPane prefHeight="403.0" prefWidth="600.0">
+      <GridPane layoutX="-2.0" layoutY="-2.0" prefHeight="400.0" prefWidth="600.0">
         <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -22,13 +22,13 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="single" alignment="CENTER" mnemonicParsing="false" onAction="#singlePressed" text="bread" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Button fx:id="multi" alignment="CENTER" layoutX="284.0" layoutY="199.0" mnemonicParsing="false" onAction="#multiPressed" text="sandwich" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
-            <Label alignment="CENTER" text="Welcome to BreadBomb!" GridPane.columnSpan="3" GridPane.halignment="CENTER">
+            <Label text="Select Mode:" GridPane.columnSpan="3" GridPane.halignment="CENTER">
                <font>
-                  <Font size="25.0" />
+                  <Font size="35.0" />
                </font>
             </Label>
+            <Button fx:id="classic" mnemonicParsing="false" onAction="#classicPressed" text="Classic" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
+            <Button fx:id="bread" mnemonicParsing="false" onAction="#breadPressed" text="Bread" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
          </children>
       </GridPane>
    </children>

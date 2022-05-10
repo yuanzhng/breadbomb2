@@ -1,29 +1,29 @@
 package com.example.breadbomb;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
 
-public class MenuController {
+public class ModeController {
     @FXML
-    private Button single;
+    private Button bread;
 
     @FXML
-    private Button multi;
+    private Button classic;
 
-    public void singlePressed() {
-        breadApplication.setSingle();
+    public void breadPressed() {
+        breadApplication.setBreadMode();
         try {
-            breadApplication.switchToMode();
+            breadApplication.switchToGame();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    public void multiPressed() {
-        breadApplication.setMulti();
+
+    public void classicPressed() {
+        breadApplication.setClassic();
         try {
-            breadApplication.switchToMode();
+            breadApplication.switchToGame();
         } catch (IOException e) {
             e.printStackTrace();
         }
