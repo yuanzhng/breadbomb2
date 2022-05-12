@@ -29,8 +29,14 @@ public class breadApplication extends Application {
     }
 
     public static void switchToGame() throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("breadcontroller-view.fxml"));
+        FXMLLoader fxmlLoader;
+        if (multiMode) {
+            fxmlLoader = new FXMLLoader(breadApplication.class.getResource("sandwichcontroller-view.fxml"));
+            sandwichController controller = fxmlLoader.getController();
+        } else {
+            fxmlLoader = new FXMLLoader(breadApplication.class.getResource("breadcontroller-view.fxml"));
+            breadController controller = fxmlLoader.getController();
+        }
         Scene scene = new Scene(fxmlLoader.load());
         breadController controller = fxmlLoader.getController();
         controller.initialize(breadMode);
