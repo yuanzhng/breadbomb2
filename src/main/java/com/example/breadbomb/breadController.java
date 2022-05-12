@@ -64,7 +64,7 @@ public class breadController {
 
     private long startGameTime = System.currentTimeMillis();
 
-    public void initialize() {
+    public void initialize(boolean breadMode) {
         try {
             File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
             Scanner dictionaryReader = new Scanner(dictionaryObj);
@@ -79,12 +79,18 @@ public class breadController {
         }
         readFile("dict.txt", dictionary);
         readFile("prompts.txt", possiblePrompts);
-        readFile("orders.txt", possibleOrders);
+        if (breadMode) {
+            System.out.println("BreadMode enabled...");
+            readFile("orders.txt", possibleOrders);
+        } else {
+            possibleOrders.add("abcdefghijklmnopqrstuvwxyz");
+        }
         restartbtn.setDisable(true);
         newPrompt();
         newOrder();
         timelbl.setText("");
         infolbl.setText("");
+
     }
 
     public void updateLives() {
