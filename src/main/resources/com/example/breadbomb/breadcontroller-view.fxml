@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="860.0" maxWidth="1093.0" minHeight="700.0" minWidth="1080.0" prefHeight="693.0" prefWidth="1093.0" spacing="20.0" style="-fx-background-color: #36393F; -fx-border-radius: 15;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.breadController">
+<VBox alignment="CENTER" maxHeight="860.0" maxWidth="1093.0" minHeight="700.0" minWidth="1080.0" prefHeight="693.0" prefWidth="1093.0" spacing="20.0" style="-fx-background-color: #36393F; -fx-border-radius: 15;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.breadController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -37,7 +37,6 @@
                <Insets left="10.0" />
             </padding>
          </Label>
-         <Label layoutX="-20.0" layoutY="555.0" prefHeight="146.0" prefWidth="268.0" style="-fx-background-color: #282A2E;" text="Label" />
             <Label fx:id="timelbl" alignment="TOP_LEFT" layoutY="569.0" prefHeight="68.0" prefWidth="170.0" text="[timelbl]" textFill="#bbbdd0" />
             <Label fx:id="liveslbl" layoutX="183.0" layoutY="568.0" text="&lt;3 &lt;3 &lt;3" textFill="#bbbdd0" />
             <Label fx:id="availlbl" alignment="CENTER" layoutY="663.0" text="Time available:" textFill="#bbbdd0" />
