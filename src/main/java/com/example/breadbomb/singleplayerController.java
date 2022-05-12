@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import java.util.*;
 
-public class breadController {
+public class singleplayerController {
     @FXML
     private Label promptlbl;
 
@@ -216,6 +216,7 @@ public class breadController {
         giveUpBtn.setDisable(false);
         infolbl.setText("");
         startGameTime = System.currentTimeMillis();
+        typed.clear();
         updateScore();
         updateLives();
         newPrompt();
