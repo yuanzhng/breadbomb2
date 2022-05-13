@@ -24,7 +24,7 @@ public class breadApplication extends Application {
 
     public static void switchToMode() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("mode-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+        Scene scene = new Scene(fxmlLoader.load(), 1080, 700);
         stage.setScene(scene);
     }
 
