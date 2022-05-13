@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox alignment="CENTER" maxHeight="860.0" maxWidth="1093.0" minHeight="700.0" minWidth="1080.0" prefHeight="693.0" prefWidth="1093.0" spacing="20.0" style="-fx-background-color: #36393F; -fx-border-radius: 15;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.singleplayerController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <AnchorPane prefHeight="690.0" prefWidth="1091.0">
+      <children>
+            <Label layoutX="262.0" layoutY="585.0" prefHeight="17.0" prefWidth="149.0" text="Type a word containing:" textFill="WHITE" />
+            <Label fx:id="promptlbl" alignment="CENTER" contentDisplay="CENTER" layoutX="262.0" layoutY="605.0" text="Label" textFill="#7289da">
+                <font>
+                    <Font name="System Bold" size="26.0" />
+                </font>
+            </Label>
+            <TextField fx:id="inputfld" layoutX="262.0" layoutY="659.0" maxWidth="-Infinity" onAction="#check" prefHeight="25.0" prefWidth="566.0" promptText="+ Message #midbomb" style="-fx-background-color: #40444B; -fx-text-fill: #bbbdd0#bbbdd0;" />
+            <Label fx:id="scorefld" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="569.0" layoutY="663.0" prefHeight="17.0" prefWidth="253.0" text="0" textFill="#bbbdd0" />
+            <Button fx:id="giveUpBtn" layoutX="835.0" layoutY="659.0" mnemonicParsing="false" onAction="#giveUp" style="-fx-background-color: #2F3136;" text="Give up" textFill="#bbbdd0" />
+            <Label fx:id="infolbl" layoutX="-20.0" layoutY="-3.0" prefHeight="559.0" prefWidth="268.0" style="-fx-background-color: #2F3136;" text="[infolbl]" textFill="#bbbdd0">
+            <padding>
+               <Insets left="20.0" />
+            </padding>
+         </Label>
+         <Button fx:id="restartbtn" layoutX="899.0" layoutY="659.0" mnemonicParsing="false" onAction="#restartGame" style="-fx-background-color: #2F3136;" text="Restart" textFill="#bbbdd0" />
+            <Label fx:id="orderlbl" layoutX="248.0" prefHeight="44.0" prefWidth="802.0" text="[order]" textFill="#bbbdd0">
+            <font>
+               <Font size="18.0" />
+            </font>
+            <padding>
+               <Insets left="10.0" />
+            </padding>
+         </Label>
+            <Label fx:id="timelbl" alignment="TOP_LEFT" layoutY="569.0" prefHeight="68.0" prefWidth="170.0" text="[timelbl]" textFill="#bbbdd0" />
+            <Label fx:id="liveslbl" layoutX="183.0" layoutY="568.0" text="&lt;3 &lt;3 &lt;3" textFill="#bbbdd0" />
+            <Label fx:id="availlbl" alignment="CENTER" layoutY="663.0" text="Time available:" textFill="#bbbdd0" />
+      </children>
+   </AnchorPane>
+</VBox>

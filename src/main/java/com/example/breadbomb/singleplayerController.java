@@ -4,12 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.Scanner;
 
 import java.util.*;
 
-public class breadController {
+public class singleplayerController {
     @FXML
     private Label promptlbl;
 
@@ -40,12 +39,13 @@ public class breadController {
     @FXML
     private Button giveUpBtn;
 
+    @FXML
+    private Button restartbtn;
+
     private int score = 0;
     private int lives = 3;
 
     private String prompt;
-
-    private String prev;
 
     private ArrayList<String> alphabet;
 
@@ -80,8 +80,11 @@ public class breadController {
         readFile("dict.txt", dictionary);
         readFile("prompts.txt", possiblePrompts);
         readFile("orders.txt", possibleOrders);
+        restartbtn.setDisable(true);
         newPrompt();
         newOrder();
+        timelbl.setText("");
+        infolbl.setText("");
     }
 
     public void updateLives() {
@@ -89,7 +92,7 @@ public class breadController {
         for (int i = 0; i < lives; i++) {
             s += "<3 ";
         }
-        liveslbl.setText("HP: " + s);
+        liveslbl.setText(s);
     }
 
     public void newPrompt() {
@@ -101,8 +104,55 @@ public class breadController {
         availlbl.setText("Time available: "+ timeAvailable/1000 + " seconds");
     }
 
+    public void updateScore() {
+        scorefld.setText("Score: " + score);
+    }
+
+    public int calcScore(String s) {
+        int k = 0;
+        for (int i = 0; i < s.length(); i++) {
+            String d = s.substring(i, i+1).toLowerCase();
+            switch (d) {
+                case "a":
+                case "e":
+                case "i":
+                case "l":
+                case "n":
+                case "o":
+                case "r":
+                case "s":
+                case "t":
+                case "u": k++; break;
+                case "d":
+                case "g": k += 2; break;
+                case "b":
+                case "c":
+                case "m":
+                case "p": k += 3; break;
+                case "f":
+                case "h":
+                case "v":
+                case "w":
+                case "y": k += 4; break;
+                case "k": k += 5; break;
+                case "j":
+                case "x": k += 8; break;
+                case "q":
+                case "z": k += 10; break;
+            }
+        }
+        return k;
+    }
+
+    public void updateTimeTaken() {
+        int s = calcScore(rawIpt(inputfld.getText()));
+        timelbl.setText("Took " + timeElapsed()/1000 + " seconds\n" +
+                rawIpt(inputfld.getText().toUpperCase()) + "\n+" + s);
+        System.out.println("word score: " + s);
+    }
+
     public void newOrder() {
-        int g = (int) (Math.random() * (possibleOrders.size()));
+        int g = (int) (Math.random() * (possibleOrders.size()) - 1);
         order = possibleOrders.get(g);
         System.out.println("order: " + order);
         orderlbl.setText("Order: " + order.toUpperCase());
@@ -110,11 +160,14 @@ public class breadController {
 
     @FXML
     public void giveUp() {
-        showInfo();
         lives--;
-        updateLives();
         timeAvailable = 30000;
-        checkGameOver();
+        updateLives();
+        showInfo();
+        if (checkGameOver()) {
+            giveGameOver();
+            return;
+        }
     }
 
     public void showInfo() {
@@ -127,24 +180,47 @@ public class breadController {
             }
         }
         for (int i = 0; i < 10; i++) {
-            int j = ((int) (Math.random() * possible.size()));
+            int j = ((int) (Math.random() * (possible.size() - 1)));
             info += possible.get(j) + "\n";
             possible.remove(j);
         }
         infolbl.setText("Words containing " + prompt.toUpperCase() + ":\n" + info);
         newPrompt();
-        scorefld.setText("Words: " + Integer.toString(score));
-        timelbl.setText("");
+
     }
 
-    public void checkGameOver() {
-        if (lives == 0) {
-            scorefld.setText("GAME OVER");
-            timelbl.setText("Time survived: " + ((System.currentTimeMillis() - startGameTime)/1000) + " seconds");
-            availlbl.setText("");
-            orderlbl.setText("");
-            return;
+    public boolean checkGameOver() {
+        if (lives <= 0) {
+            return true;
         }
+        return false;
+    }
+
+    public void giveGameOver() {
+        scorefld.setText("");
+        timelbl.setText("Time survived: " + ((System.currentTimeMillis() - startGameTime)/1000) + " seconds");
+        availlbl.setText("Final score: " + score);
+        orderlbl.setText("");
+        promptlbl.setText("---");
+        inputfld.setDisable(true);
+        giveUpBtn.setDisable(true);
+        restartbtn.setDisable(false);
+        return;
+    }
+
+    public void restartGame() {
+        score = 0;
+        lives = 3;
+        restartbtn.setDisable(true);
+        inputfld.setDisable(false);
+        giveUpBtn.setDisable(false);
+        infolbl.setText("");
+        startGameTime = System.currentTimeMillis();
+        typed.clear();
+        updateScore();
+        updateLives();
+        newPrompt();
+        newOrder();
     }
 
     public long timeElapsed() {
@@ -158,6 +234,12 @@ public class breadController {
             }
         }
         return false;
+    }
+
+    public String rawIpt(String s) {
+        String j;
+        j = s.replaceAll("[^A-Za-z]+", "");
+        return j;
     }
 
     public void readFile(String s, ArrayList<String> a) {
@@ -176,7 +258,6 @@ public class breadController {
     }
 
     public void check() {
-        checkGameOver();
         if (timeElapsed() > timeAvailable) {
             scorefld.setText("Time's up!");
             lives--;
@@ -188,24 +269,24 @@ public class breadController {
         }
         infolbl.setText("");
         String ipt = inputfld.getText();
-        ipt = ipt.replaceAll("[^A-Za-z]+", "");
+        ipt = rawIpt(ipt);
         if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
             for (int i = 0; i < ipt.length(); i++) {
                 if (order.contains(ipt.substring(i,i+1))) {
                     order = order.replaceFirst(ipt.substring(i,i+1), "");
                 }
             }
-            scorefld.setText("Words: " + score);
             if (order.replaceAll(" ", "").equals("")) {
                 scorefld.setText("Order complete! +1 life");
                 lives++;
                 newOrder();
             }
-            score++;
+            score += calcScore(ipt);
+            updateScore();
             orderlbl.setText("Order: " + order.toUpperCase());
-            timelbl.setText("Time taken: " + timeElapsed()/1000 + " seconds");
+            updateTimeTaken();
             if (timeAvailable >= 5000) {
-                timeAvailable -= 1000;
+                timeAvailable *= 0.90;
             }
             newPrompt();
             typed.add(ipt);
@@ -220,7 +301,9 @@ public class breadController {
             scorefld.setText("Invalid word!");
         }
         updateLives();
+        if (checkGameOver()) {
+            giveGameOver();
+            return;
+        }
     }
-
-
 }
