@@ -24,13 +24,19 @@ public class breadApplication extends Application {
 
     public static void switchToMode() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("mode-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+        Scene scene = new Scene(fxmlLoader.load(), 1080, 700);
         stage.setScene(scene);
     }
 
     public static void switchToGame() throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("breadcontroller-view.fxml"));
+        FXMLLoader fxmlLoader;
+        if (multiMode) {
+            fxmlLoader = new FXMLLoader(breadApplication.class.getResource("sandwichcontroller-view.fxml"));
+            sandwichController controller = fxmlLoader.getController();
+        } else {
+            fxmlLoader = new FXMLLoader(breadApplication.class.getResource("breadcontroller-view.fxml"));
+            breadController controller = fxmlLoader.getController();
+        }
         Scene scene = new Scene(fxmlLoader.load());
         breadController controller = fxmlLoader.getController();
         controller.initialize(breadMode);
