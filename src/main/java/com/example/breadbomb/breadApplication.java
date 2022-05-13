@@ -29,16 +29,12 @@ public class breadApplication extends Application {
     }
 
     public static void switchToGame() throws IOException {
-        if (multiMode == false) {
-            FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("singleplayer-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            stage.setScene(scene);
-        } else {
-            FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("multiplayer-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            stage.setScene(scene);
-        }
 
+        FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("breadcontroller-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
+        breadController controller = fxmlLoader.getController();
+        controller.initialize(breadMode);
+        stage.setScene(scene);
     }
 
     public static void setSingle() {
