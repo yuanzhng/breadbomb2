@@ -1,14 +1,23 @@
 package com.example.breadbomb;
 
+
+
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+
 
 import java.util.*;
 
 public class singleplayerController {
+    Timeline autoPlayTimeline;
+    Timeline updateTimerTimeline;
+
     @FXML
     private Label promptlbl;
 
@@ -61,7 +70,7 @@ public class singleplayerController {
 
     private long timeAvailable = 30000;
     private long startTime;
-
+    private long totalSeconds;
     private long startGameTime = System.currentTimeMillis();
 
     public void initialize() {
@@ -101,7 +110,7 @@ public class singleplayerController {
         this.prompt = possiblePrompts.get(i).toUpperCase();
         promptlbl.setText(prompt);
         startTime = System.currentTimeMillis();
-        availlbl.setText("Time available: "+ timeAvailable/1000 + " seconds");
+        startTimer();
     }
 
     public void updateScore() {
@@ -197,6 +206,7 @@ public class singleplayerController {
     }
 
     public void giveGameOver() {
+        updateTimerTimeline.stop();
         scorefld.setText("");
         timelbl.setText("Time survived: " + ((System.currentTimeMillis() - startGameTime)/1000) + " seconds");
         availlbl.setText("Final score: " + score);
@@ -214,6 +224,7 @@ public class singleplayerController {
         restartbtn.setDisable(true);
         inputfld.setDisable(false);
         giveUpBtn.setDisable(false);
+        timelbl.setText("");
         infolbl.setText("");
         startGameTime = System.currentTimeMillis();
         typed.clear();
@@ -258,7 +269,7 @@ public class singleplayerController {
     }
 
     public void check() {
-        if (timeElapsed() > timeAvailable) {
+        if (totalSeconds<=0) {
             scorefld.setText("Time's up!");
             lives--;
             updateLives();
@@ -304,6 +315,30 @@ public class singleplayerController {
         if (checkGameOver()) {
             giveGameOver();
             return;
+        }
+    }
+    public void startTimer() {
+        updateTimer();
+        if (updateTimerTimeline == null) {
+            updateTimerTimeline = new Timeline(new KeyFrame(
+                    Duration.millis(1000),
+                    ae -> updateTimer()));
+        }
+        updateTimerTimeline.setCycleCount(Timeline.INDEFINITE);
+        updateTimerTimeline.play();
+    }
+
+    public void updateTimer() {
+        totalSeconds = timeAvailable/1000 - (((System.currentTimeMillis() - startTime)) / 1000);
+
+        if (totalSeconds <= 0) {
+            check();
+    } else {
+            availlbl.setText("" + totalSeconds);
+        }
+        if (checkGameOver()) {
+            giveGameOver();
+
         }
     }
 }
