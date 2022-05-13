@@ -65,9 +65,9 @@ public class breadController {
     private long startGameTime = System.currentTimeMillis();
 
     private boolean startSandwich = true;
+    private boolean breadMode;
     private int sandwichLength = 0;
     private int idealSandwichLength = 0;
-    private boolean breadMode;
     private int orderCount = 0;
 
     public void initialize(boolean bread) {
