@@ -24,23 +24,25 @@ public class breadApplication extends Application {
 
     public static void switchToMode() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("mode-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1080, 700);
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setScene(scene);
     }
 
     public static void switchToGame() throws IOException {
-        FXMLLoader fxmlLoader;
-        if (multiMode) {
-            fxmlLoader = new FXMLLoader(breadApplication.class.getResource("sandwichcontroller-view.fxml"));
-            sandwichController controller = fxmlLoader.getController();
+        if (!multiMode) {
+            FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("singleplayer-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            singleplayerController controller = fxmlLoader.getController();
+            controller.initialize(breadMode);
+            stage.setScene(scene);
         } else {
-            fxmlLoader = new FXMLLoader(breadApplication.class.getResource("breadcontroller-view.fxml"));
-            breadController controller = fxmlLoader.getController();
+            FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("multiplayer-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            multiplayerController controller = fxmlLoader.getController();
+            controller.initialize(breadMode);
+            stage.setScene(scene);
         }
-        Scene scene = new Scene(fxmlLoader.load());
-        breadController controller = fxmlLoader.getController();
-        controller.initialize(breadMode);
-        stage.setScene(scene);
+
     }
 
     public static void setSingle() {
