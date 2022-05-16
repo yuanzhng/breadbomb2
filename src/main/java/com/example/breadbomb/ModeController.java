@@ -11,6 +11,9 @@ public class ModeController {
     @FXML
     private Button classic;
 
+    @FXML
+    private Button back;
+
     public void breadPressed() {
         breadApplication.setBreadMode();
         try {
@@ -29,4 +32,11 @@ public class ModeController {
         }
     }
 
+    public void backPressed() {
+        try {
+            breadApplication.switchToMain();
+        }  catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
