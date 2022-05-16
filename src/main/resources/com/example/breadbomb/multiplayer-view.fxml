@@ -21,14 +21,14 @@
             </Label>
             <TextField fx:id="inputfld" layoutX="527.0" layoutY="651.0" maxWidth="-Infinity" onAction="#check" prefHeight="26.0" prefWidth="205.0" promptText="+ Message #midbomb" style="-fx-background-color: #4a483f#4a483f; -fx-text-fill: #bbbdd0#bbbdd0;" />
             <Label layoutX="-20.0" layoutY="555.0" prefHeight="146.0" prefWidth="268.0" style="-fx-background-color: #2e2d28#2e2d28;" text="Label" />
-         <Label layoutX="411.0" layoutY="326.0" text="Player 1" textFill="WHITE" />
-         <Label layoutX="834.0" layoutY="326.0" text="Player 3" textFill="WHITE" />
-         <Label layoutX="629.0" layoutY="125.0" text="Player 2" textFill="WHITE" />
-         <Label layoutX="630.0" layoutY="510.0" text="Player 4" textFill="WHITE" />
-         <Label layoutX="419.0" layoutY="350.0" text="Lives" textFill="WHITE" />
-         <Label layoutX="638.0" layoutY="150.0" text="Lives" textFill="WHITE" />
-         <Label layoutX="843.0" layoutY="350.0" text="Lives" textFill="WHITE" />
-         <Label layoutX="639.0" layoutY="538.0" text="Lives" textFill="WHITE" />
+         <Label fx:id="namelbl1" layoutX="411.0" layoutY="326.0" text="Player 1" textFill="WHITE" />
+         <Label fx:id="namelbl3" layoutX="834.0" layoutY="326.0" text="Player 3" textFill="WHITE" />
+         <Label fx:id="namelbl2" layoutX="629.0" layoutY="125.0" text="Player 2" textFill="WHITE" />
+         <Label fx:id="namelbl4" layoutX="630.0" layoutY="510.0" text="Player 4" textFill="WHITE" />
+         <Label fx:id="prevlbl1" layoutX="419.0" layoutY="350.0" text="Lives" textFill="WHITE" />
+         <Label fx:id="prevlbl2" layoutX="638.0" layoutY="150.0" text="Lives" textFill="WHITE" />
+         <Label fx:id="prevlbl3" layoutX="843.0" layoutY="350.0" text="Lives" textFill="WHITE" />
+         <Label fx:id="prevlbl4" layoutX="639.0" layoutY="538.0" text="Lives" textFill="WHITE" />
         </children>
     </AnchorPane>
 </VBox>

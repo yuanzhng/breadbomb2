@@ -36,8 +36,10 @@ public class multiplayerController {
     @FXML
     private Label namelbl4;
 
-    private Label[] prevlbls = {prevlbl1, prevlbl2, prevlbl3, prevlbl4};
+    @FXML
+    private Label activeplayerlbl;
 
+    private ArrayList<Label> prevlbls = new ArrayList<Label>();
 
     @FXML
     private TextField inputfld;
@@ -54,9 +56,18 @@ public class multiplayerController {
 
     private ArrayList<Player> activePlayers = new ArrayList<Player>();
 
-    private int playerTurn;
+    private int playerTurn = 0;
 
     public void initialize(boolean breadMode) {
+        prevlbls.add(prevlbl1);
+        prevlbls.add(prevlbl2);
+        prevlbls.add(prevlbl3);
+        prevlbls.add(prevlbl4);
+        for (Label i : prevlbls) {
+            i.setText("");
+        }
+        activePlayers.add(new Player("yuan"));
+        activePlayers.add(new Player("zhuang"));
         activePlayers.add(new Player("yuan"));
         activePlayers.add(new Player("zhuang"));
         try {
@@ -87,7 +98,7 @@ public class multiplayerController {
     }
 
     public void cycleTurn() {
-        if (playerTurn == activePlayers.size()) {
+        if (playerTurn == activePlayers.size() - 1) {
             playerTurn = 0;
         } else {
             playerTurn++;
@@ -139,6 +150,7 @@ public class multiplayerController {
             newPrompt();
             cycleTurn();
             typed.add(ipt);
+            prevlbls.get(playerTurn).setText(ipt.toUpperCase());
         } else if (typed.contains(ipt)) {
             inputfld.setText("");
         } else if (!ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT))){
