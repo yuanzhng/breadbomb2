@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -50,6 +51,9 @@ public class singleplayerController {
 
     @FXML
     private Button restartbtn;
+
+    @FXML
+    private Button quitButton;
 
     private int score = 0;
     private int lives = 3;
@@ -393,5 +397,21 @@ public class singleplayerController {
             giveGameOver();
 
         }
+    }
+
+    public void quit() {
+        quitButton.setText("Really?");
+        Timeline quitTime = new Timeline(new KeyFrame(Duration.seconds(5), ae -> revertQuit()));
+        if (quitButton.isPressed()) {
+            try {
+                breadApplication.switchToMain();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void revertQuit() {
+        quitButton.setText("Quit");
     }
 }
