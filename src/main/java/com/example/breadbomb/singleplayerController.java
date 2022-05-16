@@ -267,7 +267,14 @@ public class singleplayerController {
             e.printStackTrace();
         }
     }
-
+    public void nextOrder() {
+        inputfld.setText("");
+        int i = (int) (Math.random() * (possiblePrompts.size()));
+        this.prompt = possiblePrompts.get(i).toUpperCase();
+        promptlbl.setText(prompt);
+        startTime = System.currentTimeMillis();
+        startTimer();
+    }
     public void check() {
         if (totalSeconds<=0) {
             scorefld.setText("Time's up!");
