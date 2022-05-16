@@ -44,7 +44,6 @@ public class breadApplication extends Application {
         }
 
     }
-
     public static void switchToMain() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("menu-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1080, 700);
