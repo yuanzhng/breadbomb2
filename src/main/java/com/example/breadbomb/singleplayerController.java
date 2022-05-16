@@ -64,7 +64,13 @@ public class singleplayerController {
 
     private long startGameTime = System.currentTimeMillis();
 
-    public void initialize(boolean breadMode) {
+    private boolean startSandwich = true;
+    private boolean breadMode;
+    private int sandwichLength = 0;
+    private int idealSandwichLength = 0;
+    private int orderCount = 0;
+
+    public void initialize(boolean bread) {
         try {
             File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
             Scanner dictionaryReader = new Scanner(dictionaryObj);
@@ -79,9 +85,11 @@ public class singleplayerController {
         }
         readFile("dict.txt", dictionary);
         readFile("prompts.txt", possiblePrompts);
-        if (breadMode) {
+        if (bread) {
             System.out.println("BreadMode enabled...");
             readFile("orders.txt", possibleOrders);
+            breadMode = true;
+
         } else {
             possibleOrders.add("abcdefghijklmnopqrstuvwxyz");
         }
@@ -158,10 +166,31 @@ public class singleplayerController {
     }
 
     public void newOrder() {
-        int g = (int) (Math.random() * (possibleOrders.size()) - 1);
-        order = possibleOrders.get(g);
-        System.out.println("order: " + order);
-        orderlbl.setText("Order: " + order.toUpperCase());
+        if (breadMode) {
+            if (startSandwich) {
+                order = "bread";
+                System.out.println("Order: bread");
+                orderlbl.setText("Order: BREAD");
+                startSandwich = false;
+            } else if (sandwichLength <= idealSandwichLength) {
+                int g = (int) (Math.random() * (possibleOrders.size()) - 1);
+                order = possibleOrders.get(g);
+                System.out.println("Order: " + order);
+                orderlbl.setText("Order: " + order.toUpperCase());
+                sandwichLength++;
+            } else {
+                order = "bread";
+                System.out.println("Order: bread");
+                orderlbl.setText("Order: BREAD");
+                sandwichLength = 0;
+                startSandwich = true;
+            }
+        } else {
+            int g = (int) (Math.random() * (possibleOrders.size()) - 1);
+            order = possibleOrders.get(g);
+            System.out.println("Order: " + order);
+            orderlbl.setText("Order: " + order.toUpperCase());
+        }
     }
 
     @FXML
@@ -283,8 +312,19 @@ public class singleplayerController {
                 }
             }
             if (order.replaceAll(" ", "").equals("")) {
-                scorefld.setText("Order complete! +1 life");
-                lives++;
+                if (breadMode) {
+                    if (orderCount == idealSandwichLength + 2) {
+                        scorefld.setText("Sandwich complete! +1 life");
+                        lives++;
+                        orderCount = 0;
+                        idealSandwichLength++;
+                    } else {
+                        orderCount++;
+                    }
+                } else {
+                    scorefld.setText("Order complete! +1 life");
+                    lives++;
+                }
                 newOrder();
             }
             score += calcScore(ipt);
