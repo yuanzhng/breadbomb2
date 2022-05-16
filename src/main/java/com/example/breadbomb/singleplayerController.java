@@ -374,7 +374,7 @@ public class singleplayerController {
         updateTimer();
         if (updateTimerTimeline == null) {
             updateTimerTimeline = new Timeline(new KeyFrame(
-                    Duration.millis(1000),
+                    Duration.millis(10),
                     ae -> updateTimer()));
         }
         updateTimerTimeline.setCycleCount(Timeline.INDEFINITE);

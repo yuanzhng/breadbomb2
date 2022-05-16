@@ -23,6 +23,8 @@ public class Player {
         return order;
     }
 
+    public void setOrder(String o) {order=o;}
+
     public int getScore() {
         return score;
     }

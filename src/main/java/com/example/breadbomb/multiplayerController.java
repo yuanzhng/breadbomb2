@@ -82,6 +82,12 @@ public class multiplayerController {
         newPrompt();
     }
 
+    public void addPlayer()
+    {
+        if (activePlayers.size()<4)
+            activePlayers.add(new Player (""));
+    }
+
     public void updateLives() {
 
     }
@@ -147,5 +153,11 @@ public class multiplayerController {
             inputfld.setText("");
         }
         updateLives();
+    }
+    public boolean checkGameOver() {
+        return(activePlayers.size()==0);
+    }
+    public void giveGameOver(){
+
     }
 }
