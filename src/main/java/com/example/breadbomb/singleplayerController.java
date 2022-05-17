@@ -16,6 +16,8 @@ import javafx.util.Duration;
 import java.util.*;
 
 public class singleplayerController {
+    private int confirmQuit = 0;
+    Timeline quitTime;
     Timeline autoPlayTimeline;
     Timeline updateTimerTimeline;
 
@@ -401,17 +403,21 @@ public class singleplayerController {
 
     public void quit() {
         quitButton.setText("Really?");
-        Timeline quitTime = new Timeline(new KeyFrame(Duration.seconds(5), ae -> revertQuit()));
-        if (quitButton.isPressed()) {
+        confirmQuit++;
+        if (confirmQuit == 2) {
             try {
                 breadApplication.switchToMain();
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        } else {
+             quitTime = new Timeline(new KeyFrame(
+                    Duration.seconds(5),
+                    ae -> quitButton.setText("Quit")),
+                     new KeyFrame(
+                            Duration.seconds(5),
+                     ae -> confirmQuit--));
+             quitTime.play();
         }
-    }
-
-    public void revertQuit() {
-        quitButton.setText("Quit");
     }
 }
