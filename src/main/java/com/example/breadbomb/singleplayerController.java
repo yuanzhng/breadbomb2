@@ -412,10 +412,10 @@ public class singleplayerController {
             }
         } else {
              quitTime = new Timeline(new KeyFrame(
-                    Duration.seconds(5),
+                    Duration.seconds(3),
                     ae -> quitButton.setText("Quit")),
                      new KeyFrame(
-                            Duration.seconds(5),
+                            Duration.seconds(3),
                      ae -> confirmQuit--));
              quitTime.play();
         }
