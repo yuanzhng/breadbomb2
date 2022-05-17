@@ -291,6 +291,7 @@ public class singleplayerController {
     public String rawIpt(String s) {
         String j;
         j = s.replaceAll("[^A-Za-z]+", "");
+        j = j.toLowerCase();
         return j;
     }
 
