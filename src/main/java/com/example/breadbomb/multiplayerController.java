@@ -5,10 +5,15 @@ import javafx.scene.control.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 import java.util.*;
 
 public class multiplayerController {
+    Timeline autoPlayTimeline;
+    Timeline updateTimerTimeline;
     @FXML
     private Label promptlbl;
 
@@ -36,8 +41,7 @@ public class multiplayerController {
     @FXML
     private Label namelbl4;
 
-    private Label[] prevlbls = {prevlbl1, prevlbl2, prevlbl3, prevlbl4};
-
+    private ArrayList<Label> prevlbls = new ArrayList<Label>();
 
     @FXML
     private TextField inputfld;
@@ -54,11 +58,25 @@ public class multiplayerController {
 
     private ArrayList<Player> activePlayers = new ArrayList<Player>();
 
-    private int playerTurn;
+    private int currentTurn = 0;
+
+    private long timeAvailable = 30000;
+    private long startTime;
+    private long totalSeconds;
+    private long startGameTime = System.currentTimeMillis();
 
     public void initialize(boolean breadMode) {
-        activePlayers.add(new Player("yuan"));
-        activePlayers.add(new Player("zhuang"));
+        prevlbls.add(prevlbl1);
+        prevlbls.add(prevlbl2);
+        prevlbls.add(prevlbl3);
+        prevlbls.add(prevlbl4);
+        for (Label i : prevlbls) {
+            i.setText("");
+        }
+        activePlayers.add(new Player("Player 1"));
+        activePlayers.add(new Player("Player 2"));
+        activePlayers.add(new Player("Player 3"));
+        activePlayers.add(new Player("Player 4"));
         try {
             File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
             Scanner dictionaryReader = new Scanner(dictionaryObj);
@@ -82,15 +100,52 @@ public class multiplayerController {
         newPrompt();
     }
 
+    public void startTimer() {
+        updateTimer();
+        if (updateTimerTimeline == null) {
+            updateTimerTimeline = new Timeline(new KeyFrame(
+                    Duration.millis(1000),
+                    ae -> updateTimer()));
+        }
+        updateTimerTimeline.setCycleCount(Timeline.INDEFINITE);
+        updateTimerTimeline.play();
+    }
+
+    public boolean checkGameOver() {
+        if (activePlayers.get(currentTurn).getLives() <= 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public void giveGameOver() {
+        activePlayers.remove(currentTurn);
+        cycleTurn();
+        return;
+    }
+
+    public void updateTimer() {
+        totalSeconds = timeAvailable/1000 - (((System.currentTimeMillis() - startTime)) / 1000);
+
+        if (totalSeconds <= 0) {
+            check();
+        } else {
+            //availlbl.setText("" + totalSeconds);
+        }
+        if (checkGameOver()) {
+            giveGameOver();
+
+        }
+    }
     public void updateLives() {
 
     }
 
     public void cycleTurn() {
-        if (playerTurn == activePlayers.size()) {
-            playerTurn = 0;
+        if (currentTurn == activePlayers.size() - 1) {
+            currentTurn = 0;
         } else {
-            playerTurn++;
+            currentTurn++;
         }
     }
 
@@ -135,10 +190,11 @@ public class multiplayerController {
         String ipt = inputfld.getText();
         ipt = rawIpt(ipt);
         if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
-            activePlayers.get(playerTurn).addScore(1);
+            activePlayers.get(currentTurn).addScore(1);
             newPrompt();
-            cycleTurn();
             typed.add(ipt);
+            prevlbls.get(currentTurn).setText(ipt.toUpperCase());
+            cycleTurn();
         } else if (typed.contains(ipt)) {
             inputfld.setText("");
         } else if (!ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT))){
