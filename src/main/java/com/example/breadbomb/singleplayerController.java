@@ -187,7 +187,7 @@ public class singleplayerController {
     }
 
     public void newOrder() {
-        updateSandwich(false);
+        updateSandwich();
         if (breadMode) {
             if (startSandwich) {
                 order = "bread";
@@ -206,7 +206,6 @@ public class singleplayerController {
                 orderlbl.setText("Order: BREAD");
                 sandwichLength = 0;
                 startSandwich = true;
-                updateSandwich(true);
             }
             currentSandwich.add(order);
         } else {
@@ -423,7 +422,7 @@ public class singleplayerController {
         }
     }
 
-    public void updateSandwich(boolean end) {
+    public void updateSandwich() {
         if (breadMode) {
             if (!currentSandwich.isEmpty()) {
                 String temp = new String();
@@ -431,10 +430,11 @@ public class singleplayerController {
                     temp = temp + "\n" + currentSandwich.get(i);
                 }
                 sandwichDisplay.setText(temp);
-                if (end) {
+                if (startSandwich) {
                     sandwichShowTime = new Timeline(new KeyFrame(
-                            Duration.seconds(1),
+                            Duration.millis(200),
                             ae -> sandwichDisplay.setText("")));
+                    currentSandwich.clear();
                     sandwichShowTime.play();
                 }
             } else {
