@@ -104,7 +104,7 @@ public class multiplayerController {
         updateTimer();
         if (updateTimerTimeline == null) {
             updateTimerTimeline = new Timeline(new KeyFrame(
-                    Duration.millis(1000),
+                    Duration.millis(1),
                     ae -> updateTimer()));
         }
         updateTimerTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -204,4 +204,13 @@ public class multiplayerController {
         }
         updateLives();
     }
+    public boolean gameIsWon()
+    {
+        return (activePlayers.size()==1);
+    }
+    public void win()
+    {
+        //endscreen
+    }
+
 }
