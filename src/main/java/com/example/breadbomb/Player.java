@@ -11,12 +11,24 @@ public class Player {
         name = n;
     }
 
+    public Player(String n, int i) {
+        name = n;
+        lives = i;
+    }
+
     public String getName() {
         return name;
     }
 
     public int getLives() {
         return lives;
+    }
+    public void addLives(int i) {
+        lives += i;
+    }
+
+    public void removeLives(int i) {
+        lives -= i;
     }
 
     public String getOrder() {

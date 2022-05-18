@@ -20,6 +20,7 @@ public class singleplayerController {
     Timeline quitTime;
     Timeline autoPlayTimeline;
     Timeline updateTimerTimeline;
+    Timeline sandwichShowTime;
 
     @FXML
     private Label promptlbl;
@@ -57,6 +58,9 @@ public class singleplayerController {
     @FXML
     private Button quitButton;
 
+    @FXML
+    private Label sandwichDisplay;
+
     private int score = 0;
     private int lives = 3;
 
@@ -84,6 +88,7 @@ public class singleplayerController {
     private int sandwichLength = 0;
     private int idealSandwichLength = 0;
     private int orderCount = 0;
+    private ArrayList<String> currentSandwich = new ArrayList<String>();
 
     public void initialize(boolean bread) {
         try {
@@ -107,6 +112,7 @@ public class singleplayerController {
 
         } else {
             possibleOrders.add("abcdefghijklmnopqrstuvwxyz");
+
         }
         restartbtn.setDisable(true);
         newPrompt();
@@ -181,6 +187,7 @@ public class singleplayerController {
     }
 
     public void newOrder() {
+        updateSandwich();
         if (breadMode) {
             if (startSandwich) {
                 order = "bread";
@@ -200,6 +207,7 @@ public class singleplayerController {
                 sandwichLength = 0;
                 startSandwich = true;
             }
+            currentSandwich.add(order);
         } else {
             int g = (int) (Math.random() * (possibleOrders.size()) - 1);
             order = possibleOrders.get(g);
@@ -291,6 +299,7 @@ public class singleplayerController {
     public String rawIpt(String s) {
         String j;
         j = s.replaceAll("[^A-Za-z]+", "");
+        j = j.toLowerCase();
         return j;
     }
 
@@ -410,6 +419,29 @@ public class singleplayerController {
                             Duration.seconds(3),
                      ae -> confirmQuit--));
              quitTime.play();
+        }
+    }
+
+    public void updateSandwich() {
+        if (breadMode) {
+            if (!currentSandwich.isEmpty()) {
+                String temp = new String();
+                for (int i = 0; i < currentSandwich.size(); i++) {
+                    temp = temp + "\n" + currentSandwich.get(i);
+                }
+                sandwichDisplay.setText(temp);
+                if (startSandwich) {
+                    sandwichShowTime = new Timeline(new KeyFrame(
+                            Duration.millis(200),
+                            ae -> sandwichDisplay.setText("")));
+                    currentSandwich.clear();
+                    sandwichShowTime.play();
+                }
+            } else {
+                sandwichDisplay.setText("");
+            }
+        } else {
+            sandwichDisplay.setText("Bread mode is off.");
         }
     }
 }
