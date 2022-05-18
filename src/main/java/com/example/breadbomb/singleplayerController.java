@@ -327,6 +327,7 @@ public class singleplayerController {
             newPrompt();
             return;
         }
+
         infolbl.setText("");
         String ipt = inputfld.getText();
         ipt = rawIpt(ipt);
