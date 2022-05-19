@@ -132,8 +132,19 @@ public class singleplayerController {
 
     public void newPrompt() {
         inputfld.setText("");
-        int i = (int) (Math.random() * (possiblePrompts.size()));
-        this.prompt = possiblePrompts.get(i).toUpperCase();
+        int coinFlip = (int) (Math.random() * 2);
+        int i = (int) (Math.random() * (dictionary.size() - 1));
+        int j;
+        if (coinFlip > 0) {
+            j = (int) (Math.random() * (dictionary.get(i).length() - 2));
+            this.prompt = dictionary.get(i).substring(j, j + 2);
+        } else {
+            while (dictionary.get(i).length() < 3) {
+                i = (int) (Math.random() * (dictionary.size() - 1));
+            }
+            j = (int) (Math.random() * (dictionary.get(i).length() - 3));
+            this.prompt = dictionary.get(i).substring(j, j + 3);
+        }
         promptlbl.setText(prompt);
         startTime = System.currentTimeMillis();
         startTimer();
