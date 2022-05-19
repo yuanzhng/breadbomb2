@@ -10,3 +10,8 @@ bologna
 ham
 mayonnaise
 ketchup
+sandwich
+starfruit
+peppers
+yellow
+
