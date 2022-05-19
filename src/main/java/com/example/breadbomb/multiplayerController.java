@@ -113,12 +113,14 @@ public class multiplayerController {
     @FXML
     public void giveUp() {
         timeAvailable = 30000;
+        newPrompt();
         currentPlayer().removeLives(1);
         updateLives();
         if (checkGameOver()) {
             giveGameOver();
             return;
         }
+        cycleTurn();
     }
 
     public Player currentPlayer() {
@@ -134,7 +136,6 @@ public class multiplayerController {
 
     public void giveGameOver() {
         activePlayers.remove(currentTurn);
-        cycleTurn();
         return;
     }
 
