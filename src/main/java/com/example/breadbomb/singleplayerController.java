@@ -18,7 +18,6 @@ import java.util.*;
 public class singleplayerController {
     private int confirmQuit = 0;
     Timeline quitTime;
-    Timeline autoPlayTimeline;
     Timeline updateTimerTimeline;
     Timeline sandwichShowTime;
 
@@ -70,8 +69,6 @@ public class singleplayerController {
 
     private ArrayList<String> typed = new ArrayList<String>();
 
-    private ArrayList<String> possiblePrompts = new ArrayList<String>();
-
     private ArrayList<String> possibleOrders = new ArrayList<String>();
 
     private ArrayList<String> dictionary = new ArrayList<String>();
@@ -104,7 +101,6 @@ public class singleplayerController {
             e.printStackTrace();
         }
         readFile("dict.txt", dictionary);
-        readFile("prompts.txt", possiblePrompts);
         if (bread) {
             System.out.println("BreadMode enabled...");
             readFile("orders.txt", possibleOrders);
