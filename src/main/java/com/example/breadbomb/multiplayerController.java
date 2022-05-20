@@ -5,17 +5,15 @@ import javafx.scene.control.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-
-import javafx.scene.image.ImageView;
-import javafx.scene.shape.Arc;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.Ellipse;
-import javafx.scene.transform.Rotate;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 import java.util.*;
 
 public class multiplayerController {
+    Timeline autoPlayTimeline;
+    Timeline updateTimerTimeline;
     @FXML
     private Label promptlbl;
     @FXML
@@ -34,13 +32,11 @@ public class multiplayerController {
     private Label liveslbl3;
     @FXML
     private Label liveslbl4;
-
     @FXML
-    private ImageView arrow;
+    private Label currentPlayerlbl;
+
     private ArrayList<Label> liveslbls = new ArrayList<Label>();
     private ArrayList<Label> prevlbls = new ArrayList<Label>();
-    private Label[] prevlbls = {prevlbl1, prevlbl2, prevlbl3, prevlbl4};
-
 
     @FXML
     private TextField inputfld;
@@ -58,6 +54,7 @@ public class multiplayerController {
     private ArrayList<Player> activePlayers = new ArrayList<Player>();
 
     private int currentTurn = 0;
+    private int turns = 0;
 
     private long timeAvailable = 30000;
     private long startTime;
@@ -104,37 +101,12 @@ public class multiplayerController {
         }
         newPrompt();
     }
-    public void rotateArrow()
-    {
-        /*Rotate rotate = new Rotate();
-        rotate.setPivotX(170);
-        rotate.setPivotY(29);
-        rotate.setAngle(90);
-        arrow.getTransforms().addAll(rotate);*/
-        Arc path= new Arc();
-        path.setCenterX(170);
-        path.setCenterY(29);
-        path.setRadiusX(98);
-        path.setRadiusY(98);
-        path.setStartAngle(-90*currentTurn-90);
-        path.setLength(-90);
-        PathTransition move= new PathTransition();
-        move.setPath(path);
-        move.setInterpolator(Interpolator.LINEAR);
-        move.setNode(arrow);
-        move.setDuration(Duration.seconds(0.25));
-        //move.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        RotateTransition rt = new RotateTransition(Duration.millis(250), arrow);
-        rt.setByAngle(90);
-        rt.setInterpolator(Interpolator.LINEAR);
-        rt.play();
-        move.play();
-    }
+
     public void startTimer() {
         updateTimer();
         if (updateTimerTimeline == null) {
             updateTimerTimeline = new Timeline(new KeyFrame(
-                    Duration.millis(1),
+                    Duration.millis(1000),
                     ae -> updateTimer()));
         }
         updateTimerTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -144,12 +116,11 @@ public class multiplayerController {
     @FXML
     public void giveUp() {
         timeAvailable = 30000;
-        newPrompt();
         currentPlayer().removeLives(1);
         updateLives();
-        if (checkGameOver()) {
+        System.out.println(currentPlayer().getName() + " Lives: " +currentPlayer().getLives());
+        if (checkZeroLives()) {
             giveGameOver();
-            return;
         }
         cycleTurn();
     }
@@ -159,6 +130,14 @@ public class multiplayerController {
     }
 
     public boolean checkGameOver() {
+        if (activePlayers.size() == 1) {
+            currentPlayerlbl.setText(currentPlayer().getName() + " wins!");
+             return true;
+        }
+        return false;
+    }
+
+    public boolean checkZeroLives() {
         if (currentPlayer().getLives() <= 0) {
             return true;
         }
@@ -167,10 +146,14 @@ public class multiplayerController {
 
     public void giveGameOver() {
         activePlayers.remove(currentTurn);
+        liveslbls.remove(currentTurn);
+        if (currentTurn == 0) {
+            currentTurn = activePlayers.size() - 1;
+            return;
+        }
+        currentTurn--;
         return;
     }
-
-    public void updateLives() {
 
     public void updateTimer() {
         totalSeconds = timeAvailable/1000 - (((System.currentTimeMillis() - startTime)) / 1000);
@@ -180,7 +163,7 @@ public class multiplayerController {
         } else {
             //availlbl.setText("" + totalSeconds);
         }
-        if (checkGameOver()) {
+        if (checkZeroLives()) {
             giveGameOver();
 
         }
@@ -190,12 +173,18 @@ public class multiplayerController {
             liveslbls.get(i).setText(Integer.toString(activePlayers.get(i).getLives()));
         }
     }
+    public void updateCurrentPlayerLabel() {
+        currentPlayerlbl.setText(currentPlayer().getName());
+    }
 
     public void cycleTurn() {
-        if (currentTurn == activePlayers.size() - 1) {
-            currentTurn = 0;
-        } else {
+        if (!checkGameOver()) {
+            turns++;
             currentTurn++;
+            if (currentTurn >= activePlayers.size()) {
+                currentTurn = 0;
+            }
+            updateCurrentPlayerLabel();
         }
     }
 
@@ -241,12 +230,11 @@ public class multiplayerController {
         String ipt = inputfld.getText();
         ipt = rawIpt(ipt);
         if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
-            activePlayers.get(playerTurn).addScore(1);
+            currentPlayer().addScore(1);
             newPrompt();
             typed.add(ipt);
             prevlbls.get(currentTurn).setText(ipt.toUpperCase());
             cycleTurn();
-            typed.add(ipt);
         } else if (typed.contains(ipt)) {
             inputfld.setText("");
         } else if (!ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT))){
@@ -255,13 +243,5 @@ public class multiplayerController {
             inputfld.setText("");
         }
         updateLives();
-    }
-    public boolean gameIsWon()
-    {
-        return (activePlayers.size()==1);
-    }
-    public void win()
-    {
-        //endscreen
     }
 }
