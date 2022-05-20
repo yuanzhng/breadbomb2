@@ -5,38 +5,39 @@ import javafx.scene.control.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
 
 import java.util.*;
 
 public class multiplayerController {
-    Timeline autoPlayTimeline;
-    Timeline updateTimerTimeline;
     @FXML
     private Label promptlbl;
+
     @FXML
     private Label prevlbl1;
+
     @FXML
     private Label prevlbl2;
+
     @FXML
     private Label prevlbl3;
+
     @FXML
     private Label prevlbl4;
-    @FXML
-    private Label liveslbl1;
-    @FXML
-    private Label liveslbl2;
-    @FXML
-    private Label liveslbl3;
-    @FXML
-    private Label liveslbl4;
-    @FXML
-    private Label currentPlayerlbl;
 
-    private ArrayList<Label> liveslbls = new ArrayList<Label>();
-    private ArrayList<Label> prevlbls = new ArrayList<Label>();
+    @FXML
+    private Label namelbl1;
+
+    @FXML
+    private Label namelbl2;
+
+    @FXML
+    private Label namelbl3;
+
+    @FXML
+    private Label namelbl4;
+
+    private Label[] prevlbls = {prevlbl1, prevlbl2, prevlbl3, prevlbl4};
+
 
     @FXML
     private TextField inputfld;
@@ -53,32 +54,11 @@ public class multiplayerController {
 
     private ArrayList<Player> activePlayers = new ArrayList<Player>();
 
-    private int currentTurn = 0;
-    private int turns = 0;
-
-    private long timeAvailable = 30000;
-    private long startTime;
-    private long totalSeconds;
-    private long startGameTime = System.currentTimeMillis();
+    private int playerTurn;
 
     public void initialize(boolean breadMode) {
-        prevlbls.add(prevlbl1);
-        prevlbls.add(prevlbl2);
-        prevlbls.add(prevlbl3);
-        prevlbls.add(prevlbl4);
-
-        liveslbls.add(liveslbl1);
-        liveslbls.add(liveslbl2);
-        liveslbls.add(liveslbl3);
-        liveslbls.add(liveslbl4);
-        for (Label i : prevlbls) {
-            i.setText("");
-        }
-        activePlayers.add(new Player("Player 1", 3));
-        activePlayers.add(new Player("Player 2", 3));
-        activePlayers.add(new Player("Player 3", 3));
-        activePlayers.add(new Player("Player 4", 3));
-        updateLives();
+        activePlayers.add(new Player("yuan"));
+        activePlayers.add(new Player("zhuang"));
         try {
             File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
             Scanner dictionaryReader = new Scanner(dictionaryObj);
@@ -102,89 +82,15 @@ public class multiplayerController {
         newPrompt();
     }
 
-    public void startTimer() {
-        updateTimer();
-        if (updateTimerTimeline == null) {
-            updateTimerTimeline = new Timeline(new KeyFrame(
-                    Duration.millis(1000),
-                    ae -> updateTimer()));
-        }
-        updateTimerTimeline.setCycleCount(Timeline.INDEFINITE);
-        updateTimerTimeline.play();
-    }
-
-    @FXML
-    public void giveUp() {
-        timeAvailable = 30000;
-        currentPlayer().removeLives(1);
-        updateLives();
-        System.out.println(currentPlayer().getName() + " Lives: " +currentPlayer().getLives());
-        if (checkZeroLives()) {
-            giveGameOver();
-        }
-        cycleTurn();
-    }
-
-    public Player currentPlayer() {
-        return activePlayers.get(currentTurn);
-    }
-
-    public boolean checkGameOver() {
-        if (activePlayers.size() == 1) {
-             currentPlayerlbl.setText(currentPlayer().getName() + " wins!");
-             return true;
-        }
-        return false;
-    }
-
-    public boolean checkZeroLives() {
-        if (currentPlayer().getLives() <= 0) {
-            return true;
-        }
-        return false;
-    }
-
-    public void giveGameOver() {
-        activePlayers.remove(currentTurn);
-        liveslbls.remove(currentTurn);
-        if (currentTurn == 0) {
-            currentTurn = activePlayers.size() - 1;
-            return;
-        }
-        currentTurn--;
-        return;
-    }
-
-    public void updateTimer() {
-        totalSeconds = timeAvailable/1000 - (((System.currentTimeMillis() - startTime)) / 1000);
-
-        if (totalSeconds <= 0) {
-            check();
-        } else {
-            //availlbl.setText("" + totalSeconds);
-        }
-        if (checkZeroLives()) {
-            giveGameOver();
-
-        }
-    }
     public void updateLives() {
-        for (int i = 0; i < activePlayers.size(); i++) {
-            liveslbls.get(i).setText(Integer.toString(activePlayers.get(i).getLives()));
-        }
-    }
-    public void updateCurrentPlayerLabel() {
-        currentPlayerlbl.setText(currentPlayer().getName());
+
     }
 
     public void cycleTurn() {
-        if (!checkGameOver()) {
-            turns++;
-            currentTurn++;
-            if (currentTurn >= activePlayers.size()) {
-                currentTurn = 0;
-            }
-            updateCurrentPlayerLabel();
+        if (playerTurn == activePlayers.size()) {
+            playerTurn = 0;
+        } else {
+            playerTurn++;
         }
     }
 
@@ -207,7 +113,6 @@ public class multiplayerController {
     public String rawIpt(String s) {
         String j;
         j = s.replaceAll("[^A-Za-z]+", "");
-        j = j.toLowerCase();
         return j;
     }
 
@@ -230,11 +135,10 @@ public class multiplayerController {
         String ipt = inputfld.getText();
         ipt = rawIpt(ipt);
         if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
-            currentPlayer().addScore(1);
+            activePlayers.get(playerTurn).addScore(1);
             newPrompt();
-            typed.add(ipt);
-            prevlbls.get(currentTurn).setText(ipt.toUpperCase());
             cycleTurn();
+            typed.add(ipt);
         } else if (typed.contains(ipt)) {
             inputfld.setText("");
         } else if (!ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT))){
