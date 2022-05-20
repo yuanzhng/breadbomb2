@@ -70,8 +70,6 @@ public class singleplayerController {
 
     private ArrayList<String> typed = new ArrayList<String>();
 
-    private ArrayList<String> possiblePrompts = new ArrayList<String>();
-
     private ArrayList<String> possibleOrders = new ArrayList<String>();
 
     private ArrayList<String> dictionary = new ArrayList<String>();
@@ -104,7 +102,6 @@ public class singleplayerController {
             e.printStackTrace();
         }
         readFile("dict.txt", dictionary);
-        readFile("prompts.txt", possiblePrompts);
         if (bread) {
             System.out.println("BreadMode enabled...");
             readFile("orders.txt", possibleOrders);
@@ -132,8 +129,19 @@ public class singleplayerController {
 
     public void newPrompt() {
         inputfld.setText("");
-        int i = (int) (Math.random() * (possiblePrompts.size()));
-        this.prompt = possiblePrompts.get(i).toUpperCase();
+        int coinFlip = (int) (Math.random() * 2);
+        int i = (int) (Math.random() * (dictionary.size() - 1));
+        int j;
+        if (coinFlip > 0) {
+            j = (int) (Math.random() * (dictionary.get(i).length() - 2));
+            this.prompt = dictionary.get(i).substring(j, j + 2);
+        } else {
+            while (dictionary.get(i).length() < 3) {
+                i = (int) (Math.random() * (dictionary.size() - 1));
+            }
+            j = (int) (Math.random() * (dictionary.get(i).length() - 3));
+            this.prompt = dictionary.get(i).substring(j, j + 3);
+        }
         promptlbl.setText(prompt);
         startTime = System.currentTimeMillis();
         startTimer();
@@ -327,6 +335,7 @@ public class singleplayerController {
             newPrompt();
             return;
         }
+
         infolbl.setText("");
         String ipt = inputfld.getText();
         ipt = rawIpt(ipt);
