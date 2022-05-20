@@ -50,8 +50,6 @@ public class breadApplication extends Application {
         stage.setScene(scene);
     }
 
-    // worst case scenario for homework make the loaders/scenes private variables for optimization
-
     public static void setSingle() {
         multiMode = false;
     }

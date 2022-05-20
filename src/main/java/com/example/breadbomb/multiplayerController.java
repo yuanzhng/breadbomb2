@@ -32,6 +32,8 @@ public class multiplayerController {
     private Label liveslbl3;
     @FXML
     private Label liveslbl4;
+    @FXML
+    private Label currentPlayerlbl;
 
     private ArrayList<Label> liveslbls = new ArrayList<Label>();
     private ArrayList<Label> prevlbls = new ArrayList<Label>();
@@ -52,6 +54,7 @@ public class multiplayerController {
     private ArrayList<Player> activePlayers = new ArrayList<Player>();
 
     private int currentTurn = 0;
+    private int turns = 0;
 
     private long timeAvailable = 30000;
     private long startTime;
@@ -113,12 +116,11 @@ public class multiplayerController {
     @FXML
     public void giveUp() {
         timeAvailable = 30000;
-        newPrompt();
         currentPlayer().removeLives(1);
         updateLives();
-        if (checkGameOver()) {
+        System.out.println(currentPlayer().getName() + " Lives: " +currentPlayer().getLives());
+        if (checkZeroLives()) {
             giveGameOver();
-            return;
         }
         cycleTurn();
     }
@@ -128,6 +130,14 @@ public class multiplayerController {
     }
 
     public boolean checkGameOver() {
+        if (activePlayers.size() == 1) {
+             currentPlayerlbl.setText(currentPlayer().getName() + " wins!");
+             return true;
+        }
+        return false;
+    }
+
+    public boolean checkZeroLives() {
         if (currentPlayer().getLives() <= 0) {
             return true;
         }
@@ -136,6 +146,12 @@ public class multiplayerController {
 
     public void giveGameOver() {
         activePlayers.remove(currentTurn);
+        liveslbls.remove(currentTurn);
+        if (currentTurn == 0) {
+            currentTurn = activePlayers.size() - 1;
+            return;
+        }
+        currentTurn--;
         return;
     }
 
@@ -147,7 +163,7 @@ public class multiplayerController {
         } else {
             //availlbl.setText("" + totalSeconds);
         }
-        if (checkGameOver()) {
+        if (checkZeroLives()) {
             giveGameOver();
 
         }
@@ -157,12 +173,18 @@ public class multiplayerController {
             liveslbls.get(i).setText(Integer.toString(activePlayers.get(i).getLives()));
         }
     }
+    public void updateCurrentPlayerLabel() {
+        currentPlayerlbl.setText(currentPlayer().getName());
+    }
 
     public void cycleTurn() {
-        if (currentTurn == activePlayers.size() - 1) {
-            currentTurn = 0;
-        } else {
+        if (!checkGameOver()) {
+            turns++;
             currentTurn++;
+            if (currentTurn >= activePlayers.size()) {
+                currentTurn = 0;
+            }
+            updateCurrentPlayerLabel();
         }
     }
 
