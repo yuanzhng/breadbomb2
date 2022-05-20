@@ -8,9 +8,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="700.0" minWidth="1080.0" prefHeight="700.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.MenuController">
+<AnchorPane minHeight="700.0" minWidth="1080.0" prefHeight="700.0" prefWidth="1080.0" style="-fx-background-color: #36393F;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.MenuController">
    <children>
-      <GridPane alignment="CENTER" prefHeight="403.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane alignment="CENTER" prefHeight="403.0" prefWidth="600.0" style="-fx-background-color: #36393F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -22,11 +22,11 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="single" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#singlePressed" prefHeight="100.0" prefWidth="200.0" text="singleplayer" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-            <Button fx:id="multi" alignment="CENTER" layoutX="284.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#multiPressed" prefHeight="100.0" prefWidth="200.0" text="multiplayer" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-            <Label alignment="CENTER" text="Welcome to BreadBomb!" GridPane.columnSpan="3" GridPane.halignment="CENTER">
+            <Button fx:id="single" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#singlePressed" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #2F3236;" text="Singleplayer" textFill="#bbbdd0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+            <Button fx:id="multi" alignment="CENTER" layoutX="284.0" layoutY="199.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#multiPressed" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #2F3236;" text="Multiplayer" textFill="#bbbdd0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Label alignment="CENTER" text="Welcome to BreadBomb!" textFill="#bbbdd0" GridPane.columnSpan="3" GridPane.halignment="CENTER">
                <font>
-                  <Font size="25.0" />
+                  <Font size="35.0" />
                </font>
             </Label>
          </children>
