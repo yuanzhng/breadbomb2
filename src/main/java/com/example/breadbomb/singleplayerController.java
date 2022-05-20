@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -15,8 +16,11 @@ import javafx.util.Duration;
 import java.util.*;
 
 public class singleplayerController {
+    private int confirmQuit = 0;
+    Timeline quitTime;
     Timeline autoPlayTimeline;
     Timeline updateTimerTimeline;
+    Timeline sandwichShowTime;
 
     @FXML
     private Label promptlbl;
@@ -51,6 +55,12 @@ public class singleplayerController {
     @FXML
     private Button restartbtn;
 
+    @FXML
+    private Button quitButton;
+
+    @FXML
+    private Label sandwichDisplay;
+
     private int score = 0;
     private int lives = 3;
 
@@ -59,8 +69,6 @@ public class singleplayerController {
     private ArrayList<String> alphabet;
 
     private ArrayList<String> typed = new ArrayList<String>();
-
-    private ArrayList<String> possiblePrompts = new ArrayList<String>();
 
     private ArrayList<String> possibleOrders = new ArrayList<String>();
 
@@ -78,6 +86,7 @@ public class singleplayerController {
     private int sandwichLength = 0;
     private int idealSandwichLength = 0;
     private int orderCount = 0;
+    private ArrayList<String> currentSandwich = new ArrayList<String>();
 
     public void initialize(boolean bread) {
         try {
@@ -93,7 +102,6 @@ public class singleplayerController {
             e.printStackTrace();
         }
         readFile("dict.txt", dictionary);
-        readFile("prompts.txt", possiblePrompts);
         if (bread) {
             System.out.println("BreadMode enabled...");
             readFile("orders.txt", possibleOrders);
@@ -101,6 +109,7 @@ public class singleplayerController {
 
         } else {
             possibleOrders.add("abcdefghijklmnopqrstuvwxyz");
+
         }
         restartbtn.setDisable(true);
         newPrompt();
@@ -120,8 +129,19 @@ public class singleplayerController {
 
     public void newPrompt() {
         inputfld.setText("");
-        int i = (int) (Math.random() * (possiblePrompts.size()));
-        this.prompt = possiblePrompts.get(i).toUpperCase();
+        int coinFlip = (int) (Math.random() * 2);
+        int i = (int) (Math.random() * (dictionary.size() - 1));
+        int j;
+        if (coinFlip > 0) {
+            j = (int) (Math.random() * (dictionary.get(i).length() - 2));
+            this.prompt = dictionary.get(i).substring(j, j + 2);
+        } else {
+            while (dictionary.get(i).length() < 3) {
+                i = (int) (Math.random() * (dictionary.size() - 1));
+            }
+            j = (int) (Math.random() * (dictionary.get(i).length() - 3));
+            this.prompt = dictionary.get(i).substring(j, j + 3);
+        }
         promptlbl.setText(prompt);
         startTime = System.currentTimeMillis();
         startTimer();
@@ -175,6 +195,7 @@ public class singleplayerController {
     }
 
     public void newOrder() {
+        updateSandwich();
         if (breadMode) {
             if (startSandwich) {
                 order = "bread";
@@ -194,6 +215,7 @@ public class singleplayerController {
                 sandwichLength = 0;
                 startSandwich = true;
             }
+            currentSandwich.add(order);
         } else {
             int g = (int) (Math.random() * (possibleOrders.size()) - 1);
             order = possibleOrders.get(g);
@@ -285,6 +307,7 @@ public class singleplayerController {
     public String rawIpt(String s) {
         String j;
         j = s.replaceAll("[^A-Za-z]+", "");
+        j = j.toLowerCase();
         return j;
     }
 
@@ -312,6 +335,7 @@ public class singleplayerController {
             newPrompt();
             return;
         }
+
         infolbl.setText("");
         String ipt = inputfld.getText();
         ipt = rawIpt(ipt);
@@ -384,6 +408,49 @@ public class singleplayerController {
         if (checkGameOver()) {
             giveGameOver();
 
+        }
+    }
+
+    public void quit() {
+        quitButton.setText("Really?");
+        confirmQuit++;
+        if (confirmQuit == 2) {
+            try {
+                breadApplication.switchToMain();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+             quitTime = new Timeline(new KeyFrame(
+                    Duration.seconds(3),
+                    ae -> quitButton.setText("Quit")),
+                     new KeyFrame(
+                            Duration.seconds(3),
+                     ae -> confirmQuit--));
+             quitTime.play();
+        }
+    }
+
+    public void updateSandwich() {
+        if (breadMode) {
+            if (!currentSandwich.isEmpty()) {
+                String temp = new String();
+                for (int i = 0; i < currentSandwich.size(); i++) {
+                    temp = temp + "\n" + currentSandwich.get(i);
+                }
+                sandwichDisplay.setText(temp);
+                if (startSandwich) {
+                    sandwichShowTime = new Timeline(new KeyFrame(
+                            Duration.millis(200),
+                            ae -> sandwichDisplay.setText("")));
+                    currentSandwich.clear();
+                    sandwichShowTime.play();
+                }
+            } else {
+                sandwichDisplay.setText("");
+            }
+        } else {
+            sandwichDisplay.setText("Bread mode is off.");
         }
     }
 }

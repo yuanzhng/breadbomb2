@@ -16,31 +16,24 @@ public class multiplayerController {
     Timeline updateTimerTimeline;
     @FXML
     private Label promptlbl;
-
     @FXML
     private Label prevlbl1;
-
     @FXML
     private Label prevlbl2;
-
     @FXML
     private Label prevlbl3;
-
     @FXML
     private Label prevlbl4;
-
     @FXML
-    private Label namelbl1;
-
+    private Label liveslbl1;
     @FXML
-    private Label namelbl2;
-
+    private Label liveslbl2;
     @FXML
-    private Label namelbl3;
-
+    private Label liveslbl3;
     @FXML
-    private Label namelbl4;
+    private Label liveslbl4;
 
+    private ArrayList<Label> liveslbls = new ArrayList<Label>();
     private ArrayList<Label> prevlbls = new ArrayList<Label>();
 
     @FXML
@@ -70,13 +63,19 @@ public class multiplayerController {
         prevlbls.add(prevlbl2);
         prevlbls.add(prevlbl3);
         prevlbls.add(prevlbl4);
+
+        liveslbls.add(liveslbl1);
+        liveslbls.add(liveslbl2);
+        liveslbls.add(liveslbl3);
+        liveslbls.add(liveslbl4);
         for (Label i : prevlbls) {
             i.setText("");
         }
-        activePlayers.add(new Player("Player 1"));
-        activePlayers.add(new Player("Player 2"));
-        activePlayers.add(new Player("Player 3"));
-        activePlayers.add(new Player("Player 4"));
+        activePlayers.add(new Player("Player 1", 3));
+        activePlayers.add(new Player("Player 2", 3));
+        activePlayers.add(new Player("Player 3", 3));
+        activePlayers.add(new Player("Player 4", 3));
+        updateLives();
         try {
             File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
             Scanner dictionaryReader = new Scanner(dictionaryObj);
@@ -111,8 +110,25 @@ public class multiplayerController {
         updateTimerTimeline.play();
     }
 
+    @FXML
+    public void giveUp() {
+        timeAvailable = 30000;
+        newPrompt();
+        currentPlayer().removeLives(1);
+        updateLives();
+        if (checkGameOver()) {
+            giveGameOver();
+            return;
+        }
+        cycleTurn();
+    }
+
+    public Player currentPlayer() {
+        return activePlayers.get(currentTurn);
+    }
+
     public boolean checkGameOver() {
-        if (activePlayers.get(currentTurn).getLives() <= 0) {
+        if (currentPlayer().getLives() <= 0) {
             return true;
         }
         return false;
@@ -120,7 +136,6 @@ public class multiplayerController {
 
     public void giveGameOver() {
         activePlayers.remove(currentTurn);
-        cycleTurn();
         return;
     }
 
@@ -138,7 +153,9 @@ public class multiplayerController {
         }
     }
     public void updateLives() {
-
+        for (int i = 0; i < activePlayers.size(); i++) {
+            liveslbls.get(i).setText(Integer.toString(activePlayers.get(i).getLives()));
+        }
     }
 
     public void cycleTurn() {
@@ -168,6 +185,7 @@ public class multiplayerController {
     public String rawIpt(String s) {
         String j;
         j = s.replaceAll("[^A-Za-z]+", "");
+        j = j.toLowerCase();
         return j;
     }
 
@@ -190,7 +208,7 @@ public class multiplayerController {
         String ipt = inputfld.getText();
         ipt = rawIpt(ipt);
         if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
-            activePlayers.get(currentTurn).addScore(1);
+            currentPlayer().addScore(1);
             newPrompt();
             typed.add(ipt);
             prevlbls.get(currentTurn).setText(ipt.toUpperCase());
