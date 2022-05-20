@@ -252,7 +252,6 @@ public class singleplayerController {
         }
         infolbl.setText("Words containing " + prompt.toUpperCase() + ":\n" + info);
         newPrompt();
-
     }
 
     public boolean checkGameOver() {
