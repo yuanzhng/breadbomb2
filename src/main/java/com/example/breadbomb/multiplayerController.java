@@ -6,36 +6,39 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.transform.Rotate;
+import javafx.util.Duration;
+
 import java.util.*;
 
 public class multiplayerController {
     @FXML
     private Label promptlbl;
-
     @FXML
     private Label prevlbl1;
-
     @FXML
     private Label prevlbl2;
-
     @FXML
     private Label prevlbl3;
-
     @FXML
     private Label prevlbl4;
+    @FXML
+    private Label liveslbl1;
+    @FXML
+    private Label liveslbl2;
+    @FXML
+    private Label liveslbl3;
+    @FXML
+    private Label liveslbl4;
 
     @FXML
-    private Label namelbl1;
-
-    @FXML
-    private Label namelbl2;
-
-    @FXML
-    private Label namelbl3;
-
-    @FXML
-    private Label namelbl4;
-
+    private ImageView arrow;
+    private ArrayList<Label> liveslbls = new ArrayList<Label>();
+    private ArrayList<Label> prevlbls = new ArrayList<Label>();
     private Label[] prevlbls = {prevlbl1, prevlbl2, prevlbl3, prevlbl4};
 
 
@@ -54,11 +57,31 @@ public class multiplayerController {
 
     private ArrayList<Player> activePlayers = new ArrayList<Player>();
 
-    private int playerTurn;
+    private int currentTurn = 0;
+
+    private long timeAvailable = 30000;
+    private long startTime;
+    private long totalSeconds;
+    private long startGameTime = System.currentTimeMillis();
 
     public void initialize(boolean breadMode) {
-        activePlayers.add(new Player("yuan"));
-        activePlayers.add(new Player("zhuang"));
+        prevlbls.add(prevlbl1);
+        prevlbls.add(prevlbl2);
+        prevlbls.add(prevlbl3);
+        prevlbls.add(prevlbl4);
+
+        liveslbls.add(liveslbl1);
+        liveslbls.add(liveslbl2);
+        liveslbls.add(liveslbl3);
+        liveslbls.add(liveslbl4);
+        for (Label i : prevlbls) {
+            i.setText("");
+        }
+        activePlayers.add(new Player("Player 1", 3));
+        activePlayers.add(new Player("Player 2", 3));
+        activePlayers.add(new Player("Player 3", 3));
+        activePlayers.add(new Player("Player 4", 3));
+        updateLives();
         try {
             File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
             Scanner dictionaryReader = new Scanner(dictionaryObj);
@@ -81,16 +104,98 @@ public class multiplayerController {
         }
         newPrompt();
     }
+    public void rotateArrow()
+    {
+        /*Rotate rotate = new Rotate();
+        rotate.setPivotX(170);
+        rotate.setPivotY(29);
+        rotate.setAngle(90);
+        arrow.getTransforms().addAll(rotate);*/
+        Arc path= new Arc();
+        path.setCenterX(170);
+        path.setCenterY(29);
+        path.setRadiusX(98);
+        path.setRadiusY(98);
+        path.setStartAngle(-90*currentTurn-90);
+        path.setLength(-90);
+        PathTransition move= new PathTransition();
+        move.setPath(path);
+        move.setInterpolator(Interpolator.LINEAR);
+        move.setNode(arrow);
+        move.setDuration(Duration.seconds(0.25));
+        //move.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        RotateTransition rt = new RotateTransition(Duration.millis(250), arrow);
+        rt.setByAngle(90);
+        rt.setInterpolator(Interpolator.LINEAR);
+        rt.play();
+        move.play();
+    }
+    public void startTimer() {
+        updateTimer();
+        if (updateTimerTimeline == null) {
+            updateTimerTimeline = new Timeline(new KeyFrame(
+                    Duration.millis(1),
+                    ae -> updateTimer()));
+        }
+        updateTimerTimeline.setCycleCount(Timeline.INDEFINITE);
+        updateTimerTimeline.play();
+    }
+
+    @FXML
+    public void giveUp() {
+        timeAvailable = 30000;
+        newPrompt();
+        currentPlayer().removeLives(1);
+        updateLives();
+        if (checkGameOver()) {
+            giveGameOver();
+            return;
+        }
+        cycleTurn();
+    }
+
+    public Player currentPlayer() {
+        return activePlayers.get(currentTurn);
+    }
+
+    public boolean checkGameOver() {
+        if (currentPlayer().getLives() <= 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public void giveGameOver() {
+        activePlayers.remove(currentTurn);
+        return;
+    }
 
     public void updateLives() {
 
+    public void updateTimer() {
+        totalSeconds = timeAvailable/1000 - (((System.currentTimeMillis() - startTime)) / 1000);
+
+        if (totalSeconds <= 0) {
+            check();
+        } else {
+            //availlbl.setText("" + totalSeconds);
+        }
+        if (checkGameOver()) {
+            giveGameOver();
+
+        }
+    }
+    public void updateLives() {
+        for (int i = 0; i < activePlayers.size(); i++) {
+            liveslbls.get(i).setText(Integer.toString(activePlayers.get(i).getLives()));
+        }
     }
 
     public void cycleTurn() {
-        if (playerTurn == activePlayers.size()) {
-            playerTurn = 0;
+        if (currentTurn == activePlayers.size() - 1) {
+            currentTurn = 0;
         } else {
-            playerTurn++;
+            currentTurn++;
         }
     }
 
@@ -113,6 +218,7 @@ public class multiplayerController {
     public String rawIpt(String s) {
         String j;
         j = s.replaceAll("[^A-Za-z]+", "");
+        j = j.toLowerCase();
         return j;
     }
 
@@ -137,6 +243,8 @@ public class multiplayerController {
         if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
             activePlayers.get(playerTurn).addScore(1);
             newPrompt();
+            typed.add(ipt);
+            prevlbls.get(currentTurn).setText(ipt.toUpperCase());
             cycleTurn();
             typed.add(ipt);
         } else if (typed.contains(ipt)) {
@@ -147,5 +255,13 @@ public class multiplayerController {
             inputfld.setText("");
         }
         updateLives();
+    }
+    public boolean gameIsWon()
+    {
+        return (activePlayers.size()==1);
+    }
+    public void win()
+    {
+        //endscreen
     }
 }
