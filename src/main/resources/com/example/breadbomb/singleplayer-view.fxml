@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" style="-fx-background-color: #36393F;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" style="-fx-background-color: #36393F;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.singleplayerController">
    <children>
       <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="690.0" prefWidth="1045.0">
          <children>
@@ -41,6 +40,7 @@
             <Button fx:id="quitButton" layoutX="978.0" layoutY="22.0" mnemonicParsing="false" onAction="#quit" prefHeight="30.0" prefWidth="65.0" style="-fx-background-color: #2F3136;" text="Quit" textFill="#bbbdd0" />
             <Label layoutX="835.0" layoutY="52.0" text="Current Sandwich:" textFill="#bbbdd0" />
             <Label fx:id="sandwichDisplay" layoutX="835.0" layoutY="69.0" text="Label" textFill="#bbbdd0" />
+            <Label fx:id="moneyDisplay" layoutX="828.0" layoutY="344.0" textFill="#bbbdd0" />
          </children>
          <padding>
             <Insets bottom="10.0" right="10.0" top="10.0" />

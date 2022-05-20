@@ -12,6 +12,9 @@ public class MenuController {
     @FXML
     private Button multi;
 
+    @FXML
+    private Label moneyLabel;
+
     public void singlePressed() {
         breadApplication.setSingle();
         try {
@@ -27,5 +30,8 @@ public class MenuController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void setMoney(int i) {
+        moneyLabel.setText("Money:" + "\n" + "$" + i);
     }
 }

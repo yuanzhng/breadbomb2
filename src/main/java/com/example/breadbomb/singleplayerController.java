@@ -4,9 +4,10 @@ package com.example.breadbomb;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Scanner;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -61,7 +62,13 @@ public class singleplayerController {
     @FXML
     private Label sandwichDisplay;
 
+    @FXML
+    private Label moneyDisplay;
+
     private int score = 0;
+    private int money;
+    private int moneyAdded;
+    private double combo = 1;
     private int lives = 3;
 
     private String prompt;
@@ -88,7 +95,8 @@ public class singleplayerController {
     private int orderCount = 0;
     private ArrayList<String> currentSandwich = new ArrayList<String>();
 
-    public void initialize(boolean bread) {
+    public void initialize(boolean bread, int m) {
+        money = m;
         try {
             File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
             Scanner dictionaryReader = new Scanner(dictionaryObj);
@@ -329,6 +337,7 @@ public class singleplayerController {
         if (totalSeconds<=0) {
             scorefld.setText("Time's up!");
             lives--;
+            combo = 1;
             updateLives();
             timeAvailable = 30000;
             showInfo();
@@ -349,6 +358,7 @@ public class singleplayerController {
                 if (breadMode) {
                     if (orderCount == idealSandwichLength + 2) {
                         scorefld.setText("Sandwich complete! +1 life");
+                        money += 70 * sandwichLength;
                         lives++;
                         orderCount = 0;
                         idealSandwichLength++;
@@ -362,6 +372,11 @@ public class singleplayerController {
                 newOrder();
             }
             score += calcScore(ipt);
+            if (breadMode) {
+                moneyAdded = (int) (score * combo);
+                money += moneyAdded;
+                serializeMoney();
+            }
             updateScore();
             orderlbl.setText("Order: " + order.toUpperCase());
             updateTimeTaken();
@@ -369,6 +384,8 @@ public class singleplayerController {
                 timeAvailable *= 0.90;
             }
             newPrompt();
+            combo += .1;
+            System.out.println(combo);
             typed.add(ipt);
         } else if (typed.contains(ipt)) {
             inputfld.setText("");
@@ -451,6 +468,23 @@ public class singleplayerController {
             }
         } else {
             sandwichDisplay.setText("Bread mode is off.");
+        }
+    }
+
+    public void serializeMoney() {
+        moneyDisplay.setText("Money:" + "\n" + "$" + money + "\n" + "+$" + moneyAdded);
+        try {
+            Files.createDirectory(Path.of(System.getProperty("user.home") + "/.breadbomb"));
+        } catch (IOException i) {}
+        try {
+            FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.home") + "/.breadbomb/money.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(money);
+            out.close();
+            fileOut.close();
+            System.out.printf("Serialized data is saved in money.ser");
+        } catch (IOException i) {
+            i.printStackTrace();
         }
     }
 }
