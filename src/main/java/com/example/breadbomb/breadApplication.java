@@ -3,6 +3,7 @@ package com.example.breadbomb;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -11,6 +12,8 @@ public class breadApplication extends Application {
     private static Stage stage;
     private static boolean breadMode;
     private static boolean multiMode;
+
+    private AudioClip clip;
     @Override
     public void start(Stage s) throws IOException {
         stage = s;
