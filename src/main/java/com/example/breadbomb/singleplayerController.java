@@ -11,6 +11,7 @@ import java.util.Scanner;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import javafx.scene.media.AudioClip;
 
 
 import java.util.*;
@@ -21,6 +22,7 @@ public class singleplayerController {
     Timeline quitTime;
     Timeline updateTimerTimeline;
     Timeline sandwichShowTime;
+    AudioClip correctSound = new AudioClip("");
 
     @FXML
     private Label promptlbl;

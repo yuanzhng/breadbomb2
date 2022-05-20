@@ -35,6 +35,9 @@
          <Label fx:id="liveslbl3" layoutX="840.0" layoutY="374.0" text="lives3" textFill="WHITE" />
          <Label fx:id="liveslbl4" layoutX="636.0" layoutY="562.0" text="lives4" textFill="WHITE" />
          <Button layoutX="742.0" layoutY="651.0" mnemonicParsing="false" onAction="#giveUp" style="-fx-background-color: #4a483f#4a483f #4a483f#4a483f; -fx-text-fill: #bbbdd0#bbbdd0 #bbbdd0#bbbdd0;" text="Give up" />
+         <Label fx:id="currentPlayerlbl" layoutX="593.0" layoutY="285.0" prefHeight="17.0" prefWidth="149.0" text="Player 1" textFill="WHITE" />
+         <Label fx:id="availlbl" layoutX="49.0" layoutY="643.0" text="avail" textFill="WHITE" />
+         <Label fx:id="timelbl" layoutX="49.0" layoutY="669.0" text="avail" textFill="WHITE" />
         </children>
     </AnchorPane>
 </VBox>

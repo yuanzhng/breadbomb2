@@ -34,6 +34,10 @@ public class multiplayerController {
     private Label liveslbl4;
     @FXML
     private Label currentPlayerlbl;
+    @FXML
+    private Label timelbl;
+    @FXML
+    private Label availlbl;
 
     private ArrayList<Label> liveslbls = new ArrayList<Label>();
     private ArrayList<Label> prevlbls = new ArrayList<Label>();
@@ -113,16 +117,17 @@ public class multiplayerController {
         updateTimerTimeline.play();
     }
 
+    public void updateTimeTaken() {
+        timelbl.setText("Took " + timeElapsed()/1000 + " seconds\n");
+    }
+
+    public long timeElapsed() {
+        return System.currentTimeMillis() - startTime;
+    }
+
     @FXML
     public void giveUp() {
-        timeAvailable = 30000;
-        currentPlayer().removeLives(1);
-        updateLives();
-        System.out.println(currentPlayer().getName() + " Lives: " +currentPlayer().getLives());
-        if (checkZeroLives()) {
-            giveGameOver();
-        }
-        cycleTurn();
+        fail();
     }
 
     public Player currentPlayer() {
@@ -186,6 +191,23 @@ public class multiplayerController {
             }
             updateCurrentPlayerLabel();
         }
+        resetTimer();
+    }
+
+    public void resetTimer() {
+        startTime = System.currentTimeMillis();
+        startTimer();
+    }
+
+    public void fail() {
+        timeAvailable = 30000;
+        currentPlayer().removeLives(1);
+        updateLives();
+        System.out.println(currentPlayer().getName() + " Lives: " +currentPlayer().getLives());
+        if (checkZeroLives()) {
+            giveGameOver();
+        }
+        cycleTurn();
     }
 
     public void newPrompt() {
@@ -227,6 +249,9 @@ public class multiplayerController {
     }
 
     public void check() {
+        if (totalSeconds<=0) {
+            fail();
+        }
         String ipt = inputfld.getText();
         ipt = rawIpt(ipt);
         if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
