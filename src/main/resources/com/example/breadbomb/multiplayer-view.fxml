@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -14,7 +16,12 @@
     </padding>
     <AnchorPane prefHeight="690.0" prefWidth="1091.0">
         <children>
-            <Label layoutX="580.0" layoutY="309.0" prefHeight="17.0" prefWidth="149.0" text="Type a word containing:" textFill="WHITE" />
+         <ImageView fx:id="arrow" fitHeight="58.0" fitWidth="136.0" layoutX="453.0" layoutY="324.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="C:\Users\danie\IdeaProjects\breadbomb3\src\main\resources\com\example\breadbomb\pngfind.com-hand-drawn-arrow-png-302687.png" />
+            </image>
+         </ImageView>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="580.0" layoutY="309.0" prefHeight="17.0" prefWidth="149.0" text="Type a word containing:" textAlignment="CENTER" textFill="WHITE" />
             <Label fx:id="promptlbl" alignment="CENTER" contentDisplay="CENTER" layoutX="621.0" layoutY="334.0" text="Label" textAlignment="CENTER" textFill="#d9c473">
                 <font>
                     <Font name="System Bold" size="26.0" />

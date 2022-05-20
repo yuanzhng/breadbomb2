@@ -15,11 +15,11 @@ public class breadApplication extends Application {
     public void start(Stage s) throws IOException {
         stage = s;
         FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("menu-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1080, 700);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setTitle("BreadBomb");
         stage.setScene(scene);
         stage.show();
-        stage.setResizable(false);
+        stage.setResizable(true);
     }
 
     public static void switchToMode() throws IOException {
@@ -46,7 +46,7 @@ public class breadApplication extends Application {
     }
     public static void switchToMain() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("menu-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1080, 700);
+        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setScene(scene);
     }
 

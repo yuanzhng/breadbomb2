@@ -1,12 +1,17 @@
 package com.example.breadbomb;
 
+import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+
+import javafx.scene.image.ImageView;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 import java.util.*;
@@ -33,6 +38,8 @@ public class multiplayerController {
     @FXML
     private Label liveslbl4;
 
+    @FXML
+    private ImageView arrow;
     private ArrayList<Label> liveslbls = new ArrayList<Label>();
     private ArrayList<Label> prevlbls = new ArrayList<Label>();
 
@@ -98,7 +105,32 @@ public class multiplayerController {
         }
         newPrompt();
     }
-
+    public void rotateArrow()
+    {
+        /*Rotate rotate = new Rotate();
+        rotate.setPivotX(170);
+        rotate.setPivotY(29);
+        rotate.setAngle(90);
+        arrow.getTransforms().addAll(rotate);*/
+        Arc path= new Arc();
+        path.setCenterX(170);
+        path.setCenterY(29);
+        path.setRadiusX(98);
+        path.setRadiusY(98);
+        path.setStartAngle(-90*currentTurn-90);
+        path.setLength(-90);
+        PathTransition move= new PathTransition();
+        move.setPath(path);
+        move.setInterpolator(Interpolator.LINEAR);
+        move.setNode(arrow);
+        move.setDuration(Duration.seconds(0.25));
+        //move.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        RotateTransition rt = new RotateTransition(Duration.millis(250), arrow);
+        rt.setByAngle(90);
+        rt.setInterpolator(Interpolator.LINEAR);
+        rt.play();
+        move.play();
+    }
     public void startTimer() {
         updateTimer();
         if (updateTimerTimeline == null) {
@@ -164,6 +196,7 @@ public class multiplayerController {
         } else {
             currentTurn++;
         }
+        rotateArrow();
     }
 
     public void newPrompt() {
