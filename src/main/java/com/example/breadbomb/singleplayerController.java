@@ -253,6 +253,8 @@ public class singleplayerController {
     @FXML
     public void giveUp() {
         lives--;
+        combo = 1;
+        moneyDisplay.setText("Money (Combo Broken!):" + "\n" + "$" + money);
         timeAvailable = 30000;
         updateLives();
         showInfo();
@@ -277,9 +279,6 @@ public class singleplayerController {
             possible.remove(j);
         }
         infolbl.setText("Words containing " + prompt.toUpperCase() + ":\n" + info);
-        if (breadMode) {
-            infolbl.setText(infolbl.getText() +  "\nCombo Broken!");
-        }
         newPrompt();
 
     }
@@ -360,6 +359,7 @@ public class singleplayerController {
             scorefld.setText("Time's up!");
             lives--;
             combo = 1;
+            moneyDisplay.setText("Money (Combo Broken!):" + "\n" + "$" + money);
             updateLives();
             timeAvailable = 30000;
             showInfo();
@@ -370,7 +370,7 @@ public class singleplayerController {
         infolbl.setText("");
         String ipt = inputfld.getText();
         ipt = rawIpt(ipt);
-        if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt) || true) {
+        if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
             for (int i = 0; i < ipt.length(); i++) {
                 if (order.contains(ipt.substring(i, i + 1))) {
                     order = order.replaceFirst(ipt.substring(i, i + 1), "");
@@ -393,7 +393,7 @@ public class singleplayerController {
             }
             score += calcScore(ipt);
             if (breadMode) {
-                moneyAdded = (int) (score * combo);
+                moneyAdded = (int) (calcScore(ipt) * combo);
                 money += moneyAdded;
                 money += sandwichMoney;
                 serializeMoney();
@@ -405,7 +405,7 @@ public class singleplayerController {
                 timeAvailable *= 0.90;
             }
             newPrompt();
-            combo += 0.1;
+            combo += 0.01;
             typed.add(ipt);
         } else if (typed.contains(ipt)) {
             inputfld.setText("");
@@ -497,7 +497,7 @@ public class singleplayerController {
     public void serializeMoney() {
         moneyDisplay.setText("Money (Combo x" + combo + "):" + "\n" + "$" + money + "\n" + "+$" + moneyAdded);
         if (sandwichDone) {
-            moneyDisplay.setText(moneyDisplay.getText() + "\n" + "+$" + sandwichMoney + " (Sandwich finished!)");
+            moneyDisplay.setText(moneyDisplay.getText() + "\n" + "+$" + sandwichMoney + " (Sandwich finished!) x" + (idealSandwichLength - 1));
             sandwichDone = false;
         }
         try {
