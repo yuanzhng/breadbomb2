@@ -34,6 +34,11 @@ public class multiplayerController {
     private Label liveslbl4;
     @FXML
     private Label currentPlayerlbl;
+    @FXML
+    private Button giveupbtn;
+
+    @FXML
+    private Label availlbl;
 
     private ArrayList<Label> liveslbls = new ArrayList<Label>();
     private ArrayList<Label> prevlbls = new ArrayList<Label>();
@@ -53,6 +58,7 @@ public class multiplayerController {
 
     private ArrayList<Player> activePlayers = new ArrayList<Player>();
 
+    private boolean isGrace;
     private int currentTurn = 0;
     private int turns = 0;
 
@@ -99,7 +105,9 @@ public class multiplayerController {
         } else {
             possibleOrders.add("abcdefghijklmnopqrstuvwxyz");
         }
+        startTime = System.currentTimeMillis();
         newPrompt();
+        startTimer();
     }
 
     public void startTimer() {
@@ -120,7 +128,7 @@ public class multiplayerController {
         updateLives();
         System.out.println(currentPlayer().getName() + " Lives: " +currentPlayer().getLives());
         if (checkZeroLives()) {
-            giveGameOver();
+            giveDeath();
         }
         cycleTurn();
     }
@@ -132,7 +140,8 @@ public class multiplayerController {
     public boolean checkGameOver() {
         if (activePlayers.size() == 1) {
             currentPlayerlbl.setText(currentPlayer().getName() + " wins!");
-             return true;
+            giveupbtn.setDisable(true);
+            return true;
         }
         return false;
     }
@@ -144,7 +153,7 @@ public class multiplayerController {
         return false;
     }
 
-    public void giveGameOver() {
+    public void giveDeath() {
         activePlayers.remove(currentTurn);
         liveslbls.remove(currentTurn);
         if (currentTurn == 0) {
@@ -161,10 +170,10 @@ public class multiplayerController {
         if (totalSeconds <= 0) {
             check();
         } else {
-            //availlbl.setText("" + totalSeconds);
+            availlbl.setText("" + totalSeconds);
         }
         if (checkZeroLives()) {
-            giveGameOver();
+            giveDeath();
 
         }
     }
@@ -186,6 +195,8 @@ public class multiplayerController {
             }
             updateCurrentPlayerLabel();
         }
+        startTime = System.currentTimeMillis();
+        startTimer();
     }
 
     public void newPrompt() {
@@ -227,21 +238,26 @@ public class multiplayerController {
     }
 
     public void check() {
-        String ipt = inputfld.getText();
-        ipt = rawIpt(ipt);
-        if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
-            currentPlayer().addScore(1);
+        if (isGrace) {
+            isGrace = false;
             newPrompt();
-            typed.add(ipt);
-            prevlbls.get(currentTurn).setText(ipt.toUpperCase());
             cycleTurn();
-        } else if (typed.contains(ipt)) {
-            inputfld.setText("");
-        } else if (!ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT))){
-            inputfld.setText("");
         } else {
-            inputfld.setText("");
+            String ipt = inputfld.getText();
+            ipt = rawIpt(ipt);
+            if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
+                currentPlayer().addScore(1);
+                typed.add(ipt);
+                prevlbls.get(currentTurn).setText(ipt.toUpperCase());
+                isGrace = true;
+            } else if (typed.contains(ipt)) {
+                inputfld.setText("");
+            } else if (!ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT))) {
+                inputfld.setText("");
+            } else {
+                inputfld.setText("");
+            }
+            updateLives();
         }
-        updateLives();
     }
 }
