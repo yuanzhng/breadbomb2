@@ -161,6 +161,8 @@ public class multiplayerController {
             return;
         }
         currentTurn--;
+        currentPlayerlbl.setText("Time's up!");
+        makeGrace();
         return;
     }
 
@@ -168,6 +170,7 @@ public class multiplayerController {
         totalSeconds = timeAvailable/1000 - (((System.currentTimeMillis() - startTime)) / 1000);
 
         if (totalSeconds <= 0) {
+            damageCurrent(1);
             check();
         } else {
             availlbl.setText("" + totalSeconds);
@@ -177,6 +180,12 @@ public class multiplayerController {
 
         }
     }
+
+    public void damageCurrent(int i) {
+        currentPlayer().removeLives(i);
+        cycleTurn();
+    }
+
     public void updateLives() {
         for (int i = 0; i < activePlayers.size(); i++) {
             liveslbls.get(i).setText(Integer.toString(activePlayers.get(i).getLives()));
@@ -237,6 +246,13 @@ public class multiplayerController {
         }
     }
 
+    public void makeGrace() {
+        inputfld.setText("");
+        promptlbl.setText("---");
+        inputfld.setPromptText("Press enter when you are ready...");
+        isGrace = true;
+    }
+
     public void check() {
         if (isGrace) {
             isGrace = false;
@@ -249,7 +265,7 @@ public class multiplayerController {
                 currentPlayer().addScore(1);
                 typed.add(ipt);
                 prevlbls.get(currentTurn).setText(ipt.toUpperCase());
-                isGrace = true;
+                makeGrace();
             } else if (typed.contains(ipt)) {
                 inputfld.setText("");
             } else if (!ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT))) {
