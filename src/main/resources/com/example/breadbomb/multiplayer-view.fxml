@@ -18,7 +18,7 @@
         <children>
          <ImageView fx:id="arrow" fitHeight="58.0" fitWidth="149.0" layoutX="479.0" layoutY="324.0" pickOnBounds="true" preserveRatio="true">
             <image>
-               <Image url="C:\Users\danie\IdeaProjects\breadbomb3\src\main\resources\com\example\breadbomb\pngfind.com-hand-drawn-arrow-png-302687.png" />
+               <Image url="@pngfind.com-hand-drawn-arrow-png-302687.png" />
             </image>
          </ImageView>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="580.0" layoutY="309.0" prefHeight="17.0" prefWidth="149.0" text="Type a word containing:" textAlignment="CENTER" textFill="WHITE" />
