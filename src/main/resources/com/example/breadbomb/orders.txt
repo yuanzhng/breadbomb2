@@ -10,3 +10,20 @@ bologna
 ham
 mayonnaise
 ketchup
+sandwich
+starfruit
+peppers
+yellow
+pickle
+onion
+relish
+BBQ
+money
+metal
+wood
+honey
+jam
+peanut butter
+tuna fish
+simpson
+
