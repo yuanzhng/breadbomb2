@@ -4,9 +4,10 @@ package com.example.breadbomb;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Scanner;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -17,8 +18,8 @@ import java.util.*;
 
 public class singleplayerController {
     private int confirmQuit = 0;
+
     Timeline quitTime;
-    Timeline autoPlayTimeline;
     Timeline updateTimerTimeline;
     Timeline sandwichShowTime;
 
@@ -61,7 +62,14 @@ public class singleplayerController {
     @FXML
     private Label sandwichDisplay;
 
+    @FXML
+    private Label moneyDisplay;
+
     private int score = 0;
+    private int money;
+    private int moneyAdded;
+    private int sandwichMoney;
+    private double combo = 1;
     private int lives = 3;
 
     private String prompt;
@@ -81,14 +89,19 @@ public class singleplayerController {
     private long totalSeconds;
     private long startGameTime = System.currentTimeMillis();
 
-    private boolean startSandwich = true;
+    private boolean startSandwich;
+    private boolean sandwichDone;
     private boolean breadMode;
-    private int sandwichLength = 0;
-    private int idealSandwichLength = 0;
-    private int orderCount = 0;
+    private int sandwichLength;
+    private int idealSandwichLength;
     private ArrayList<String> currentSandwich = new ArrayList<String>();
 
-    public void initialize(boolean bread) {
+    public void initialize(boolean bread, int m) {
+        money = m;
+        startSandwich = true;
+        sandwichDone = false;
+        sandwichLength = 0;
+        idealSandwichLength = 1;
         try {
             File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
             Scanner dictionaryReader = new Scanner(dictionaryObj);
@@ -154,7 +167,7 @@ public class singleplayerController {
     public int calcScore(String s) {
         int k = 0;
         for (int i = 0; i < s.length(); i++) {
-            String d = s.substring(i, i+1).toLowerCase();
+            String d = s.substring(i, i + 1).toLowerCase();
             switch (d) {
                 case "a":
                 case "e":
@@ -165,23 +178,37 @@ public class singleplayerController {
                 case "r":
                 case "s":
                 case "t":
-                case "u": k++; break;
+                case "u":
+                    k++;
+                    break;
                 case "d":
-                case "g": k += 2; break;
+                case "g":
+                    k += 2;
+                    break;
                 case "b":
                 case "c":
                 case "m":
-                case "p": k += 3; break;
+                case "p":
+                    k += 3;
+                    break;
                 case "f":
                 case "h":
                 case "v":
                 case "w":
-                case "y": k += 4; break;
-                case "k": k += 5; break;
+                case "y":
+                    k += 4;
+                    break;
+                case "k":
+                    k += 5;
+                    break;
                 case "j":
-                case "x": k += 8; break;
+                case "x":
+                    k += 8;
+                    break;
                 case "q":
-                case "z": k += 10; break;
+                case "z":
+                    k += 10;
+                    break;
             }
         }
         return k;
@@ -189,7 +216,7 @@ public class singleplayerController {
 
     public void updateTimeTaken() {
         int s = calcScore(rawIpt(inputfld.getText()));
-        timelbl.setText("Took " + timeElapsed()/1000 + " seconds\n" +
+        timelbl.setText("Took " + timeElapsed() / 1000 + " seconds\n" +
                 rawIpt(inputfld.getText().toUpperCase()) + "\n+" + s);
         System.out.println("word score: " + s);
     }
@@ -198,11 +225,12 @@ public class singleplayerController {
         updateSandwich();
         if (breadMode) {
             if (startSandwich) {
+                sandwichLength = 0;
                 order = "bread";
                 System.out.println("Order: bread");
                 orderlbl.setText("Order: BREAD");
                 startSandwich = false;
-            } else if (sandwichLength <= idealSandwichLength) {
+            } else if (sandwichLength < idealSandwichLength) {
                 int g = (int) (Math.random() * (possibleOrders.size()) - 1);
                 order = possibleOrders.get(g);
                 System.out.println("Order: " + order);
@@ -212,13 +240,11 @@ public class singleplayerController {
                 order = "bread";
                 System.out.println("Order: bread");
                 orderlbl.setText("Order: BREAD");
-                sandwichLength = 0;
                 startSandwich = true;
             }
             currentSandwich.add(order);
         } else {
-            int g = (int) (Math.random() * (possibleOrders.size()) - 1);
-            order = possibleOrders.get(g);
+            order = "abcdefghijklmnopqrstuvwxyz";
             System.out.println("Order: " + order);
             orderlbl.setText("Order: " + order.toUpperCase());
         }
@@ -251,6 +277,9 @@ public class singleplayerController {
             possible.remove(j);
         }
         infolbl.setText("Words containing " + prompt.toUpperCase() + ":\n" + info);
+        if (breadMode) {
+            infolbl.setText(infolbl.getText() +  "\nCombo Broken!");
+        }
         newPrompt();
 
     }
@@ -265,7 +294,7 @@ public class singleplayerController {
     public void giveGameOver() {
         updateTimerTimeline.stop();
         scorefld.setText("");
-        timelbl.setText("Time survived: " + ((System.currentTimeMillis() - startGameTime)/1000) + " seconds");
+        timelbl.setText("Time survived: " + ((System.currentTimeMillis() - startGameTime) / 1000) + " seconds");
         availlbl.setText("Final score: " + score);
         orderlbl.setText("");
         promptlbl.setText("---");
@@ -325,10 +354,12 @@ public class singleplayerController {
             e.printStackTrace();
         }
     }
+
     public void check() {
-        if (totalSeconds<=0) {
+        if (totalSeconds <= 0) {
             scorefld.setText("Time's up!");
             lives--;
+            combo = 1;
             updateLives();
             timeAvailable = 30000;
             showInfo();
@@ -339,21 +370,20 @@ public class singleplayerController {
         infolbl.setText("");
         String ipt = inputfld.getText();
         ipt = rawIpt(ipt);
-        if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
+        if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt) || true) {
             for (int i = 0; i < ipt.length(); i++) {
-                if (order.contains(ipt.substring(i,i+1))) {
-                    order = order.replaceFirst(ipt.substring(i,i+1), "");
+                if (order.contains(ipt.substring(i, i + 1))) {
+                    order = order.replaceFirst(ipt.substring(i, i + 1), "");
                 }
             }
             if (order.replaceAll(" ", "").equals("")) {
                 if (breadMode) {
-                    if (orderCount == idealSandwichLength + 2) {
+                    if (sandwichLength == idealSandwichLength && startSandwich) {
                         scorefld.setText("Sandwich complete! +1 life");
+                        sandwichMoney = 70 * (sandwichLength);
+                        sandwichDone = true;
                         lives++;
-                        orderCount = 0;
                         idealSandwichLength++;
-                    } else {
-                        orderCount++;
                     }
                 } else {
                     scorefld.setText("Order complete! +1 life");
@@ -362,6 +392,12 @@ public class singleplayerController {
                 newOrder();
             }
             score += calcScore(ipt);
+            if (breadMode) {
+                moneyAdded = (int) (score * combo);
+                money += moneyAdded;
+                money += sandwichMoney;
+                serializeMoney();
+            }
             updateScore();
             orderlbl.setText("Order: " + order.toUpperCase());
             updateTimeTaken();
@@ -369,11 +405,12 @@ public class singleplayerController {
                 timeAvailable *= 0.90;
             }
             newPrompt();
+            combo += 0.1;
             typed.add(ipt);
         } else if (typed.contains(ipt)) {
             inputfld.setText("");
             scorefld.setText("Word already used!");
-        } else if (!ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT))){
+        } else if (!ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT))) {
             inputfld.setText("");
             scorefld.setText("Doesn't contain prompt!");
         } else {
@@ -386,11 +423,12 @@ public class singleplayerController {
             return;
         }
     }
+
     public void startTimer() {
         updateTimer();
         if (updateTimerTimeline == null) {
             updateTimerTimeline = new Timeline(new KeyFrame(
-                    Duration.millis(10),
+                    Duration.millis(1000),
                     ae -> updateTimer()));
         }
         updateTimerTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -398,12 +436,12 @@ public class singleplayerController {
     }
 
     public void updateTimer() {
-        totalSeconds = timeAvailable/1000 - (((System.currentTimeMillis() - startTime)) / 1000);
+        totalSeconds = timeAvailable / 1000 - (((System.currentTimeMillis() - startTime)) / 1000);
 
         if (totalSeconds <= 0) {
             check();
-    } else {
-            availlbl.setText("Time left: " + totalSeconds);
+        } else {
+            availlbl.setText("" + totalSeconds);
         }
         if (checkGameOver()) {
             giveGameOver();
@@ -415,19 +453,21 @@ public class singleplayerController {
         quitButton.setText("Really?");
         confirmQuit++;
         if (confirmQuit == 2) {
+            quitButton.setText("Quit");
+            confirmQuit = 0;
             try {
                 breadApplication.switchToMain();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-             quitTime = new Timeline(new KeyFrame(
+            quitTime = new Timeline(new KeyFrame(
                     Duration.seconds(3),
                     ae -> quitButton.setText("Quit")),
-                     new KeyFrame(
+                    new KeyFrame(
                             Duration.seconds(3),
-                     ae -> confirmQuit--));
-             quitTime.play();
+                            ae -> confirmQuit--));
+            quitTime.play();
         }
     }
 
@@ -451,6 +491,28 @@ public class singleplayerController {
             }
         } else {
             sandwichDisplay.setText("Bread mode is off.");
+        }
+    }
+
+    public void serializeMoney() {
+        moneyDisplay.setText("Money (Combo x" + combo + "):" + "\n" + "$" + money + "\n" + "+$" + moneyAdded);
+        if (sandwichDone) {
+            moneyDisplay.setText(moneyDisplay.getText() + "\n" + "+$" + sandwichMoney + " (Sandwich finished!)");
+            sandwichDone = false;
+        }
+        try {
+            Files.createDirectory(Path.of(System.getProperty("user.home") + "/.breadbomb"));
+        } catch (IOException i) {
+        }
+        try {
+            FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.home") + "/.breadbomb/money.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(money);
+            out.close();
+            fileOut.close();
+            System.out.printf("Serialized data is saved in money.ser");
+        } catch (IOException i) {
+            i.printStackTrace();
         }
     }
 }
