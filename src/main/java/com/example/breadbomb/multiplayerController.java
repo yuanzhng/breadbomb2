@@ -58,6 +58,12 @@ public class multiplayerController {
 
     private ArrayList<Player> activePlayers = new ArrayList<Player>();
 
+    private boolean breadMode;
+    private boolean startSandwich;
+    private boolean sandwichDone;
+    private int sandwichLength;
+    private int idealSandwichLength;
+
     private boolean isGrace;
     private int currentTurn = 0;
     private int turns = 0;
@@ -67,91 +73,100 @@ public class multiplayerController {
     private long totalSeconds;
     private long startGameTime = System.currentTimeMillis();
 
-    public void initialize(boolean breadMode) {
-        prevlbls.add(prevlbl1);
-        prevlbls.add(prevlbl2);
-        prevlbls.add(prevlbl3);
-        prevlbls.add(prevlbl4);
-
-        liveslbls.add(liveslbl1);
-        liveslbls.add(liveslbl2);
-        liveslbls.add(liveslbl3);
-        liveslbls.add(liveslbl4);
-        for (Label i : prevlbls) {
-            i.setText("");
-        }
-        activePlayers.add(new Player("Player 1", 3));
-        activePlayers.add(new Player("Player 2", 3));
-        activePlayers.add(new Player("Player 3", 3));
-        activePlayers.add(new Player("Player 4", 3));
-        updateLives();
-        try {
-            File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
-            Scanner dictionaryReader = new Scanner(dictionaryObj);
-            while (dictionaryReader.hasNextLine()) {
-                String data = dictionaryReader.nextLine();
-                dictionary.add(data.toLowerCase());
-            }
-            dictionaryReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-        readFile("dict.txt", dictionary);
-        readFile("prompts.txt", possiblePrompts);
-        if (breadMode) {
+    public void initialize(boolean bread) {
+        startSandwich = true;
+        sandwichDone = false;
+        sandwichLength = 0;
+        idealSandwichLength = 1;
+        if (bread) {
             System.out.println("BreadMode enabled...");
             readFile("orders.txt", possibleOrders);
-        } else {
-            possibleOrders.add("abcdefghijklmnopqrstuvwxyz");
+            breadMode = true;
         }
-        startTime = System.currentTimeMillis();
-        newPrompt();
-        startTimer();
-    }
+            prevlbls.add(prevlbl1);
+            prevlbls.add(prevlbl2);
+            prevlbls.add(prevlbl3);
+            prevlbls.add(prevlbl4);
 
-    public void startTimer() {
-        updateTimer();
-        if (updateTimerTimeline == null) {
-            updateTimerTimeline = new Timeline(new KeyFrame(
-                    Duration.millis(1000),
-                    ae -> updateTimer()));
+            liveslbls.add(liveslbl1);
+            liveslbls.add(liveslbl2);
+            liveslbls.add(liveslbl3);
+            liveslbls.add(liveslbl4);
+            for (Label i : prevlbls) {
+                i.setText("");
+            }
+            activePlayers.add(new Player("Player 1", 3));
+            activePlayers.add(new Player("Player 2", 3));
+            activePlayers.add(new Player("Player 3", 3));
+            activePlayers.add(new Player("Player 4", 3));
+            updateLives();
+            try {
+                File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
+                Scanner dictionaryReader = new Scanner(dictionaryObj);
+                while (dictionaryReader.hasNextLine()) {
+                    String data = dictionaryReader.nextLine();
+                    dictionary.add(data.toLowerCase());
+                }
+                dictionaryReader.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+            readFile("dict.txt", dictionary);
+            readFile("prompts.txt", possiblePrompts);
+            if (breadMode) {
+                System.out.println("BreadMode enabled...");
+                readFile("orders.txt", possibleOrders);
+            } else {
+                possibleOrders.add("abcdefghijklmnopqrstuvwxyz");
+            }
+            startTime = System.currentTimeMillis();
+            newPrompt();
+            startTimer();
         }
-        updateTimerTimeline.setCycleCount(Timeline.INDEFINITE);
-        updateTimerTimeline.play();
-    }
 
-    @FXML
-    public void giveUp() {
-        timeAvailable = 30000;
-        currentPlayer().removeLives(1);
-        updateLives();
-        System.out.println(currentPlayer().getName() + " Lives: " +currentPlayer().getLives());
-        if (checkZeroLives()) {
-            giveDeath();
+        public void startTimer () {
+            updateTimer();
+            if (updateTimerTimeline == null) {
+                updateTimerTimeline = new Timeline(new KeyFrame(
+                        Duration.millis(1000),
+                        ae -> updateTimer()));
+            }
+            updateTimerTimeline.setCycleCount(Timeline.INDEFINITE);
+            updateTimerTimeline.play();
         }
-        cycleTurn();
-    }
 
-    public Player currentPlayer() {
-        return activePlayers.get(currentTurn);
-    }
-
-    public boolean checkGameOver() {
-        if (activePlayers.size() == 1) {
-            currentPlayerlbl.setText(currentPlayer().getName() + " wins!");
-            giveupbtn.setDisable(true);
-            return true;
+        @FXML
+        public void giveUp () {
+            timeAvailable = 30000;
+            currentPlayer().removeLives(1);
+            updateLives();
+            System.out.println(currentPlayer().getName() + " Lives: " + currentPlayer().getLives());
+            if (checkZeroLives()) {
+                giveDeath();
+            }
+            cycleTurn();
         }
-        return false;
-    }
 
-    public boolean checkZeroLives() {
-        if (currentPlayer().getLives() <= 0) {
-            return true;
+        public Player currentPlayer () {
+            return activePlayers.get(currentTurn);
         }
-        return false;
-    }
+
+        public boolean checkGameOver () {
+            if (activePlayers.size() == 1) {
+                currentPlayerlbl.setText(currentPlayer().getName() + " wins!");
+                giveupbtn.setDisable(true);
+                return true;
+            }
+            return false;
+        }
+
+        public boolean checkZeroLives () {
+            if (currentPlayer().getLives() <= 0) {
+                return true;
+            }
+            return false;
+        }
 
     public void giveDeath() {
         activePlayers.remove(currentTurn);
@@ -231,20 +246,20 @@ public class multiplayerController {
         return j;
     }
 
-    public void readFile(String s, ArrayList<String> a) {
-        try {
-            File dictionaryObj = new File(breadApplication.class.getResource(s).getFile());
-            Scanner dictionaryReader = new Scanner(dictionaryObj);
-            while (dictionaryReader.hasNextLine()) {
-                String data = dictionaryReader.nextLine();
-                a.add(data.toLowerCase());
+        public void readFile (String s, ArrayList < String > a){
+            try {
+                File dictionaryObj = new File(breadApplication.class.getResource(s).getFile());
+                Scanner dictionaryReader = new Scanner(dictionaryObj);
+                while (dictionaryReader.hasNextLine()) {
+                    String data = dictionaryReader.nextLine();
+                    a.add(data.toLowerCase());
+                }
+                dictionaryReader.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
             }
-            dictionaryReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
         }
-    }
 
     public void makeGrace() {
         inputfld.setText("");
