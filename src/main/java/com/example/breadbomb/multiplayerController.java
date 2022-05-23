@@ -66,6 +66,9 @@ public class multiplayerController {
     private long startGameTime = System.currentTimeMillis();
 
     public void initialize(boolean breadMode) {
+
+
+
         prevlbls.add(prevlbl1);
         prevlbls.add(prevlbl2);
         prevlbls.add(prevlbl3);
@@ -103,10 +106,37 @@ public class multiplayerController {
         } else {
             possibleOrders.add("abcdefghijklmnopqrstuvwxyz");
         }
+        Arc path= new Arc();
+        path.setCenterX(170);
+        path.setCenterY(29);
+        path.setRadiusX(98);
+        path.setRadiusY(98);
+        path.setStartAngle(-180);
+        path.setLength(0.0001);
+        PathTransition move= new PathTransition();
+        move.setPath(path);
+        move.setInterpolator(Interpolator.LINEAR);
+        move.setNode(arrow);
+        move.setDuration(Duration.seconds(0.001));
+        //move.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        RotateTransition rt = new RotateTransition(Duration.millis(1), arrow);
+        rt.setByAngle(0.0001);
+        rt.setInterpolator(Interpolator.LINEAR);
+        rt.play();
+        move.play();
         newPrompt();
     }
     public void rotateArrow()
     {
+        int angle = 0;
+        if (activePlayers.get(currentTurn).getName().equals("Player 1")
+            angle=-180;
+        if (activePlayers.get(currentTurn).getName().equals("Player 2")
+            angle=-270;
+        if (activePlayers.get(currentTurn).getName().equals("Player 3")
+            angle=0;
+        if (activePlayers.get(currentTurn).getName().equals("Player 4")
+             angle=-90;
         /*Rotate rotate = new Rotate();
         rotate.setPivotX(170);
         rotate.setPivotY(29);
@@ -118,12 +148,14 @@ public class multiplayerController {
         path.setRadiusX(98);
         path.setRadiusY(98);
         path.setStartAngle(-90*currentTurn-90);
-        path.setLength(-90);
+
+        path.setLength(90);
         PathTransition move= new PathTransition();
         move.setPath(path);
         move.setInterpolator(Interpolator.LINEAR);
         move.setNode(arrow);
         move.setDuration(Duration.seconds(0.25));
+
         //move.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         RotateTransition rt = new RotateTransition(Duration.millis(250), arrow);
         rt.setByAngle(90);
