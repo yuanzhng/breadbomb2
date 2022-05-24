@@ -18,7 +18,6 @@ import java.util.*;
 
 public class singleplayerController {
     private int confirmQuit = 0;
-
     Timeline quitTime;
     Timeline updateTimerTimeline;
     Timeline sandwichShowTime;
