@@ -4,53 +4,94 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.controlsfx.control.PropertySheet;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 public class breadApplication extends Application {
     private static Stage stage;
     private static boolean breadMode;
     private static boolean multiMode;
+    private static FXMLLoader singleLoader = new FXMLLoader(breadApplication.class.getResource("singleplayer-view.fxml"));
+    private static FXMLLoader multiLoader = new FXMLLoader(breadApplication.class.getResource("multiplayer-view.fxml"));
+    private static FXMLLoader modeLoader = new FXMLLoader(breadApplication.class.getResource("mode-view.fxml"));
+    private static FXMLLoader menuLoader = new FXMLLoader(breadApplication.class.getResource("menu-view.fxml"));
+    private static Scene menuScene;
+    private static Scene modeScene;
+    private static Scene singleScene;
+    private static Scene multiScene;
+    static {
+        try {
+            menuScene = new Scene(menuLoader.load(), 1080, 700);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+           modeScene = new Scene(modeLoader.load(), 1080, 700);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            singleScene = new Scene(singleLoader.load(), 1080, 700);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            multiScene = new Scene(multiLoader.load(), 1080, 700);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static int money;
+
     @Override
     public void start(Stage s) throws IOException {
+        MenuController controller = menuLoader.getController();
+        try {
+            FileInputStream fileIn = new FileInputStream(System.getProperty("user.home") + "/.breadbomb/money.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            money = (Integer) in.readObject();
+            in.close();
+            fileIn.close();
+            controller.setMoney(money);
+        } catch (IOException i) {
+            i.printStackTrace();
+            controller.setMoney(0);
+        } catch (ClassNotFoundException c) {
+            System.out.println("Money file not found");
+            c.printStackTrace();
+            controller.setMoney(0);
+        }
         stage = s;
-        FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("menu-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
         stage.setTitle("BreadBomb");
-        stage.setScene(scene);
+        stage.setScene(menuScene);
         stage.show();
-        stage.setResizable(true);
+        stage.setResizable(false);
     }
 
     public static void switchToMode() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("mode-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        stage.setScene(scene);
+        stage.setScene(modeScene);
     }
 
     public static void switchToGame() throws IOException {
         if (!multiMode) {
-            FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("singleplayer-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            singleplayerController controller = fxmlLoader.getController();
+            singleplayerController controller = singleLoader.getController();
             controller.initialize(breadMode);
-            stage.setScene(scene);
+            stage.setScene(singleScene);
         } else {
-            FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("multiplayer-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            multiplayerController controller = fxmlLoader.getController();
+            multiplayerController controller = multiLoader.getController();
             controller.initialize(breadMode);
-            stage.setScene(scene);
+            stage.setScene(multiScene);
         }
 
     }
     public static void switchToMain() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(breadApplication.class.getResource("menu-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
-        stage.setScene(scene);
+        stage.setScene(menuScene);
     }
-
-    // worst case scenario for homework make the loaders/scenes private variables for optimization
 
     public static void setSingle() {
         multiMode = false;

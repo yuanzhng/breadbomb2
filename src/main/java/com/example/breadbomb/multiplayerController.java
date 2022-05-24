@@ -81,10 +81,10 @@ public class multiplayerController {
         for (Label i : prevlbls) {
             i.setText("");
         }
-        activePlayers.add(new Player("Player 1", 3));
-        activePlayers.add(new Player("Player 2", 3));
-        activePlayers.add(new Player("Player 3", 3));
-        activePlayers.add(new Player("Player 4", 3));
+        activePlayers.add(new Player("Player 1", 3,0));
+        activePlayers.add(new Player("Player 2", 3,1));
+        activePlayers.add(new Player("Player 3", 3,2));
+        activePlayers.add(new Player("Player 4", 3,3));
         updateLives();
         try {
             File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
@@ -126,17 +126,27 @@ public class multiplayerController {
         move.play();
         newPrompt();
     }
+    public Player nextPlayer()
+    {
+        int a= currentTurn;
+        if (a == activePlayers.size() - 1) {
+            a= 0;
+        } else {
+            a++;
+        }
+        return activePlayers.get(a);
+    }
     public void rotateArrow()
     {
-        int angle = 0;
-        if (activePlayers.get(currentTurn).getName().equals("Player 1")
-            angle=-180;
-        if (activePlayers.get(currentTurn).getName().equals("Player 2")
-            angle=-270;
-        if (activePlayers.get(currentTurn).getName().equals("Player 3")
-            angle=0;
-        if (activePlayers.get(currentTurn).getName().equals("Player 4")
-             angle=-90;
+        double angle = 0;
+        if (nextPlayer().getId()==0)
+            angle=-90;
+        if (nextPlayer().getId()==1)
+            angle=180;
+        if (nextPlayer().getId()==2)
+            angle=90;
+        if (nextPlayer().getId()==3)
+             angle=0;
         /*Rotate rotate = new Rotate();
         rotate.setPivotX(170);
         rotate.setPivotY(29);
@@ -147,9 +157,14 @@ public class multiplayerController {
         path.setCenterY(29);
         path.setRadiusX(98);
         path.setRadiusY(98);
-        path.setStartAngle(-90*currentTurn-90);
-
-        path.setLength(90);
+        double startAngle=-90*currentTurn-90;
+        if (startAngle<0)
+            startAngle+=360;
+        path.setStartAngle(startAngle);
+        double length=angle-startAngle;
+        if (length>0)
+            length=length-360;
+        path.setLength(length);
         PathTransition move= new PathTransition();
         move.setPath(path);
         move.setInterpolator(Interpolator.LINEAR);
@@ -200,6 +215,7 @@ public class multiplayerController {
 
     public void giveGameOver() {
         activePlayers.remove(currentTurn);
+        rotateArrow();
         return;
     }
 

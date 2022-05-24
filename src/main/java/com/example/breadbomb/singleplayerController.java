@@ -13,6 +13,7 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 import javafx.scene.*;
 
+import javafx.scene.media.*;
 import java.util.*;
 import javafx.scene.*;
 public class singleplayerController {
@@ -88,7 +89,7 @@ public class singleplayerController {
     private int orderCount = 0;
     private ArrayList<String> currentSandwich = new ArrayList<String>();
 
-    //private AudioClip oof = new AudioClip(getClass().getResource("/audio/buzzer.mp3").toExternalForm());
+    private AudioClip oof = new AudioClip(getClass().getResource("roblox-oof-gamespecifications.com_.wav").toExternalForm());
 
     public void initialize(boolean bread) {
         try {
@@ -147,6 +148,10 @@ public class singleplayerController {
         promptlbl.setText(prompt);
         startTime = System.currentTimeMillis();
         startTimer();
+    }
+
+    public void playDeathSound(){
+        oof.play();
     }
 
     public void updateScore() {
@@ -228,6 +233,7 @@ public class singleplayerController {
 
     @FXML
     public void giveUp() {
+        playDeathSound();
         lives--;
         timeAvailable = 30000;
         updateLives();
