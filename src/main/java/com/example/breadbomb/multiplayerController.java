@@ -95,6 +95,8 @@ public class multiplayerController {
     private long totalSeconds;
     private long startGameTime = System.currentTimeMillis();
 
+    private int stress = 1;
+
     public void initialize(boolean bread) {
         startSandwich = true;
         sandwichDone = false;
@@ -172,7 +174,6 @@ public class multiplayerController {
             if (checkZeroLives()) {
                 giveDeath();
             }
-            newPrompt();
             cycleTurn();
         }
 
@@ -267,11 +268,17 @@ public class multiplayerController {
             }
             updateCurrentPlayerLabel();
         }
+        stress++;
+        if (stress >= activePlayers.size()) {
+            newPrompt();
+            stress = 1;
+        }
         startTime = System.currentTimeMillis();
         startTimer();
     }
 
     public void newPrompt() {
+        stress = 1;
         inputfld.setText("");
         int coinFlip = (int) (Math.random() * 2);
         int i = (int) (Math.random() * (dictionary.size() - 1));
