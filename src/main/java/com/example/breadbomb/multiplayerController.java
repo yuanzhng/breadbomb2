@@ -11,6 +11,8 @@ import javafx.util.Duration;
 
 import java.util.*;
 
+import static java.lang.Integer.decode;
+
 public class multiplayerController {
     Timeline autoPlayTimeline;
     Timeline updateTimerTimeline;
@@ -36,10 +38,18 @@ public class multiplayerController {
     private Label currentPlayerlbl;
     @FXML
     private Button giveupbtn;
-
     @FXML
     private Label availlbl;
+    @FXML
+    private Label namelbl1;
+    @FXML
+    private Label namelbl2;
+    @FXML
+    private Label namelbl3;
+    @FXML
+    private Label namelbl4;
 
+    private ArrayList<Label> namelbls = new ArrayList<Label>();
     private ArrayList<Label> liveslbls = new ArrayList<Label>();
     private ArrayList<Label> prevlbls = new ArrayList<Label>();
 
@@ -83,11 +93,14 @@ public class multiplayerController {
             readFile("orders.txt", possibleOrders);
             breadMode = true;
         }
+            namelbls.add(namelbl1);
+            namelbls.add(namelbl2);
+            namelbls.add(namelbl3);
+            namelbls.add(namelbl4);
             prevlbls.add(prevlbl1);
             prevlbls.add(prevlbl2);
             prevlbls.add(prevlbl3);
             prevlbls.add(prevlbl4);
-
             liveslbls.add(liveslbl1);
             liveslbls.add(liveslbl2);
             liveslbls.add(liveslbl3);
@@ -95,10 +108,9 @@ public class multiplayerController {
             for (Label i : prevlbls) {
                 i.setText("");
             }
-            activePlayers.add(new Player("Player 1", 3));
-            activePlayers.add(new Player("Player 2", 3));
-            activePlayers.add(new Player("Player 3", 3));
-            activePlayers.add(new Player("Player 4", 3));
+            for (int i = 0; i < 4; i++) {
+                promptNewPlayer(i);
+            }
             updateLives();
             try {
                 File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
@@ -135,7 +147,9 @@ public class multiplayerController {
             updateTimerTimeline.setCycleCount(Timeline.INDEFINITE);
             updateTimerTimeline.play();
         }
-
+        public void pauseTimer() {
+            updateTimerTimeline.pause();
+        }
         @FXML
         public void giveUp () {
             timeAvailable = 30000;
@@ -148,8 +162,12 @@ public class multiplayerController {
             cycleTurn();
         }
 
-        public Player currentPlayer () {
+        public Player currentPlayer() {
             return activePlayers.get(currentTurn);
+        }
+
+        public Player nextPlayer() {
+            return activePlayers.get((currentTurn + 1) % activePlayers.size());
         }
 
         public boolean checkGameOver () {
@@ -166,6 +184,21 @@ public class multiplayerController {
                 return true;
             }
             return false;
+        }
+
+        public void promptNewPlayer(int i) {
+            TextInputDialog in = new TextInputDialog("");
+            in.setTitle("Add PLAYER " + (i + 1));
+            in.setHeaderText("What is PLAYER " + (i + 1) + "'s name? (Leave blank if not playing)");
+            in.setContentText("Name:");
+
+            Optional<String> b = in.showAndWait();
+            String out = b.get();
+            if (!out.equals("")) {
+                Player n = new Player(out, 3);
+                activePlayers.add(n);
+            }
+            namelbls.get(i).setText(out);
         }
 
     public void giveDeath() {
@@ -266,6 +299,7 @@ public class multiplayerController {
         promptlbl.setText("---");
         inputfld.setPromptText("Press enter when you are ready...");
         isGrace = true;
+        pauseTimer();
     }
 
     public void check() {
