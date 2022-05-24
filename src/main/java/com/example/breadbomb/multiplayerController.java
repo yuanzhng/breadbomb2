@@ -235,6 +235,7 @@ public class multiplayerController {
         if (totalSeconds <= 0) {
             damageCurrent(1);
             check();
+            updateLives();
         } else {
             availlbl.setText("" + totalSeconds);
         }
@@ -416,7 +417,7 @@ public class multiplayerController {
                     currentPlayer().addScore(1);
                     typed.add(ipt);
                     prevlbls.get(currentTurn).setText(ipt.toUpperCase());
-                    isGrace = true;
+                    makeGrace();
                 } else if (typed.contains(ipt)) {
                     inputfld.setText("");
                 } else if (!ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT))) {
