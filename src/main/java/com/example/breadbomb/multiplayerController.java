@@ -14,7 +14,6 @@ import java.util.*;
 import static java.lang.Integer.decode;
 
 public class multiplayerController {
-    Timeline autoPlayTimeline;
     Timeline updateTimerTimeline;
     Timeline sandwichShowTime;
 
@@ -255,8 +254,8 @@ public class multiplayerController {
             liveslbls.get(i).setText(Integer.toString(activePlayers.get(i).getLives()));
         }
     }
-    public void updateCurrentPlayerLabel() {
-        currentPlayerlbl.setText(currentPlayer().getName());
+    public void updateCurrentPlayerLabel () {
+            currentPlayerlbl.setText(currentPlayer().getName());
     }
 
     public void cycleTurn() {
