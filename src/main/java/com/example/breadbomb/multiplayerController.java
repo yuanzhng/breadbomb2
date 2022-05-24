@@ -403,15 +403,13 @@ public class multiplayerController {
                                 sandwichDone = true;
                                 currentPlayer().addLives(1);
                                 idealSandwichLength++;
-                                newOrder();
-                                updateLives();
                             }
                         } else {
                             scorefld.setText("Order complete! +1 life");
                             currentPlayer().addLives(1);
-                            newOrder();
-                            updateLives();
                         }
+                        newOrder();
+                        updateLives();
                     }
                     orderlbl.setText("Order: " + order.toUpperCase());
                     currentPlayer().addScore(1);
