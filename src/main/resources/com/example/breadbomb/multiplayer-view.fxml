@@ -41,7 +41,12 @@
          <Label fx:id="liveslbl2" layoutX="635.0" layoutY="174.0" text="lives2" textFill="WHITE" />
          <Label fx:id="liveslbl3" layoutX="840.0" layoutY="374.0" text="lives3" textFill="WHITE" />
          <Label fx:id="liveslbl4" layoutX="636.0" layoutY="562.0" text="lives4" textFill="WHITE" />
-         <Button layoutX="742.0" layoutY="651.0" mnemonicParsing="false" onAction="#giveUp" style="-fx-background-color: #4a483f#4a483f #4a483f#4a483f; -fx-text-fill: #bbbdd0#bbbdd0 #bbbdd0#bbbdd0;" text="Give up" />
+         <Button fx:id="giveupbtn" layoutX="742.0" layoutY="651.0" mnemonicParsing="false" onAction="#giveUp" style="-fx-background-color: #4a483f#4a483f #4a483f#4a483f; -fx-text-fill: #bbbdd0#bbbdd0 #bbbdd0#bbbdd0;" text="Give up" />
+         <Label fx:id="currentPlayerlbl" layoutX="611.0" layoutY="277.0" text="Current player:" textFill="WHITE" />
+         <Label fx:id="availlbl" layoutX="476.0" layoutY="655.0" text="seconds" textFill="WHITE" />
+         <Label fx:id="orderlbl" layoutX="262.0" layoutY="14.0" prefHeight="17.0" prefWidth="390.0" textFill="WHITE" />
+         <Label fx:id="sandwichDisplay" layoutX="876.0" layoutY="23.0" prefHeight="17.0" prefWidth="205.0" textFill="WHITE" />
+         <Label fx:id="scorefld" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="520.0" layoutY="656.0" prefHeight="17.0" prefWidth="205.0" text="0" textFill="WHITE" />
         </children>
     </AnchorPane>
 </VBox>
