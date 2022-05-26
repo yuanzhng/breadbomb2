@@ -182,13 +182,13 @@ public class multiplayerController {
     {
         double angle = 0;
         if (nextPlayer().getId()==0)
-            angle=-90;
+            angle=270;
         if (nextPlayer().getId()==1)
-            angle=180;
+            angle=0;
         if (nextPlayer().getId()==2)
             angle=90;
         if (nextPlayer().getId()==3)
-             angle=0;
+             angle=180;
         /*Rotate rotate = new Rotate();
         rotate.setPivotX(170);
         rotate.setPivotY(29);
@@ -199,13 +199,22 @@ public class multiplayerController {
         path.setCenterY(29);
         path.setRadiusX(98);
         path.setRadiusY(98);
-        double startAngle=-90*currentTurn-90;
-        if (startAngle<0)
-            startAngle+=360;
+        double startAngle=45;
+        if(activePlayers.get(currentTurn).getId()==0)
+            startAngle=270;
+        if(activePlayers.get(currentTurn).getId()==1)
+            startAngle=0;
+        if(activePlayers.get(currentTurn).getId()==2)
+            startAngle=90;
+        if(activePlayers.get(currentTurn).getId()==3)
+            startAngle=180;
+
+
         path.setStartAngle(startAngle);
-        double length=angle-startAngle;
+        double length=startAngle-angle;
         if (length>0)
             length=length-360;
+
         path.setLength(length);
         PathTransition move= new PathTransition();
         move.setPath(path);
@@ -277,7 +286,7 @@ public class multiplayerController {
             Optional<String> b = in.showAndWait();
             String out = b.get();
             if (!out.equals("")) {
-                Player n = new Player(out, 3, -1);
+                Player n = new Player(out, 3, i);
                 activePlayers.add(n);
             }
             namelbls.get(i).setText(out);
@@ -327,6 +336,7 @@ public class multiplayerController {
     }
 
     public void cycleTurn() {
+        rotateArrow();
         if (!checkGameOver()) {
             turns++;
             currentTurn++;
@@ -341,6 +351,7 @@ public class multiplayerController {
             stress = 1;
         }
         startTime = System.currentTimeMillis();
+
         startTimer();
     }
 
