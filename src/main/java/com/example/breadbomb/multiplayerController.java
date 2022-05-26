@@ -50,6 +50,8 @@ public class multiplayerController {
     @FXML
     private Label availlbl;
     @FXML
+    private Label infolbl;
+    @FXML
     private Label namelbl1;
     @FXML
     private Label namelbl2;
@@ -149,6 +151,7 @@ public class multiplayerController {
             newPrompt();
             newOrder();
             startTimer();
+            infolbl.setText("");
         }
 
         public void startTimer () {
@@ -175,6 +178,7 @@ public class multiplayerController {
             }
             newPrompt();
             cycleTurn();
+            showInfo();
         }
 
         public Player currentPlayer() {
@@ -236,6 +240,7 @@ public class multiplayerController {
             damageCurrent(1);
             check();
             updateLives();
+            showInfo();
         } else {
             availlbl.setText("Time Remaining: " + totalSeconds);
         }
@@ -382,47 +387,69 @@ public class multiplayerController {
         isGrace = true;
         pauseTimer();
     }
-        public void check () {
-            if (isGrace) {
-                isGrace = false;
-                newPrompt();
-                cycleTurn();
-            } else {
-                String ipt = inputfld.getText();
-                ipt = rawIpt(ipt);
-                if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
-                    for (int i = 0; i < ipt.length(); i++) {
-                        if (order.contains(ipt.substring(i, i + 1))) {
-                            order = order.replaceFirst(ipt.substring(i, i + 1), "");
-                        }
-                    }
-                    if (order.replaceAll(" ", "").equals("")) {
-                        if (breadMode) {
-                            if (sandwichLength == idealSandwichLength && startSandwich) {
-                                scorefld.setText("Sandwich complete! +1 life");
-                                sandwichDone = true;
-                                currentPlayer().addLives(1);
-                                idealSandwichLength++;
-                            }
-                        } else {
-                            scorefld.setText("Order complete! +1 life");
-                            currentPlayer().addLives(1);
-                        }
-                        newOrder();
-                        updateLives();
-                    }
-                    orderlbl.setText("Order: " + order.toUpperCase());
-                    currentPlayer().addScore(1);
-                    typed.add(ipt);
-                    prevlbls.get(currentTurn).setText(ipt.toUpperCase());
-                    makeGrace();
-                } else if (typed.contains(ipt)) {
-                    inputfld.setText("");
-                } else if (!ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT))) {
-                    inputfld.setText("");
-                } else {
-                    inputfld.setText("");
-                }
+
+    public void showInfo() {
+        String info = "";
+        System.out.println("prompt skipped: " + prompt);
+        ArrayList<String> possible = new ArrayList<>();
+        for (String c : dictionary) {
+            if (c.toLowerCase().contains(prompt.toLowerCase())) {
+                possible.add(c);
             }
+        }
+        for (int i = 0; i < 10; i++) {
+            int j = ((int) (Math.random() * (possible.size() - 1)));
+            info += possible.get(j) + "\n";
+            possible.remove(j);
+        }
+        infolbl.setText("Words containing " + prompt.toUpperCase() + ":\n" + info);
+        newPrompt();
+    }
+
+    public void check () {
+        if (isGrace) {
+            isGrace = false;
+            newPrompt();
+            cycleTurn();
+        } else {
+            String ipt = inputfld.getText();
+            ipt = rawIpt(ipt);
+            if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
+                for (int i = 0; i < ipt.length(); i++) {
+                    if (order.contains(ipt.substring(i, i + 1))) {
+                        order = order.replaceFirst(ipt.substring(i, i + 1), "");
+                    }
+                }
+                if (order.replaceAll(" ", "").equals("")) {
+                    if (breadMode) {
+                        if (sandwichLength == idealSandwichLength && startSandwich) {
+                            scorefld.setText("Sandwich complete! +1 life");
+                            sandwichDone = true;
+                            currentPlayer().addLives(1);
+                            idealSandwichLength++;
+                        }
+                    } else {
+                        scorefld.setText("Order complete! +1 life");
+                        currentPlayer().addLives(1);
+                    }
+                    newOrder();
+                    updateLives();
+                }
+                orderlbl.setText("Order: " + order.toUpperCase());
+                currentPlayer().addScore(1);
+                typed.add(ipt);
+                prevlbls.get(currentTurn).setText(ipt.toUpperCase());
+                makeGrace();
+            } else if (typed.contains(ipt)) {
+                inputfld.setText("");
+                scorefld.setText("Word already used!");
+            } else if (!ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT))) {
+                inputfld.setText("");
+                scorefld.setText("Doesn't contain prompt!");
+            } else {
+                inputfld.setText("");
+                scorefld.setText("Invalid word!");
+            }
+        }
     }
 }

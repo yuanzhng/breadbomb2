@@ -19,14 +19,14 @@
             </Label>
             <TextField fx:id="inputfld" layoutX="260.0" layoutY="660.0" maxWidth="-Infinity" onAction="#check" prefHeight="25.0" prefWidth="560.0" promptText="+ Message #midbomb" style="-fx-background-color: #40444B; -fx-text-fill: #bbbdd0#bbbdd0;" />
             <Label fx:id="scorefld" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="565.0" layoutY="665.0" prefHeight="15.0" prefWidth="250.0" text="0" textFill="#bbbdd0" />
-            <Button fx:id="giveUpBtn" layoutX="835.0" layoutY="660.0" mnemonicParsing="false" onAction="#giveUp" style="-fx-background-color: #2F3136;" text="Give up" textFill="#bbbdd0" />
+            <Button fx:id="giveUpBtn" layoutX="835.0" layoutY="660.0" mnemonicParsing="false" onAction="#giveUp" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #2F3136;" text="Give up" textFill="#bbbdd0" />
             <Label fx:id="infolbl" prefHeight="555.0" prefWidth="260.0" style="-fx-background-color: #2F3136;" text="[infolbl]" textFill="#bbbdd0">
                <padding>
                   <Insets left="20.0" />
                </padding>
             </Label>
-            <Button fx:id="restartbtn" layoutX="900.0" layoutY="660.0" mnemonicParsing="false" onAction="#restartGame" style="-fx-background-color: #2F3136;" text="Restart" textFill="#bbbdd0" />
-            <Label fx:id="orderlbl" layoutX="260.0" prefHeight="45.0" prefWidth="820.0" text="[order]" textFill="#bbbdd0">
+            <Button fx:id="restartbtn" layoutX="900.0" layoutY="660.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#restartGame" prefHeight="25.0" prefWidth="55.0" style="-fx-background-color: #2F3136;" text="Restart" textFill="#bbbdd0" />
+            <Label fx:id="orderlbl" layoutX="260.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="820.0" text="[order]" textFill="#bbbdd0">
                <font>
                   <Font size="18.0" />
                </font>
@@ -40,7 +40,7 @@
                </padding></Label>
             <Label fx:id="liveslbl" layoutX="190.0" layoutY="575.0" text="&lt;3 &lt;3 &lt;3" textFill="#bbbdd0" />
             <Label fx:id="availlbl" alignment="CENTER" layoutX="15.0" layoutY="675.0" text="Time Remaining: " textFill="#bbbdd0" />
-            <Button fx:id="quitButton" layoutX="995.0" layoutY="14.0" mnemonicParsing="false" onAction="#quit" prefHeight="17.0" prefWidth="51.0" style="-fx-background-color: #2F3136;" text="Quit" textFill="#bbbdd0" />
+            <Button fx:id="quitButton" layoutX="995.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#quit" prefHeight="25.0" prefWidth="65.0" style="-fx-background-color: #2F3136;" text="Quit" textFill="#bbbdd0" />
             <Label layoutX="835.0" layoutY="50.0" text="Current Sandwich:" textFill="#bbbdd0" />
             <Label fx:id="sandwichDisplay" layoutX="835.0" layoutY="70.0" text="[sandwichLabel]" textFill="#bbbdd0" />
             <Label fx:id="moneyDisplay" layoutX="828.0" layoutY="344.0" textFill="#bbbdd0" />

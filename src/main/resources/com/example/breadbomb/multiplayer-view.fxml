@@ -22,7 +22,7 @@
                 </font>
             </Label>
             <TextField fx:id="inputfld" layoutX="260.0" layoutY="660.0" maxWidth="-Infinity" onAction="#check" prefHeight="25.0" prefWidth="560.0" promptText="+ Message #midbomb" style="-fx-background-color: #4a483f#4a483f; -fx-text-fill: #bbbdd0#bbbdd0;" />
-            <Label prefHeight="555.0" prefWidth="260.0" style="-fx-background-color: #2e2d28#2e2d28;" text="[infolbl]" textFill="WHITE">
+            <Label fx:id="infolbl" prefHeight="555.0" prefWidth="260.0" style="-fx-background-color: #2e2d28#2e2d28;" text="[infolbl]" textFill="WHITE">
             <padding>
                <Insets left="20.0" />
             </padding></Label>
@@ -38,7 +38,7 @@
          <Label fx:id="liveslbl2" layoutX="635.0" layoutY="174.0" text="lives2" textFill="WHITE" />
          <Label fx:id="liveslbl3" layoutX="840.0" layoutY="374.0" text="lives3" textFill="WHITE" />
          <Label fx:id="liveslbl4" layoutX="636.0" layoutY="562.0" text="lives4" textFill="WHITE" />
-         <Button fx:id="giveupbtn" layoutX="835.0" layoutY="660.0" mnemonicParsing="false" onAction="#giveUp" style="-fx-background-color: #4a483f#4a483f #4a483f#4a483f; -fx-text-fill: #bbbdd0#bbbdd0 #bbbdd0#bbbdd0;" text="Give up" />
+         <Button fx:id="giveupbtn" layoutX="835.0" layoutY="660.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#giveUp" prefHeight="25.0" prefWidth="60.0" style="-fx-background-color: #4a483f#4a483f #4a483f#4a483f; -fx-text-fill: #bbbdd0#bbbdd0 #bbbdd0#bbbdd0;" text="Give up" />
          <Label fx:id="currentPlayerlbl" layoutX="611.0" layoutY="277.0" text="Current player:" textFill="WHITE" />
          <Label fx:id="availlbl" layoutX="15.0" layoutY="675.0" text="Time Remaining: " textFill="WHITE" />
          <Label fx:id="orderlbl" layoutX="260.0" prefHeight="45.0" prefWidth="820.0" text="[order]" textFill="WHITE">
