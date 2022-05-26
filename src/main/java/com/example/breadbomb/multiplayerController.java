@@ -182,13 +182,13 @@ public class multiplayerController {
     {
         double angle = 0;
         if (nextPlayer().getId()==0)
-            angle=270;
+            angle=180;
         if (nextPlayer().getId()==1)
-            angle=0;
-        if (nextPlayer().getId()==2)
             angle=90;
+        if (nextPlayer().getId()==2)
+            angle=0;
         if (nextPlayer().getId()==3)
-             angle=180;
+             angle=270;
         /*Rotate rotate = new Rotate();
         rotate.setPivotX(170);
         rotate.setPivotY(29);
@@ -201,17 +201,17 @@ public class multiplayerController {
         path.setRadiusY(98);
         double startAngle=45;
         if(activePlayers.get(currentTurn).getId()==0)
-            startAngle=270;
-        if(activePlayers.get(currentTurn).getId()==1)
-            startAngle=0;
-        if(activePlayers.get(currentTurn).getId()==2)
-            startAngle=90;
-        if(activePlayers.get(currentTurn).getId()==3)
             startAngle=180;
+        if(activePlayers.get(currentTurn).getId()==1)
+            startAngle=90;
+        if(activePlayers.get(currentTurn).getId()==2)
+            startAngle=0;
+        if(activePlayers.get(currentTurn).getId()==3)
+            startAngle=270;
 
 
         path.setStartAngle(startAngle);
-        double length=startAngle-angle;
+        double length=angle-startAngle;
         if (length>0)
             length=length-360;
 
@@ -223,7 +223,7 @@ public class multiplayerController {
         move.setDuration(Duration.seconds(0.25));
 //move.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
         RotateTransition rt = new RotateTransition(Duration.millis(250), arrow);
-        rt.setByAngle(90);
+        rt.setByAngle(-length);
         rt.setInterpolator(Interpolator.LINEAR);
         rt.play();
         move.play();
@@ -300,6 +300,12 @@ public class multiplayerController {
             return;
         }
         currentTurn--;
+
+
+        /* if(currentTurn==activePlayers.size())
+            currentTurn=0;
+
+         */
         currentPlayerlbl.setText("Time's up!");
         makeGrace();
         return;
