@@ -22,6 +22,7 @@ public class multiplayerController {
     Timeline autoPlayTimeline;
     Timeline updateTimerTimeline;
     Timeline sandwichShowTime;
+    private double startAngle=180;
 
     @FXML
     private Label promptlbl;
@@ -160,7 +161,17 @@ public class multiplayerController {
         path.setCenterY(29);
         path.setRadiusX(98);
         path.setRadiusY(98);
-        path.setStartAngle(-180);
+
+        if(activePlayers.get(currentTurn).getId()==0)
+            startAngle=180;
+        if(activePlayers.get(currentTurn).getId()==1)
+            startAngle=90;
+        if(activePlayers.get(currentTurn).getId()==2)
+            startAngle=0;
+        if(activePlayers.get(currentTurn).getId()==3)
+            startAngle=270;
+
+        path.setStartAngle(startAngle);
         path.setLength(0.0001);
         PathTransition move= new PathTransition();
         move.setPath(path);
@@ -168,9 +179,16 @@ public class multiplayerController {
         move.setNode(arrow);
         move.setDuration(Duration.seconds(0.001));
         //move.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
-        RotateTransition rt = new RotateTransition(Duration.millis(1), arrow);
-        rt.setByAngle(0.0001);
+        RotateTransition rt = new RotateTransition(Duration.millis(5), arrow);
+
+        rt.setByAngle(.0001);
         rt.setInterpolator(Interpolator.LINEAR);
+        /*RotateTransition initial= new RotateTransition(Duration.millis(5),arrow);
+        initial.setByAngle(startAngle);
+        initial.setInterpolator(Interpolator.LINEAR);
+        initial.play();
+
+         */
         rt.play();
         move.play();
             newPrompt();
@@ -199,7 +217,7 @@ public class multiplayerController {
         path.setCenterY(29);
         path.setRadiusX(98);
         path.setRadiusY(98);
-        double startAngle=45;
+       /* double startAngle=45;
         if(activePlayers.get(currentTurn).getId()==0)
             startAngle=180;
         if(activePlayers.get(currentTurn).getId()==1)
@@ -209,6 +227,8 @@ public class multiplayerController {
         if(activePlayers.get(currentTurn).getId()==3)
             startAngle=270;
 
+
+        */
 
         path.setStartAngle(startAngle);
         double length=angle-startAngle;
@@ -227,6 +247,7 @@ public class multiplayerController {
         rt.setInterpolator(Interpolator.LINEAR);
         rt.play();
         move.play();
+        startAngle=angle;
     }
         public void startTimer () {
             updateTimer();
@@ -297,15 +318,17 @@ public class multiplayerController {
         liveslbls.remove(currentTurn);
         if (currentTurn == 0) {
             currentTurn = activePlayers.size() - 1;
-            return;
+
         }
-        currentTurn--;
+        else {
+            currentTurn--;
 
 
-        /* if(currentTurn==activePlayers.size())
-            currentTurn=0;
+        }
 
-         */
+
+
+
         currentPlayerlbl.setText("Time's up!");
         makeGrace();
         return;
