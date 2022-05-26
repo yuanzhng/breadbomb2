@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" spacing="20.0" style="-fx-background-color: #3f3d36#3f3d36; -fx-border-radius: 15;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.multiplayerController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" spacing="20.0" style="-fx-background-color: #3f3d36#3f3d36; -fx-border-radius: 15;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.multiplayerController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -40,16 +40,17 @@
          <Label fx:id="liveslbl4" layoutX="636.0" layoutY="562.0" text="lives4" textFill="WHITE" />
          <Button fx:id="giveupbtn" layoutX="835.0" layoutY="660.0" mnemonicParsing="false" onAction="#giveUp" style="-fx-background-color: #4a483f#4a483f #4a483f#4a483f; -fx-text-fill: #bbbdd0#bbbdd0 #bbbdd0#bbbdd0;" text="Give up" />
          <Label fx:id="currentPlayerlbl" layoutX="611.0" layoutY="277.0" text="Current player:" textFill="WHITE" />
-         <Label fx:id="availlbl" layoutX="15.0" layoutY="675.0" text="seconds" textFill="WHITE" />
+         <Label fx:id="availlbl" layoutX="15.0" layoutY="675.0" text="Time Remaining: " textFill="WHITE" />
          <Label fx:id="orderlbl" layoutX="260.0" prefHeight="45.0" prefWidth="820.0" text="[order]" textFill="WHITE">
             <font>
                <Font size="18.0" />
             </font>
             <padding>
-               <Insets left="20.0" />
+               <Insets left="10.0" />
             </padding></Label>
-         <Label fx:id="sandwichDisplay" layoutX="876.0" layoutY="23.0" prefHeight="17.0" prefWidth="205.0" textFill="WHITE" />
          <Label fx:id="scorefld" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="565.0" layoutY="665.0" prefHeight="15.0" prefWidth="250.0" text="0" textFill="WHITE" />
+         <Label layoutX="835.0" layoutY="50.0" text="Current Sandwich:" textFill="WHITE" />
+         <Label fx:id="sandwichDisplay" layoutX="835.0" layoutY="70.0" text="[sandwichLabel]" textFill="WHITE" />
         </children>
       <rotationAxis>
          <Point3D />

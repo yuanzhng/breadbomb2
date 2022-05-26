@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" style="-fx-background-color: #36393F;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.singleplayerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" style="-fx-background-color: #36393F;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.singleplayerController">
    <children>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0">
          <children>
@@ -39,10 +39,10 @@
                   <Insets left="20.0" top="20.0" />
                </padding></Label>
             <Label fx:id="liveslbl" layoutX="190.0" layoutY="575.0" text="&lt;3 &lt;3 &lt;3" textFill="#bbbdd0" />
-            <Label fx:id="availlbl" alignment="CENTER" layoutX="15.0" layoutY="675.0" text="Time available:" textFill="#bbbdd0" />
+            <Label fx:id="availlbl" alignment="CENTER" layoutX="15.0" layoutY="675.0" text="Time Remaining: " textFill="#bbbdd0" />
             <Button fx:id="quitButton" layoutX="995.0" layoutY="14.0" mnemonicParsing="false" onAction="#quit" prefHeight="17.0" prefWidth="51.0" style="-fx-background-color: #2F3136;" text="Quit" textFill="#bbbdd0" />
-            <Label layoutX="835.0" layoutY="52.0" text="Current Sandwich:" textFill="#bbbdd0" />
-            <Label fx:id="sandwichDisplay" layoutX="835.0" layoutY="69.0" text="Label" textFill="#bbbdd0" />
+            <Label layoutX="835.0" layoutY="50.0" text="Current Sandwich:" textFill="#bbbdd0" />
+            <Label fx:id="sandwichDisplay" layoutX="835.0" layoutY="70.0" text="[sandwichLabel]" textFill="#bbbdd0" />
             <Label fx:id="moneyDisplay" layoutX="828.0" layoutY="344.0" textFill="#bbbdd0" />
          </children>
       </AnchorPane>

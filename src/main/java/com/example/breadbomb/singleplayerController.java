@@ -440,7 +440,7 @@ public class singleplayerController {
         if (totalSeconds <= 0) {
             check();
         } else {
-            availlbl.setText("" + totalSeconds);
+            availlbl.setText("Time Remaining: " + totalSeconds);
         }
         if (checkGameOver()) {
             giveGameOver();

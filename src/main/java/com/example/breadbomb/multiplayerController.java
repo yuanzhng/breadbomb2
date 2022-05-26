@@ -237,7 +237,7 @@ public class multiplayerController {
             check();
             updateLives();
         } else {
-            availlbl.setText("" + totalSeconds);
+            availlbl.setText("Time Remaining: " + totalSeconds);
         }
         if (checkZeroLives()) {
             giveDeath();
