@@ -98,6 +98,8 @@ public class multiplayerController {
     private long totalSeconds;
     private long startGameTime = System.currentTimeMillis();
 
+    private static boolean enoughPlayers;
+
     public void initialize(boolean bread) {
         startSandwich = true;
         sandwichDone = false;
@@ -108,24 +110,26 @@ public class multiplayerController {
             readFile("orders.txt", possibleOrders);
             breadMode = true;
         }
-            namelbls.add(namelbl1);
-            namelbls.add(namelbl2);
-            namelbls.add(namelbl3);
-            namelbls.add(namelbl4);
-            prevlbls.add(prevlbl1);
-            prevlbls.add(prevlbl2);
-            prevlbls.add(prevlbl3);
-            prevlbls.add(prevlbl4);
-            liveslbls.add(liveslbl1);
-            liveslbls.add(liveslbl2);
-            liveslbls.add(liveslbl3);
-            liveslbls.add(liveslbl4);
-            for (Label i : prevlbls) {
-                i.setText("");
-            }
-            for (int i = 0; i < 4; i++) {
-                promptNewPlayer(i);
-            }
+        namelbls.add(namelbl1);
+        namelbls.add(namelbl2);
+        namelbls.add(namelbl3);
+        namelbls.add(namelbl4);
+        prevlbls.add(prevlbl1);
+        prevlbls.add(prevlbl2);
+        prevlbls.add(prevlbl3);
+        prevlbls.add(prevlbl4);
+        liveslbls.add(liveslbl1);
+        liveslbls.add(liveslbl2);
+        liveslbls.add(liveslbl3);
+        liveslbls.add(liveslbl4);
+        for (Label i : prevlbls) {
+            i.setText("");
+        }
+        for (int i = 0; i < 4; i++) {
+            promptNewPlayer(i);
+        }
+        if (activePlayers.size() >= 2) {
+            enoughPlayers = true;
             updateLives();
             try {
                 File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
@@ -152,7 +156,11 @@ public class multiplayerController {
             newOrder();
             startTimer();
             infolbl.setText("");
+        } else {
+            enoughPlayers = false;
+            System.out.println("Not enough players!");
         }
+    }
 
         public void startTimer () {
             updateTimer();
@@ -176,9 +184,9 @@ public class multiplayerController {
             if (checkZeroLives()) {
                 giveDeath();
             }
+            showInfo();
             newPrompt();
             cycleTurn();
-            showInfo();
         }
 
         public Player currentPlayer() {
@@ -196,6 +204,10 @@ public class multiplayerController {
                 return true;
             }
             return false;
+        }
+
+        public boolean playerCheck() {
+            return enoughPlayers;
         }
 
         public boolean checkZeroLives () {
