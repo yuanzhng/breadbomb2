@@ -85,9 +85,10 @@ public class breadApplication extends Application {
         } else {
             multiplayerController controller = multiLoader.getController();
             controller.initialize(breadMode);
-            stage.setScene(multiScene);
+            if (controller.playerCheck()) {
+                stage.setScene(multiScene);
+            }
         }
-
     }
     public static void switchToMain() throws IOException {
         stage.setScene(menuScene);

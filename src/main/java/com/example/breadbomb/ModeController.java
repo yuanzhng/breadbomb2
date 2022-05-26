@@ -14,6 +14,8 @@ public class ModeController {
     @FXML
     private Button back;
 
+    private boolean multi;
+
     public void breadPressed() {
         breadApplication.setBreadMode();
         try {

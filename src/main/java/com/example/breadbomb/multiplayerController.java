@@ -14,6 +14,7 @@ import java.util.*;
 import static java.lang.Integer.decode;
 
 public class multiplayerController {
+    Timeline autoPlayTimeline;
     Timeline updateTimerTimeline;
     Timeline sandwichShowTime;
 
@@ -48,6 +49,8 @@ public class multiplayerController {
 
     @FXML
     private Label availlbl;
+    @FXML
+    private Label infolbl;
     @FXML
     private Label namelbl1;
     @FXML
@@ -95,7 +98,7 @@ public class multiplayerController {
     private long totalSeconds;
     private long startGameTime = System.currentTimeMillis();
 
-    private int stress = 1;
+    private static boolean enoughPlayers;
 
     public void initialize(boolean bread) {
         startSandwich = true;
@@ -107,24 +110,26 @@ public class multiplayerController {
             readFile("orders.txt", possibleOrders);
             breadMode = true;
         }
-            namelbls.add(namelbl1);
-            namelbls.add(namelbl2);
-            namelbls.add(namelbl3);
-            namelbls.add(namelbl4);
-            prevlbls.add(prevlbl1);
-            prevlbls.add(prevlbl2);
-            prevlbls.add(prevlbl3);
-            prevlbls.add(prevlbl4);
-            liveslbls.add(liveslbl1);
-            liveslbls.add(liveslbl2);
-            liveslbls.add(liveslbl3);
-            liveslbls.add(liveslbl4);
-            for (Label i : prevlbls) {
-                i.setText("");
-            }
-            for (int i = 0; i < 4; i++) {
-                promptNewPlayer(i);
-            }
+        namelbls.add(namelbl1);
+        namelbls.add(namelbl2);
+        namelbls.add(namelbl3);
+        namelbls.add(namelbl4);
+        prevlbls.add(prevlbl1);
+        prevlbls.add(prevlbl2);
+        prevlbls.add(prevlbl3);
+        prevlbls.add(prevlbl4);
+        liveslbls.add(liveslbl1);
+        liveslbls.add(liveslbl2);
+        liveslbls.add(liveslbl3);
+        liveslbls.add(liveslbl4);
+        for (Label i : prevlbls) {
+            i.setText("");
+        }
+        for (int i = 0; i < 4; i++) {
+            promptNewPlayer(i);
+        }
+        if (activePlayers.size() >= 2) {
+            enoughPlayers = true;
             updateLives();
             try {
                 File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
@@ -150,7 +155,12 @@ public class multiplayerController {
             newPrompt();
             newOrder();
             startTimer();
+            infolbl.setText("");
+        } else {
+            enoughPlayers = false;
+            System.out.println("Not enough players!");
         }
+    }
 
         public void startTimer () {
             updateTimer();
@@ -174,6 +184,8 @@ public class multiplayerController {
             if (checkZeroLives()) {
                 giveDeath();
             }
+            showInfo();
+            newPrompt();
             cycleTurn();
         }
 
@@ -192,6 +204,10 @@ public class multiplayerController {
                 return true;
             }
             return false;
+        }
+
+        public boolean playerCheck() {
+            return enoughPlayers;
         }
 
         public boolean checkZeroLives () {
@@ -236,8 +252,9 @@ public class multiplayerController {
             damageCurrent(1);
             check();
             updateLives();
+            showInfo();
         } else {
-            availlbl.setText("" + totalSeconds);
+            availlbl.setText("Time Remaining: " + totalSeconds);
         }
         if (checkZeroLives()) {
             giveDeath();
@@ -255,8 +272,8 @@ public class multiplayerController {
             liveslbls.get(i).setText(Integer.toString(activePlayers.get(i).getLives()));
         }
     }
-    public void updateCurrentPlayerLabel () {
-            currentPlayerlbl.setText(currentPlayer().getName());
+    public void updateCurrentPlayerLabel() {
+        currentPlayerlbl.setText(currentPlayer().getName());
     }
 
     public void cycleTurn() {
@@ -268,17 +285,11 @@ public class multiplayerController {
             }
             updateCurrentPlayerLabel();
         }
-        stress++;
-        if (stress >= activePlayers.size()) {
-            newPrompt();
-            stress = 1;
-        }
         startTime = System.currentTimeMillis();
         startTimer();
     }
 
     public void newPrompt() {
-        stress = 1;
         inputfld.setText("");
         int coinFlip = (int) (Math.random() * 2);
         int i = (int) (Math.random() * (dictionary.size() - 1));
@@ -388,49 +399,69 @@ public class multiplayerController {
         isGrace = true;
         pauseTimer();
     }
-        public void check () {
-            if (isGrace) {
-                isGrace = false;
-                newPrompt();
-                cycleTurn();
-            } else {
-                String ipt = inputfld.getText();
-                ipt = rawIpt(ipt);
-                if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
-                    for (int i = 0; i < ipt.length(); i++) {
-                        if (order.contains(ipt.substring(i, i + 1))) {
-                            order = order.replaceFirst(ipt.substring(i, i + 1), "");
-                        }
-                    }
-                    if (order.replaceAll(" ", "").equals("")) {
-                        if (breadMode) {
-                            if (sandwichLength == idealSandwichLength && startSandwich) {
-                                scorefld.setText("Sandwich complete! +1 life");
-                                sandwichDone = true;
-                                currentPlayer().addLives(1);
-                                idealSandwichLength++;
-                                newOrder();
-                                updateLives();
-                            }
-                        } else {
-                            scorefld.setText("Order complete! +1 life");
-                            currentPlayer().addLives(1);
-                            newOrder();
-                            updateLives();
-                        }
-                    }
-                    orderlbl.setText("Order: " + order.toUpperCase());
-                    currentPlayer().addScore(1);
-                    typed.add(ipt);
-                    prevlbls.get(currentTurn).setText(ipt.toUpperCase());
-                    makeGrace();
-                } else if (typed.contains(ipt)) {
-                    inputfld.setText("");
-                } else if (!ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT))) {
-                    inputfld.setText("");
-                } else {
-                    inputfld.setText("");
-                }
+
+    public void showInfo() {
+        String info = "";
+        System.out.println("prompt skipped: " + prompt);
+        ArrayList<String> possible = new ArrayList<>();
+        for (String c : dictionary) {
+            if (c.toLowerCase().contains(prompt.toLowerCase())) {
+                possible.add(c);
             }
+        }
+        for (int i = 0; i < 10; i++) {
+            int j = ((int) (Math.random() * (possible.size() - 1)));
+            info += possible.get(j) + "\n";
+            possible.remove(j);
+        }
+        infolbl.setText("Words containing " + prompt.toUpperCase() + ":\n" + info);
+        newPrompt();
+    }
+
+    public void check () {
+        if (isGrace) {
+            isGrace = false;
+            newPrompt();
+            cycleTurn();
+        } else {
+            String ipt = inputfld.getText();
+            ipt = rawIpt(ipt);
+            if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
+                for (int i = 0; i < ipt.length(); i++) {
+                    if (order.contains(ipt.substring(i, i + 1))) {
+                        order = order.replaceFirst(ipt.substring(i, i + 1), "");
+                    }
+                }
+                if (order.replaceAll(" ", "").equals("")) {
+                    if (breadMode) {
+                        if (sandwichLength == idealSandwichLength && startSandwich) {
+                            scorefld.setText("Sandwich complete! +1 life");
+                            sandwichDone = true;
+                            currentPlayer().addLives(1);
+                            idealSandwichLength++;
+                        }
+                    } else {
+                        scorefld.setText("Order complete! +1 life");
+                        currentPlayer().addLives(1);
+                    }
+                    newOrder();
+                    updateLives();
+                }
+                orderlbl.setText("Order: " + order.toUpperCase());
+                currentPlayer().addScore(1);
+                typed.add(ipt);
+                prevlbls.get(currentTurn).setText(ipt.toUpperCase());
+                makeGrace();
+            } else if (typed.contains(ipt)) {
+                inputfld.setText("");
+                scorefld.setText("Word already used!");
+            } else if (!ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT))) {
+                inputfld.setText("");
+                scorefld.setText("Doesn't contain prompt!");
+            } else {
+                inputfld.setText("");
+                scorefld.setText("Invalid word!");
+            }
+        }
     }
 }
