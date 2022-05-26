@@ -91,6 +91,22 @@ public class breadApplication extends Application {
         }
     }
     public static void switchToMain() throws IOException {
+        MenuController controller = menuLoader.getController();
+        try {
+            FileInputStream fileIn = new FileInputStream(System.getProperty("user.home") + "/.breadbomb/money.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            money = (Integer) in.readObject();
+            in.close();
+            fileIn.close();
+            controller.setMoney(money);
+        } catch (IOException i) {
+            i.printStackTrace();
+            controller.setMoney(0);
+        } catch (ClassNotFoundException c) {
+            System.out.println("Money file not found");
+            c.printStackTrace();
+        }
+        controller.setMoney(money);
         stage.setScene(menuScene);
     }
 
