@@ -19,7 +19,11 @@ public class breadApplication extends Application {
     private static FXMLLoader multiLoader = new FXMLLoader(breadApplication.class.getResource("multiplayer-view.fxml"));
     private static FXMLLoader modeLoader = new FXMLLoader(breadApplication.class.getResource("mode-view.fxml"));
     private static FXMLLoader menuLoader = new FXMLLoader(breadApplication.class.getResource("menu-view.fxml"));
+
+    private static FXMLLoader winLoader = new FXMLLoader(breadApplication.class.getResource("winScreen.fxml"));
     private static Scene menuScene;
+
+    private static Scene winScene;
     private static Scene modeScene;
     private static Scene singleScene;
     private static Scene multiScene;
@@ -44,6 +48,12 @@ public class breadApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        try {
+            winScene = new Scene(winLoader.load(), 1080, 700);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     }
 
     private static int money;
@@ -92,6 +102,11 @@ public class breadApplication extends Application {
     public static void switchToMain() throws IOException {
         stage.setScene(menuScene);
     }
+
+    public static void win() {
+        stage.setScene(winScene);
+    }
+
 
     public static void setSingle() {
         multiMode = false;

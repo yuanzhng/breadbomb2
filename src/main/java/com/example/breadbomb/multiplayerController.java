@@ -2,9 +2,12 @@ package com.example.breadbomb;
 
 import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 import javafx.scene.image.ImageView;
@@ -19,10 +22,13 @@ import java.util.*;
 import static java.lang.Integer.decode;
 
 public class multiplayerController {
+
     Timeline autoPlayTimeline;
     Timeline updateTimerTimeline;
     Timeline sandwichShowTime;
     private double startAngle=180;
+    private static Scene winScene;
+
 
     @FXML
     private Label promptlbl;
@@ -543,6 +549,7 @@ public class multiplayerController {
     public void win()
     {
         //endscreen
+
     }
 
 }
