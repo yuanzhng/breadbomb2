@@ -292,6 +292,7 @@ public class multiplayerController {
     }
 
     public void cycleTurn() {
+        updateOrders();
         if (!checkGameOver()) {
             turns++;
             currentTurn++;
@@ -301,7 +302,6 @@ public class multiplayerController {
             updateCurrentPlayerLabel();
         }
         cycleOrder();
-        updateOrders();
         startTime = System.currentTimeMillis();
         startTimer();
     }
