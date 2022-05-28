@@ -191,6 +191,7 @@ public class multiplayerController {
             timeAvailable = 30000;
             currentPlayer().removeLives(1);
             updateLives();
+            updateOrders();
             System.out.println(currentPlayer().getName() + " Lives: " + currentPlayer().getLives());
             if (checkZeroLives()) {
                 giveDeath();
@@ -288,11 +289,16 @@ public class multiplayerController {
     }
 
     public void updateOrders() {
-        orderlbls.get(currentTurn).setText(currentPlayer().getOrder());
+        if (breadMode) {
+            for (Player p : activePlayers) {
+                p.setOrder(order);
+            }
+        } else {
+            orderlbls.get(currentTurn).setText(currentPlayer().getOrder());
+        }
     }
 
     public void cycleTurn() {
-        updateOrders();
         if (!checkGameOver()) {
             turns++;
             currentTurn++;
@@ -368,6 +374,9 @@ public class multiplayerController {
             for (Label l : orderlbls) {
                 l.setText(order);
             }
+            for (Player p : activePlayers) {
+                p.setOrder(order);
+            }
             System.out.println("Order: " + order);
             orderlbl.setText("Order: " + order.toUpperCase());
             currentSandwich.add(order);
@@ -377,10 +386,11 @@ public class multiplayerController {
             System.out.println("Order: " + currentPlayer().getOrder());
             orderlbl.setText("Order: " + currentPlayer().getOrder());
         }
+        updateOrders();
     }
 
     public void cycleOrder() {
-        if (turns < 4) {
+        if (!breadMode && turns < 4) {
             newOrder();
         }
         System.out.println("Order: " + currentPlayer().getOrder());
@@ -465,7 +475,8 @@ public class multiplayerController {
                         }
                     }
                 }
-                if (order.replaceAll(" ", "").equals("")) {
+                updateOrders();
+                if (currentPlayer().getOrder().replaceAll(" ", "").equals("")) {
                     if (breadMode) {
                         if (sandwichLength == idealSandwichLength && startSandwich) {
                             scorefld.setText("Sandwich complete! +1 life");
@@ -484,7 +495,6 @@ public class multiplayerController {
                 currentPlayer().addScore(1);
                 typed.add(ipt);
                 prevlbls.get(currentTurn).setText(ipt.toUpperCase());
-
                 makeGrace();
             } else if (typed.contains(ipt)) {
                 inputfld.setText("");
