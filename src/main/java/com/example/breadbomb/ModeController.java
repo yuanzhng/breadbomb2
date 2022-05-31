@@ -19,7 +19,7 @@ public class ModeController {
     public void breadPressed() {
         breadApplication.setBreadMode();
         try {
-            breadApplication.switchToGame();
+            breadApplication.switchToAddPlayer();
         } catch (IOException e) {
             e.printStackTrace();
         }

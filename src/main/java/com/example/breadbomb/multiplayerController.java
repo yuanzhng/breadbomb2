@@ -109,7 +109,7 @@ public class multiplayerController {
 
     private static boolean enoughPlayers;
 
-    public void initialize(boolean bread) {
+    public void initialize(boolean bread, ArrayList <Player> players) {
         startSandwich = true;
         sandwichDone = false;
         sandwichLength = 0;
@@ -138,7 +138,7 @@ public class multiplayerController {
             l.setText("");
         }
         for (int i = 0; i < 4; i++) {
-            promptNewPlayer(i);
+            activePlayers.add(players.get(i));
         }
         if (activePlayers.size() >= 2) {
             enoughPlayers = true;

@@ -19,10 +19,12 @@ public class breadApplication extends Application {
     private static FXMLLoader multiLoader = new FXMLLoader(breadApplication.class.getResource("multiplayer-view.fxml"));
     private static FXMLLoader modeLoader = new FXMLLoader(breadApplication.class.getResource("mode-view.fxml"));
     private static FXMLLoader menuLoader = new FXMLLoader(breadApplication.class.getResource("menu-view.fxml"));
+    private static FXMLLoader addPlayerLoader = new FXMLLoader(breadApplication.class.getResource("addplayer-view.fxml"));
     private static Scene menuScene;
     private static Scene modeScene;
     private static Scene singleScene;
     private static Scene multiScene;
+    private static Scene addPlayerScene;
     static {
         try {
             menuScene = new Scene(menuLoader.load(), 1080, 700);
@@ -41,6 +43,11 @@ public class breadApplication extends Application {
         }
         try {
             multiScene = new Scene(multiLoader.load(), 1080, 700);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            addPlayerScene = new Scene(addPlayerLoader.load(), 1080, 700);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -108,6 +115,10 @@ public class breadApplication extends Application {
         }
         controller.setMoney(money);
         stage.setScene(menuScene);
+    }
+
+    public static void switchToAddPlayer() throws IOException {
+        stage.setScene(addPlayerScene);
     }
 
     public static void setSingle() {
