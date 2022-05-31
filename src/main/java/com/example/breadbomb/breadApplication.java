@@ -54,7 +54,6 @@ public class breadApplication extends Application {
             e.printStackTrace();
         }
     }
-    }
 
     private static int money;
 
