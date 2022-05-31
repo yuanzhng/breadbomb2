@@ -37,6 +37,14 @@ public class multiplayerController {
     @FXML
     private Label liveslbl4;
     @FXML
+    private Label orderlbl1;
+    @FXML
+    private Label orderlbl2;
+    @FXML
+    private Label orderlbl3;
+    @FXML
+    private Label orderlbl4;
+    @FXML
     private Label currentPlayerlbl;
     @FXML
     private Button giveupbtn;
@@ -63,6 +71,7 @@ public class multiplayerController {
     private ArrayList<Label> namelbls = new ArrayList<Label>();
     private ArrayList<Label> liveslbls = new ArrayList<Label>();
     private ArrayList<Label> prevlbls = new ArrayList<Label>();
+    private ArrayList<Label> orderlbls = new ArrayList<Label>();
 
     @FXML
     private TextField inputfld;
@@ -105,11 +114,7 @@ public class multiplayerController {
         sandwichDone = false;
         sandwichLength = 0;
         idealSandwichLength = 1;
-        if (bread) {
-            System.out.println("BreadMode enabled...");
-            readFile("orders.txt", possibleOrders);
-            breadMode = true;
-        }
+
         namelbls.add(namelbl1);
         namelbls.add(namelbl2);
         namelbls.add(namelbl3);
@@ -122,10 +127,17 @@ public class multiplayerController {
         liveslbls.add(liveslbl2);
         liveslbls.add(liveslbl3);
         liveslbls.add(liveslbl4);
-        for (Label i : liveslbls) {
-            i.setText("");
+        orderlbls.add(orderlbl1);
+        orderlbls.add(orderlbl2);
+        orderlbls.add(orderlbl3);
+        orderlbls.add(orderlbl4);
+        for (Label l : prevlbls) {
+            l.setText("");
         }
-        for (Label i : prevlbls) {
+        for (Label l : orderlbls) {
+            l.setText("");
+        }
+        for (Label i : liveslbls) {
             i.setText("");
         }
         for (int i = 0; i < 4; i++) {
@@ -148,11 +160,10 @@ public class multiplayerController {
             }
             readFile("dict.txt", dictionary);
             readFile("prompts.txt", possiblePrompts);
-            if (breadMode) {
+            if (bread) {
+                breadMode = true;
                 System.out.println("BreadMode enabled...");
                 readFile("orders.txt", possibleOrders);
-            } else {
-                possibleOrders.add("abcdefghijklmnopqrstuvwxyz");
             }
             startTime = System.currentTimeMillis();
             newPrompt();
@@ -179,15 +190,17 @@ public class multiplayerController {
             updateTimerTimeline.pause();
         }
         @FXML
-        public void giveUp() {
+        public void giveUp () {
             timeAvailable = 30000;
             currentPlayer().removeLives(1);
             updateLives();
+            updateOrders();
             System.out.println(currentPlayer().getName() + " Lives: " + currentPlayer().getLives());
             if (checkZeroLives()) {
                 giveDeath();
             }
             showInfo();
+            newPrompt();
             cycleTurn();
         }
 
@@ -238,10 +251,12 @@ public class multiplayerController {
         namelbls.get(currentTurn).setText("");
         liveslbls.get(currentTurn).setText("");
         prevlbls.get(currentTurn).setText("");
+        orderlbls.get(currentTurn).setText("");
         namelbls.remove(currentTurn);
         activePlayers.remove(currentTurn);
         liveslbls.remove(currentTurn);
         prevlbls.remove(currentTurn);
+        orderlbls.remove(currentTurn);
         if (currentTurn == 0) {
             currentTurn = activePlayers.size() - 1;
             return;
@@ -283,6 +298,16 @@ public class multiplayerController {
         currentPlayerlbl.setText(currentPlayer().getName());
     }
 
+    public void updateOrders() {
+        if (breadMode) {
+            for (Player p : activePlayers) {
+                p.setOrder(order);
+            }
+        } else {
+            orderlbls.get(currentTurn).setText(currentPlayer().getOrder());
+        }
+    }
+
     public void cycleTurn() {
         if (!checkGameOver()) {
             turns++;
@@ -292,6 +317,7 @@ public class multiplayerController {
             }
             updateCurrentPlayerLabel();
         }
+        cycleOrder();
         startTime = System.currentTimeMillis();
         startTimer();
     }
@@ -345,27 +371,40 @@ public class multiplayerController {
             if (startSandwich) {
                 sandwichLength = 0;
                 order = "bread";
-                System.out.println("Order: bread");
-                orderlbl.setText("Order: BREAD");
                 startSandwich = false;
             } else if (sandwichLength < idealSandwichLength) {
                 int g = (int) (Math.random() * (possibleOrders.size()) - 1);
                 order = possibleOrders.get(g);
-                System.out.println("Order: " + order);
-                orderlbl.setText("Order: " + order.toUpperCase());
                 sandwichLength++;
             } else {
                 order = "bread";
                 System.out.println("Order: bread");
-                orderlbl.setText("Order: BREAD");
                 startSandwich = true;
             }
+            for (Label l : orderlbls) {
+                l.setText(order);
+            }
+            for (Player p : activePlayers) {
+                p.setOrder(order);
+            }
+            System.out.println("Order: " + order);
+            orderlbl.setText("Order: " + order.toUpperCase());
             currentSandwich.add(order);
         } else {
             order = "abcdefghijklmnopqrstuvwxyz";
-            System.out.println("Order: " + order);
-            orderlbl.setText("Order: " + order.toUpperCase());
+            currentPlayer().setOrder(order);
+            System.out.println("Order: " + currentPlayer().getOrder());
+            orderlbl.setText("Order: " + currentPlayer().getOrder());
         }
+        updateOrders();
+    }
+
+    public void cycleOrder() {
+        if (!breadMode && turns < 4) {
+            newOrder();
+        }
+        System.out.println("Order: " + currentPlayer().getOrder());
+        orderlbl.setText("Order: " + currentPlayer().getOrder().toUpperCase());
     }
 
     public boolean isInDictionary(String s) {
@@ -436,10 +475,18 @@ public class multiplayerController {
             if (ipt.toLowerCase().contains(prompt.toLowerCase(Locale.ROOT)) && isInDictionary(ipt) && !typed.contains(ipt)) {
                 for (int i = 0; i < ipt.length(); i++) {
                     if (order.contains(ipt.substring(i, i + 1))) {
-                        order = order.replaceFirst(ipt.substring(i, i + 1), "");
+                        if (breadMode) {
+                            order = order.replaceFirst(ipt.substring(i, i + 1), "");
+                            for (Label l : orderlbls) {
+                                l.setText(order);
+                            }
+                        } else {
+                            currentPlayer().setOrder(currentPlayer().getOrder().replaceFirst(ipt.substring(i, i + 1), ""));
+                        }
                     }
                 }
-                if (order.replaceAll(" ", "").equals("")) {
+                updateOrders();
+                if (currentPlayer().getOrder().replaceAll(" ", "").equals("")) {
                     if (breadMode) {
                         if (sandwichLength == idealSandwichLength && startSandwich) {
                             scorefld.setText("Sandwich complete! +1 life");
@@ -454,7 +501,7 @@ public class multiplayerController {
                     newOrder();
                     updateLives();
                 }
-                orderlbl.setText("Order: " + order.toUpperCase());
+                orderlbl.setText("Order: " + currentPlayer().getOrder().toUpperCase());
                 currentPlayer().addScore(1);
                 typed.add(ipt);
                 prevlbls.get(currentTurn).setText(ipt.toUpperCase());
