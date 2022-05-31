@@ -122,6 +122,9 @@ public class multiplayerController {
         liveslbls.add(liveslbl2);
         liveslbls.add(liveslbl3);
         liveslbls.add(liveslbl4);
+        for (Label i : liveslbls) {
+            i.setText("");
+        }
         for (Label i : prevlbls) {
             i.setText("");
         }
@@ -267,6 +270,7 @@ public class multiplayerController {
 
     public void damageCurrent(int i) {
         currentPlayer().removeLives(i);
+        timeAvailable = 30000;
         cycleTurn();
     }
 
@@ -455,6 +459,9 @@ public class multiplayerController {
                 typed.add(ipt);
                 prevlbls.get(currentTurn).setText(ipt.toUpperCase());
                 makeGrace();
+                if (timeAvailable >= 5000) {
+                    timeAvailable *= 0.90;
+                }
             } else if (typed.contains(ipt)) {
                 inputfld.setText("");
                 scorefld.setText("Word already used!");
