@@ -43,7 +43,8 @@
             <Button fx:id="quitButton" layoutX="995.0" layoutY="15.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#quit" prefHeight="25.0" prefWidth="65.0" style="-fx-background-color: #2F3136;" text="Quit" textFill="#bbbdd0" />
             <Label layoutX="835.0" layoutY="50.0" text="Current Sandwich:" textFill="#bbbdd0" />
             <Label fx:id="sandwichDisplay" layoutX="835.0" layoutY="70.0" text="[sandwichLabel]" textFill="#bbbdd0" />
-            <Label fx:id="moneyDisplay" layoutX="828.0" layoutY="344.0" textFill="#bbbdd0" />
+            <Label fx:id="moneyDisplay" layoutX="833.0" layoutY="269.0" prefHeight="68.0" prefWidth="288.0" textFill="#bbbdd0" />
+            <Label fx:id="gameComboDisplay" layoutX="829.0" layoutY="337.0" prefHeight="68.0" prefWidth="297.0" textFill="#bbbdd0" />
          </children>
       </AnchorPane>
    </children>

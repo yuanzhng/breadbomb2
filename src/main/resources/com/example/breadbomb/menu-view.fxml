@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="700.0" minWidth="1080.0" prefHeight="700.0" prefWidth="1080.0" style="-fx-background-color: #36393F;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.MenuController">
+<AnchorPane minHeight="700.0" minWidth="1080.0" prefHeight="700.0" prefWidth="1080.0" style="-fx-background-color: #36393F;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.MenuController">
    <children>
       <GridPane alignment="CENTER" prefHeight="403.0" prefWidth="600.0" style="-fx-background-color: #36393F;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -29,7 +29,7 @@
                   <Font size="35.0" />
                </font>
             </Label>
-            <Label fx:id="moneyLabel" alignment="CENTER" contentDisplay="CENTER" textFill="#bbbdd0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <Label fx:id="moneyLabel" prefHeight="166.0" prefWidth="317.0" textFill="#bbbdd0" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font size="20.0" />
                </font>

@@ -47,6 +47,9 @@ public class singleplayerController {
     private TextField inputfld;
 
     @FXML
+    private Label gameComboDisplay;
+
+    @FXML
     private Label scorefld;
 
     @FXML
@@ -69,6 +72,7 @@ public class singleplayerController {
     private int moneyAdded;
     private int sandwichMoney;
     private double combo = 1;
+    private double gameCombo = 1;
     private int lives = 3;
 
     private String prompt;
@@ -87,7 +91,6 @@ public class singleplayerController {
     private long startTime;
     private long totalSeconds;
     private long startGameTime = System.currentTimeMillis();
-
     private boolean startSandwich;
     private boolean sandwichDone;
     private boolean breadMode;
@@ -305,6 +308,7 @@ public class singleplayerController {
     public void restartGame() {
         score = 0;
         lives = 3;
+        gameCombo = (gameCombo - 1)/2 + 1;
         restartbtn.setDisable(true);
         inputfld.setDisable(false);
         giveUpBtn.setDisable(false);
@@ -392,7 +396,7 @@ public class singleplayerController {
             }
             score += calcScore(ipt);
             if (breadMode) {
-                moneyAdded = (int) (calcScore(ipt) * combo);
+                moneyAdded = (int) (calcScore(ipt) * combo * gameCombo);
                 money += moneyAdded;
                 money += sandwichMoney;
                 serializeMoney();
@@ -404,7 +408,9 @@ public class singleplayerController {
                 timeAvailable *= 0.90;
             }
             newPrompt();
-            combo += 0.01;
+            combo += 0.02;
+            gameCombo += 0.005;
+            gameComboDisplay.setText("Overarching multiplier: x" + gameCombo);
             typed.add(ipt);
         } else if (typed.contains(ipt)) {
             inputfld.setText("");
@@ -493,10 +499,20 @@ public class singleplayerController {
         }
     }
 
+    public String optfirst4(double d) {
+        if (String.valueOf(d).length() > 4) {
+            return String.valueOf(d).substring(0, 3);
+        } else {
+            return String.valueOf(d);
+        }
+    }
+
     public void serializeMoney() {
-        moneyDisplay.setText("Money (Combo x" + combo + "):" + "\n" + "$" + money + "\n" + "+$" + moneyAdded);
+        moneyDisplay.setText("Money (Combo: x" + combo + "):" + "\n" + "$" + money + "\n" + "+$" + moneyAdded);
         if (sandwichDone) {
             moneyDisplay.setText(moneyDisplay.getText() + "\n" + "+$" + sandwichMoney + " (Sandwich finished!) x" + (idealSandwichLength - 1));
+            gameComboDisplay.setText(gameComboDisplay.getText() + "\n+5% Multiplier");
+            gameCombo += 0.05;
             sandwichDone = false;
         }
         try {

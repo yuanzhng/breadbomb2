@@ -176,7 +176,7 @@ public class multiplayerController {
             updateTimerTimeline.pause();
         }
         @FXML
-        public void giveUp () {
+        public void giveUp() {
             timeAvailable = 30000;
             currentPlayer().removeLives(1);
             updateLives();
@@ -185,7 +185,6 @@ public class multiplayerController {
                 giveDeath();
             }
             showInfo();
-            newPrompt();
             cycleTurn();
         }
 
@@ -233,15 +232,19 @@ public class multiplayerController {
         }
 
     public void giveDeath() {
+        namelbls.get(currentTurn).setText("");
+        liveslbls.get(currentTurn).setText("");
+        prevlbls.get(currentTurn).setText("");
+        namelbls.remove(currentTurn);
         activePlayers.remove(currentTurn);
         liveslbls.remove(currentTurn);
+        prevlbls.remove(currentTurn);
         if (currentTurn == 0) {
             currentTurn = activePlayers.size() - 1;
             return;
         }
         currentTurn--;
         currentPlayerlbl.setText("Time's up!");
-        makeGrace();
         return;
     }
 
