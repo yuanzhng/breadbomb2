@@ -51,7 +51,8 @@
          <Label fx:id="scorefld" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="520.0" layoutY="656.0" prefHeight="17.0" prefWidth="205.0" text="0" textFill="WHITE" />
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5c9d9f" height="50.0" layoutY="-2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1093.0" />
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#4e8a8b" height="15.0" layoutY="48.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1093.0" />
-         <Polygon fill="DODGERBLUE" layoutX="900.0" layoutY="661.0" points="-50.0, 40.00006103515625, 5.3333740234375, 40.0, 5.3333740234375, -10.33331298828125" stroke="TRANSPARENT" strokeType="INSIDE" />
+         <Polygon fill="#5c9d9f" layoutX="891.0" layoutY="661.0" points="-50.0, 40.0, 0, 40.0, 0, -10.33331298828125" stroke="TRANSPARENT" strokeType="INSIDE" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5c9d9f" height="50.0" layoutX="888.0" layoutY="651.0" stroke="TRANSPARENT" strokeType="INSIDE" width="205.0" />
         </children>
     </AnchorPane>
 </VBox>
