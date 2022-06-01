@@ -81,17 +81,19 @@ public class breadApplication extends Application {
     }
 
     public static void switchToMode() throws IOException {
+        ModeController controller = modeLoader.getController();
+        controller.initialize(multiMode);
         stage.setScene(modeScene);
     }
 
-    public static void switchToGame() throws IOException {
+    public static void switchToGame(ArrayList<Player> players) throws IOException {
         if (!multiMode) {
             singleplayerController controller = singleLoader.getController();
             controller.initialize(breadMode, money);
             stage.setScene(singleScene);
         } else {
             multiplayerController controller = multiLoader.getController();
-            controller.initialize(breadMode);
+            controller.initialize(breadMode, players);
             if (controller.playerCheck()) {
                 stage.setScene(multiScene);
             }

@@ -16,21 +16,43 @@ public class ModeController {
 
     private boolean multi;
 
+    public void initialize(boolean multiplayer) {
+        if (multiplayer) {
+            multi = true;
+        }
+    }
+
     public void breadPressed() {
         breadApplication.setBreadMode();
-        try {
-            breadApplication.switchToAddPlayer();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (multi) {
+            try {
+                breadApplication.switchToAddPlayer();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                breadApplication.switchToGame(null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void classicPressed() {
         breadApplication.setClassic();
-        try {
-            breadApplication.switchToGame();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (multi) {
+            try {
+                breadApplication.switchToAddPlayer();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                breadApplication.switchToGame(null);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

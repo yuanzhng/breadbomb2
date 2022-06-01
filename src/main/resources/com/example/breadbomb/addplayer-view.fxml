@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" style="-fx-background-color: #36393F;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.AddPlayerController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" style="-fx-background-color: #36393F;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.AddPlayerController">
    <children>
       <GridPane prefHeight="700.0" prefWidth="1080.0">
         <columnConstraints>
@@ -74,7 +74,7 @@
                   <Insets left="150.0" />
                </GridPane.margin>
             </Label>
-            <Button fx:id="startButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="75.0" prefWidth="150.0" style="-fx-background-color: #2F3236 #2F3236 #2F3236 #2F3236;" text="Start" textFill="#bbbdd0" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+            <Button fx:id="startButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#start" prefHeight="75.0" prefWidth="150.0" style="-fx-background-color: #2F3236 #2F3236 #2F3236 #2F3236;" text="Start" textFill="#bbbdd0" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
                <GridPane.margin>
                   <Insets right="75.0" />
                </GridPane.margin>
