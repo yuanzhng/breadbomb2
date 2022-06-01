@@ -2,8 +2,6 @@ package com.example.breadbomb;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.controlsfx.control.PropertySheet;
-
 import java.io.IOException;
 
 public class MenuController {

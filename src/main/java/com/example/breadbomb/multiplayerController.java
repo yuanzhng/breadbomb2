@@ -109,7 +109,7 @@ public class multiplayerController {
 
     private static boolean enoughPlayers;
 
-    public void initialize(boolean bread) {
+    public void initialize(boolean bread, ArrayList <Player> players) {
         startSandwich = true;
         sandwichDone = false;
         sandwichLength = 0;
@@ -140,40 +140,35 @@ public class multiplayerController {
         for (Label i : liveslbls) {
             i.setText("");
         }
-        for (int i = 0; i < 4; i++) {
-            promptNewPlayer(i);
+
+        for (int i = 0; i < players.size(); i++) {
+            activePlayers.add(players.get(i));
         }
-        if (activePlayers.size() >= 2) {
-            enoughPlayers = true;
-            updateLives();
-            try {
-                File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
-                Scanner dictionaryReader = new Scanner(dictionaryObj);
-                while (dictionaryReader.hasNextLine()) {
-                    String data = dictionaryReader.nextLine();
-                    dictionary.add(data.toLowerCase());
-                }
-                dictionaryReader.close();
-            } catch (FileNotFoundException e) {
-                System.out.println("An error occurred.");
-                e.printStackTrace();
+        updateLives();
+        try {
+            File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
+            Scanner dictionaryReader = new Scanner(dictionaryObj);
+            while (dictionaryReader.hasNextLine()) {
+                String data = dictionaryReader.nextLine();
+                dictionary.add(data.toLowerCase());
             }
-            readFile("dict.txt", dictionary);
-            readFile("prompts.txt", possiblePrompts);
-            if (bread) {
-                breadMode = true;
-                System.out.println("BreadMode enabled...");
-                readFile("orders.txt", possibleOrders);
-            }
-            startTime = System.currentTimeMillis();
-            newPrompt();
-            newOrder();
-            startTimer();
-            infolbl.setText("");
-        } else {
-            enoughPlayers = false;
-            System.out.println("Not enough players!");
+            dictionaryReader.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
+        readFile("dict.txt", dictionary);
+        readFile("prompts.txt", possiblePrompts);
+        if (bread) {
+            breadMode = true;
+            System.out.println("BreadMode enabled...");
+            readFile("orders.txt", possibleOrders);
+        }
+        startTime = System.currentTimeMillis();
+        newPrompt();
+        newOrder();
+        startTimer();
+        infolbl.setText("");
     }
 
         public void startTimer () {
@@ -263,6 +258,7 @@ public class multiplayerController {
         }
         currentTurn--;
         currentPlayerlbl.setText("Time's up!");
+        makeGrace();
         return;
     }
 

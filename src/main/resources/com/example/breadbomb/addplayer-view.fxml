@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1080.0" style="-fx-background-color: #36393F;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.AddPlayerController">
+   <children>
+      <GridPane prefHeight="700.0" prefWidth="1080.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TextField fx:id="playerOneName" promptText="Type Here..." style="-fx-background-color: #2F3236 #2F3236;">
+               <GridPane.margin>
+                  <Insets left="300.0" right="300.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="playerTwoName" promptText="Type Here..." style="-fx-background-color: #2F3236 #2F3236;" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="300.0" right="300.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="playerThreeName" promptText="Type Here..." style="-fx-background-color: #2F3236 #2F3236;" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="300.0" right="300.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="playerFourName" promptText="Type Here..." style="-fx-background-color: #2F3236 #2F3236;" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets left="300.0" right="300.0" />
+               </GridPane.margin>
+            </TextField>
+            <Label alignment="CENTER" text="Player 1:" textFill="#bbbdd0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="150.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" layoutX="110.0" layoutY="89.0" text="Player 2:" textFill="#bbbdd0" GridPane.rowIndex="1">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="150.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" layoutX="110.0" layoutY="264.0" text="Player 3:" textFill="#bbbdd0" GridPane.rowIndex="2">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="150.0" />
+               </GridPane.margin>
+            </Label>
+            <Label alignment="CENTER" layoutX="110.0" layoutY="439.0" text="Player 4:" textFill="#bbbdd0" GridPane.rowIndex="3">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="150.0" />
+               </GridPane.margin>
+            </Label>
+            <Button fx:id="startButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#start" prefHeight="75.0" prefWidth="150.0" style="-fx-background-color: #2F3236 #2F3236 #2F3236 #2F3236;" text="Start" textFill="#bbbdd0" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets right="75.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>
