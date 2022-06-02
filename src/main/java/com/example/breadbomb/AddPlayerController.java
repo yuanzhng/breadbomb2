@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class AddPlayerController {
-    private ArrayList<Player> players = new ArrayList<Player>();
+    private Player[] players = new Player[4];
     @FXML
     private TextField playerOneName;
     @FXML
@@ -24,19 +24,18 @@ public class AddPlayerController {
     private Timeline buttonTimeline;
 
     public void start() {
-        if (!playerOneName.getText().replaceAll(" ", "").equals("")) {
-            players.add(new Player(playerOneName.getText()));
+        int pCount = 0;
+        players[0] = new Player(playerOneName.getText(), 2);
+        players[1] = new Player(playerTwoName.getText(), 2);
+        players[2] = new Player(playerThreeName.getText(), 2);
+        players[3] = new Player(playerFourName.getText(), 2);
+
+        for (Player p : players) {
+            if (!p.getName().replace(" ", "").equals("")) {
+                pCount++;
+            }
         }
-        if (!playerTwoName.getText().replaceAll(" ", "").equals("")) {
-            players.add(new Player(playerTwoName.getText()));
-        }
-        if (!playerThreeName.getText().replaceAll(" ", "").equals("")) {
-            players.add(new Player(playerThreeName.getText()));
-        }
-        if (!playerFourName.getText().replaceAll(" ", "").equals("")) {
-            players.add(new Player(playerFourName.getText()));
-        }
-        if (!players.isEmpty()) {
+        if (pCount >= 2) {
             try {
                 breadApplication.switchToGame(players);
             } catch (IOException e) {

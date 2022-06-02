@@ -9,6 +9,7 @@ public class Player {
 
     public Player(String n) {
         name = n;
+        lives = 2; //default lives number
     }
 
     public Player(String n, int i) {

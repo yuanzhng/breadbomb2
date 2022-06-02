@@ -109,7 +109,7 @@ public class multiplayerController {
 
     private static boolean enoughPlayers;
 
-    public void initialize(boolean bread, ArrayList <Player> players) {
+    public void initialize(boolean bread, Player[] players) {
         startSandwich = true;
         sandwichDone = false;
         sandwichLength = 0;
@@ -137,8 +137,10 @@ public class multiplayerController {
         for (Label l : orderlbls) {
             l.setText("");
         }
-        for (int i = 0; i < players.size(); i++) {
-            activePlayers.add(players.get(i));
+        for (int i = 0; i < players.length; i++) {
+            if (!players[i].getName().replaceAll(" ", "").equals("")) {
+                activePlayers.add(players[i]);
+            }
         }
 
         updateLives();
