@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -44,10 +45,16 @@ public class multiplayerController {
     private Label orderlbl3;
     @FXML
     private Label orderlbl4;
+
+    private int confirmQuit = 0;
+    Timeline quitTime;
     @FXML
     private Label currentPlayerlbl;
     @FXML
     private Button giveupbtn;
+
+    @FXML
+    private Button quitButton;
     @FXML
     private Label orderlbl;
     @FXML
@@ -442,6 +449,56 @@ public class multiplayerController {
         pauseTimer();
     }
 
+    public int calcScore(String s) {
+        int k = 0;
+        for (int i = 0; i < s.length(); i++) {
+            String d = s.substring(i, i + 1).toLowerCase();
+            switch (d) {
+                case "a":
+                case "e":
+                case "i":
+                case "l":
+                case "n":
+                case "o":
+                case "r":
+                case "s":
+                case "t":
+                case "u":
+                    k++;
+                    break;
+                case "d":
+                case "g":
+                    k += 2;
+                    break;
+                case "b":
+                case "c":
+                case "m":
+                case "p":
+                    k += 3;
+                    break;
+                case "f":
+                case "h":
+                case "v":
+                case "w":
+                case "y":
+                    k += 4;
+                    break;
+                case "k":
+                    k += 5;
+                    break;
+                case "j":
+                case "x":
+                    k += 8;
+                    break;
+                case "q":
+                case "z":
+                    k += 10;
+                    break;
+            }
+        }
+        return k;
+    }
+
     public void showInfo() {
         String info = "";
         System.out.println("prompt skipped: " + prompt);
@@ -460,6 +517,27 @@ public class multiplayerController {
         newPrompt();
     }
 
+    public void quit() {
+        quitButton.setText("Really?" + (15-confirmQuit));
+        confirmQuit++;
+        if (confirmQuit == 15) {
+            quitButton.setText("Quit");
+            confirmQuit = 0;
+            try {
+                breadApplication.switchToMain();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            quitTime = new Timeline(new KeyFrame(
+                    Duration.seconds(3),
+                    ae -> quitButton.setText("Quit")),
+                    new KeyFrame(
+                            Duration.seconds(3),
+                            ae -> confirmQuit--));
+            quitTime.play();
+        }
+    }
     public void check () {
         if (isGrace) {
             isGrace = false;
@@ -502,6 +580,7 @@ public class multiplayerController {
                 typed.add(ipt);
                 prevlbls.get(currentTurn).setText(ipt.toUpperCase());
                 makeGrace();
+                currentPlayer().addScore(calcScore(ipt));
                 if (timeAvailable >= 5000) {
                     timeAvailable *= 0.90;
                 }
