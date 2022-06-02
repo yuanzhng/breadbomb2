@@ -18,6 +18,7 @@
     </padding>
     <AnchorPane prefHeight="690.0" prefWidth="1091.0">
         <children>
+         <Label layoutX="100.0" prefHeight="700.0" prefWidth="100.0" style="-fx-background-color: #2e2d28#2e2d28;" text="Label" />
          <ImageView fx:id="arrow" fitHeight="58.0" fitWidth="149.0" layoutX="479.0" layoutY="324.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@pngfind.com-hand-drawn-arrow-png-302687.png" />
@@ -30,7 +31,7 @@
                 </font>
             </Label>
             <TextField fx:id="inputfld" layoutX="527.0" layoutY="651.0" maxWidth="-Infinity" onAction="#check" prefHeight="26.0" prefWidth="205.0" promptText="+ Message #midbomb" style="-fx-background-color: #4a483f#4a483f; -fx-text-fill: #bbbdd0#bbbdd0;" />
-            <Label layoutX="-20.0" layoutY="555.0" prefHeight="146.0" prefWidth="268.0" style="-fx-background-color: #2e2d28#2e2d28;" text="Label" />
+            <Label prefHeight="700.0" prefWidth="100.0" style="-fx-background-color: #2e2d28#2e2d28;" text="Label" />
          <Label fx:id="namelbl1" layoutX="411.0" layoutY="326.0" text="Player 1" textFill="WHITE" />
          <Label fx:id="namelbl3" layoutX="834.0" layoutY="326.0" text="Player 3" textFill="WHITE" />
          <Label fx:id="namelbl2" layoutX="629.0" layoutY="125.0" text="Player 2" textFill="WHITE" />
@@ -49,10 +50,16 @@
          <Label fx:id="orderlbl" layoutX="262.0" layoutY="14.0" prefHeight="17.0" prefWidth="390.0" textFill="WHITE" />
          <Label fx:id="sandwichDisplay" layoutX="876.0" layoutY="23.0" prefHeight="17.0" prefWidth="205.0" textFill="WHITE" />
          <Label fx:id="scorefld" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="520.0" layoutY="656.0" prefHeight="17.0" prefWidth="205.0" text="0" textFill="WHITE" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5c9d9f" height="50.0" layoutY="-2.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1093.0" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#4e8a8b" height="15.0" layoutY="48.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1093.0" />
-         <Polygon fill="#5c9d9f" layoutX="891.0" layoutY="661.0" points="-50.0, 40.0, 0, 40.0, 0, -10.33331298828125" stroke="TRANSPARENT" strokeType="INSIDE" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#5c9d9f" height="50.0" layoutX="888.0" layoutY="651.0" stroke="TRANSPARENT" strokeType="INSIDE" width="205.0" />
+         <Rectangle fill="#5c9d9f" height="50.0" layoutY="-2.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="1093.0" />
+         <Rectangle fill="#4e8a8b" height="15.0" layoutY="48.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="1093.0" />
+         <Polygon fill="#4e8a8b" layoutX="873.0" layoutY="661.0" points="-65, 40, 0.0, 40.0, 0.0, -25" stroke="TRANSPARENT" strokeType="INSIDE" />
+         <Rectangle fill="#4e8a8b" height="65.0" layoutX="873.0" layoutY="636.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="221.0" />
+         <Polygon fill="#5c9d9f" layoutX="880.0" layoutY="661.0" points="-50.0, 40.0, 0, 40.0, 0, -10" stroke="TRANSPARENT" strokeType="INSIDE" />
+         <Rectangle fill="#5c9d9f" height="50.0" layoutX="880.0" layoutY="651.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="213.0" />
+         <Rectangle fill="#4e8a8b" height="65.0" layoutX="-1.0" layoutY="636.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="378.3" />
+         <Rectangle fill="#5c9d9f" height="50.0" layoutX="-1.0" layoutY="651.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="371.0" />
+         <Polygon fill="#4e8a8b" layoutX="442.0" layoutY="661.0" points="-65.0, 40.0, 0.0, 40.0, -65.0, -25" stroke="TRANSPARENT" strokeType="INSIDE" />
+         <Polygon fill="#5c9d9f" layoutX="420.0" layoutY="661.0" points="-50.0, 40.0, 0.0, 40.0, -50.0, -10" stroke="TRANSPARENT" strokeType="INSIDE" />
         </children>
     </AnchorPane>
 </VBox>
