@@ -163,7 +163,7 @@ public class multiplayerController {
             }
             startTime = System.currentTimeMillis();
         Arc path= new Arc();
-        path.setCenterX(170);
+        path.setCenterX(175);
         path.setCenterY(29);
         path.setRadiusX(98);
         path.setRadiusY(98);
@@ -219,7 +219,7 @@ public class multiplayerController {
         rotate.setAngle(90);
         arrow.getTransforms().addAll(rotate);*/
         Arc path= new Arc();
-        path.setCenterX(170);
+        path.setCenterX(175);
         path.setCenterY(29);
         path.setRadiusX(98);
         path.setRadiusY(98);

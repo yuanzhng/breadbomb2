@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -12,40 +13,70 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="860.0" maxWidth="1093.0" minHeight="700.0" minWidth="1080.0" prefHeight="693.0" prefWidth="1093.0" spacing="20.0" style="-fx-background-color: #3f3d36#3f3d36; -fx-border-radius: 15;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.multiplayerController">
+<VBox alignment="CENTER" maxHeight="860.0" maxWidth="1093.0" minHeight="700.0" minWidth="1080.0" prefHeight="693.0" prefWidth="1093.0" spacing="20.0" style="-fx-background-color: #222c31; -fx-border-radius: 15;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.multiplayerController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <AnchorPane prefHeight="690.0" prefWidth="1091.0">
         <children>
-         <Label layoutX="100.0" prefHeight="700.0" prefWidth="100.0" style="-fx-background-color: #2e2d28#2e2d28;" text="Label" />
          <ImageView fx:id="arrow" fitHeight="58.0" fitWidth="149.0" layoutX="479.0" layoutY="324.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@pngfind.com-hand-drawn-arrow-png-302687.png" />
             </image>
+            <effect>
+               <ColorAdjust contrast="-0.17" hue="0.03" />
+            </effect>
          </ImageView>
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="580.0" layoutY="309.0" prefHeight="17.0" prefWidth="149.0" text="Type a word containing:" textAlignment="CENTER" textFill="WHITE" />
-            <Label fx:id="promptlbl" alignment="CENTER" contentDisplay="CENTER" layoutX="621.0" layoutY="334.0" text="Label" textAlignment="CENTER" textFill="#d9c473">
+         <Label layoutX="-5.0" prefHeight="700.0" prefWidth="300.0" style="-fx-background-color: #202b2e;" />
+            <Label layoutX="963.0" prefHeight="700.0" prefWidth="135.0" style="-fx-background-color: #202b2e;" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="580.0" layoutY="309.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="149.0" text="Type a word containing:" textAlignment="CENTER" textFill="WHITE" />
+            <Label fx:id="promptlbl" alignment="CENTER" contentDisplay="CENTER" layoutX="621.0" layoutY="334.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="65.0" text="Label" textAlignment="CENTER" textFill="#4e8a8b">
                 <font>
                     <Font name="System Bold" size="26.0" />
                 </font>
             </Label>
-            <TextField fx:id="inputfld" layoutX="527.0" layoutY="651.0" maxWidth="-Infinity" onAction="#check" prefHeight="26.0" prefWidth="205.0" promptText="+ Message #midbomb" style="-fx-background-color: #4a483f#4a483f; -fx-text-fill: #bbbdd0#bbbdd0;" />
-            <Label prefHeight="700.0" prefWidth="100.0" style="-fx-background-color: #2e2d28#2e2d28;" text="Label" />
-         <Label fx:id="namelbl1" layoutX="411.0" layoutY="326.0" text="Player 1" textFill="WHITE" />
-         <Label fx:id="namelbl3" layoutX="834.0" layoutY="326.0" text="Player 3" textFill="WHITE" />
-         <Label fx:id="namelbl2" layoutX="629.0" layoutY="125.0" text="Player 2" textFill="WHITE" />
-         <Label fx:id="namelbl4" layoutX="630.0" layoutY="510.0" text="Player 4" textFill="WHITE" />
-         <Label fx:id="prevlbl1" layoutX="419.0" layoutY="350.0" text="prev" textFill="WHITE" />
-         <Label fx:id="prevlbl2" layoutX="638.0" layoutY="149.0" text="prev" textFill="WHITE" />
-         <Label fx:id="prevlbl3" layoutX="843.0" layoutY="350.0" text="prev" textFill="WHITE" />
-         <Label fx:id="prevlbl4" layoutX="639.0" layoutY="536.0" text="prev" textFill="WHITE" />
-         <Label fx:id="liveslbl1" layoutX="416.0" layoutY="374.0" text="lives1" textFill="WHITE" />
-         <Label fx:id="liveslbl2" layoutX="635.0" layoutY="174.0" text="lives2" textFill="WHITE" />
-         <Label fx:id="liveslbl3" layoutX="840.0" layoutY="374.0" text="lives3" textFill="WHITE" />
-         <Label fx:id="liveslbl4" layoutX="636.0" layoutY="562.0" text="lives4" textFill="WHITE" />
-         <Button fx:id="giveupbtn" layoutX="742.0" layoutY="651.0" mnemonicParsing="false" onAction="#giveUp" style="-fx-background-color: #4a483f#4a483f #4a483f#4a483f; -fx-text-fill: #bbbdd0#bbbdd0 #bbbdd0#bbbdd0;" text="Give up" />
-         <Label fx:id="currentPlayerlbl" layoutX="611.0" layoutY="277.0" text="Current player:" textFill="WHITE" />
+            <TextField fx:id="inputfld" layoutX="527.0" layoutY="651.0" maxWidth="-Infinity" onAction="#check" prefHeight="26.0" prefWidth="205.0" promptText="+ Message #midbomb" style="-fx-background-color: #3f454a; -fx-text-fill: #bbbdd0#bbbdd0;" />
+         <Label fx:id="namelbl1" alignment="CENTER" contentDisplay="CENTER" layoutX="401.0" layoutY="322.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="60.0" text="Player 1" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font name="System Italic" size="17.0" />
+            </font></Label>
+         <Label fx:id="namelbl3" alignment="CENTER" contentDisplay="CENTER" layoutX="843.0" layoutY="319.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="60.0" text="Player 3" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font name="System Italic" size="17.0" />
+            </font></Label>
+         <Label fx:id="namelbl2" alignment="CENTER" contentDisplay="CENTER" layoutX="625.0" layoutY="102.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="60.0" text="Player 2" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font name="System Italic" size="17.0" />
+            </font></Label>
+         <Label fx:id="namelbl4" alignment="CENTER" contentDisplay="CENTER" layoutX="625.0" layoutY="527.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="60.0" text="Player 4" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font name="System Italic" size="17.0" />
+            </font></Label>
+         <Label fx:id="prevlbl1" alignment="CENTER" contentDisplay="CENTER" layoutX="281.0" layoutY="350.0" maxHeight="17.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="300.0" text="prev" textAlignment="CENTER" textFill="WHITE" />
+         <Label fx:id="prevlbl2" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="136.0" maxHeight="17.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="300.0" text="prev" textAlignment="CENTER" textFill="WHITE" />
+         <Label fx:id="prevlbl3" alignment="CENTER" contentDisplay="CENTER" layoutX="723.0" layoutY="350.0" maxHeight="17.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="300.0" text="prev" textAlignment="CENTER" textFill="WHITE" />
+         <Label fx:id="prevlbl4" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="560.0" maxHeight="17.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="300.0" text="prev" textAlignment="CENTER" textFill="WHITE" />
+         <Label fx:id="liveslbl1" alignment="CENTER" contentDisplay="CENTER" layoutX="404.0" layoutY="372.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="53.0" text="lives1" textAlignment="CENTER" textFill="#ffadad">
+            <font>
+               <Font name="System Bold" size="20.0" />
+            </font></Label>
+         <Label fx:id="liveslbl2" alignment="CENTER" contentDisplay="CENTER" layoutX="628.0" layoutY="154.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="53.0" text="lives2" textAlignment="CENTER" textFill="#ffadad">
+            <font>
+               <Font name="System Bold" size="20.0" />
+            </font></Label>
+         <Label fx:id="liveslbl3" alignment="CENTER" contentDisplay="CENTER" layoutX="846.0" layoutY="369.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="53.0" text="lives3" textAlignment="CENTER" textFill="#ffadad">
+            <font>
+               <Font name="System Bold" size="20.0" />
+            </font></Label>
+         <Label fx:id="liveslbl4" alignment="CENTER" contentDisplay="CENTER" layoutX="628.0" layoutY="585.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="53.0" text="lives4" textAlignment="CENTER" textFill="#ffadad">
+            <font>
+               <Font name="System Bold" size="20.0" />
+            </font></Label>
+         <Button fx:id="giveupbtn" layoutX="742.0" layoutY="651.0" mnemonicParsing="false" onAction="#giveUp" style="-fx-background-color: #3f454a; -fx-text-fill: #bbbdd0#bbbdd0 #bbbdd0#bbbdd0;" text="Give up" />
+         <Label fx:id="currentPlayerlbl" alignment="CENTER" contentDisplay="CENTER" layoutX="599.0" layoutY="274.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="110.0" text="Current player:" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font name="System Italic" size="17.0" />
+            </font></Label>
          <Label fx:id="availlbl" layoutX="476.0" layoutY="655.0" text="seconds" textFill="WHITE" />
          <Label fx:id="orderlbl" layoutX="262.0" layoutY="14.0" prefHeight="17.0" prefWidth="390.0" textFill="WHITE" />
          <Label fx:id="sandwichDisplay" layoutX="876.0" layoutY="23.0" prefHeight="17.0" prefWidth="205.0" textFill="WHITE" />
