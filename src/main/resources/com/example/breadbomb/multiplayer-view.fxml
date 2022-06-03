@@ -9,6 +9,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -17,80 +18,92 @@
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-    <AnchorPane prefHeight="690.0" prefWidth="1091.0">
+    <AnchorPane prefHeight="701.0" prefWidth="1083.0">
         <children>
+         <Circle fx:id="circle" fill="#5c9b9f" layoutX="655.0" layoutY="353.0" radius="155.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+         <Circle fill="#202b2e" layoutX="655.0" layoutY="353.0" radius="150.0" stroke="TRANSPARENT" strokeType="INSIDE" />
          <ImageView fx:id="arrow" fitHeight="58.0" fitWidth="149.0" layoutX="479.0" layoutY="324.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@pngfind.com-hand-drawn-arrow-png-302687.png" />
             </image>
             <effect>
-               <ColorAdjust contrast="-0.17" hue="0.03" />
+               <ColorAdjust brightness="0.59" contrast="-1.0" hue="-1.0" saturation="0.22" />
             </effect>
          </ImageView>
          <Label layoutX="-5.0" prefHeight="700.0" prefWidth="300.0" style="-fx-background-color: #202b2e;" />
-            <Label layoutX="963.0" prefHeight="700.0" prefWidth="135.0" style="-fx-background-color: #202b2e;" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="580.0" layoutY="309.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="149.0" text="Type a word containing:" textAlignment="CENTER" textFill="WHITE" />
-            <Label fx:id="promptlbl" alignment="CENTER" contentDisplay="CENTER" layoutX="621.0" layoutY="334.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="65.0" text="Label" textAlignment="CENTER" textFill="#4e8a8b">
+            <Label layoutX="963.0" prefHeight="700.0" prefWidth="127.0" style="-fx-background-color: #202b2e;" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="580.0" layoutY="309.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="150.0" text="Type a word containing:" textAlignment="CENTER" textFill="WHITE" />
+            <Label fx:id="promptlbl" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="334.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="300.0" text="Label" textAlignment="CENTER" textFill="#4e8a8b">
                 <font>
                     <Font name="System Bold" size="26.0" />
                 </font>
             </Label>
             <TextField fx:id="inputfld" layoutX="527.0" layoutY="651.0" maxWidth="-Infinity" onAction="#check" prefHeight="26.0" prefWidth="205.0" promptText="+ Message #midbomb" style="-fx-background-color: #3f454a; -fx-text-fill: #bbbdd0#bbbdd0;" />
-         <Label fx:id="namelbl1" alignment="CENTER" contentDisplay="CENTER" layoutX="401.0" layoutY="322.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="60.0" text="Player 1" textAlignment="CENTER" textFill="WHITE">
+         <Label fx:id="namelbl1" alignment="CENTER" contentDisplay="CENTER" layoutX="280.0" layoutY="322.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="300.0" text="Player 1" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font name="System Italic" size="17.0" />
             </font></Label>
-         <Label fx:id="namelbl3" alignment="CENTER" contentDisplay="CENTER" layoutX="843.0" layoutY="319.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="60.0" text="Player 3" textAlignment="CENTER" textFill="WHITE">
+         <Label fx:id="namelbl3" alignment="CENTER" contentDisplay="CENTER" layoutX="730.0" layoutY="322.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="300.0" text="Player 3" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font name="System Italic" size="17.0" />
             </font></Label>
-         <Label fx:id="namelbl2" alignment="CENTER" contentDisplay="CENTER" layoutX="625.0" layoutY="102.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="60.0" text="Player 2" textAlignment="CENTER" textFill="WHITE">
+         <Label fx:id="namelbl2" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="102.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="300.0" text="Player 2" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font name="System Italic" size="17.0" />
             </font></Label>
-         <Label fx:id="namelbl4" alignment="CENTER" contentDisplay="CENTER" layoutX="625.0" layoutY="527.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="60.0" text="Player 4" textAlignment="CENTER" textFill="WHITE">
+         <Label fx:id="namelbl4" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="527.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="300.0" text="Player 4" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font name="System Italic" size="17.0" />
             </font></Label>
-         <Label fx:id="prevlbl1" alignment="CENTER" contentDisplay="CENTER" layoutX="281.0" layoutY="350.0" maxHeight="17.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="300.0" text="prev" textAlignment="CENTER" textFill="WHITE" />
+         <Label fx:id="prevlbl1" alignment="CENTER" contentDisplay="CENTER" layoutX="280.0" layoutY="350.0" maxHeight="17.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="300.0" text="prev" textAlignment="CENTER" textFill="WHITE" />
          <Label fx:id="prevlbl2" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="136.0" maxHeight="17.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="300.0" text="prev" textAlignment="CENTER" textFill="WHITE" />
-         <Label fx:id="prevlbl3" alignment="CENTER" contentDisplay="CENTER" layoutX="723.0" layoutY="350.0" maxHeight="17.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="300.0" text="prev" textAlignment="CENTER" textFill="WHITE" />
+         <Label fx:id="prevlbl3" alignment="CENTER" contentDisplay="CENTER" layoutX="730.0" layoutY="350.0" maxHeight="17.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="300.0" text="prev" textAlignment="CENTER" textFill="WHITE" />
          <Label fx:id="prevlbl4" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="560.0" maxHeight="17.0" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="300.0" text="prev" textAlignment="CENTER" textFill="WHITE" />
-         <Label fx:id="liveslbl1" alignment="CENTER" contentDisplay="CENTER" layoutX="404.0" layoutY="372.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="53.0" text="lives1" textAlignment="CENTER" textFill="#ffadad">
+         <Label fx:id="liveslbl1" alignment="CENTER" contentDisplay="CENTER" layoutX="280.0" layoutY="372.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives1" textAlignment="CENTER" textFill="#ffadad">
             <font>
                <Font name="System Bold" size="20.0" />
             </font></Label>
-         <Label fx:id="liveslbl2" alignment="CENTER" contentDisplay="CENTER" layoutX="628.0" layoutY="154.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="53.0" text="lives2" textAlignment="CENTER" textFill="#ffadad">
+         <Label fx:id="liveslbl2" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="154.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives2" textAlignment="CENTER" textFill="#ffadad">
             <font>
                <Font name="System Bold" size="20.0" />
             </font></Label>
-         <Label fx:id="liveslbl3" alignment="CENTER" contentDisplay="CENTER" layoutX="846.0" layoutY="369.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="53.0" text="lives3" textAlignment="CENTER" textFill="#ffadad">
+         <Label fx:id="liveslbl3" alignment="CENTER" contentDisplay="CENTER" layoutX="730.0" layoutY="369.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives3" textAlignment="CENTER" textFill="#ffadad">
             <font>
                <Font name="System Bold" size="20.0" />
             </font></Label>
-         <Label fx:id="liveslbl4" alignment="CENTER" contentDisplay="CENTER" layoutX="628.0" layoutY="585.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="53.0" text="lives4" textAlignment="CENTER" textFill="#ffadad">
+         <Label fx:id="liveslbl4" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="585.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives4" textAlignment="CENTER" textFill="#ffadad">
             <font>
                <Font name="System Bold" size="20.0" />
             </font></Label>
          <Button fx:id="giveupbtn" layoutX="742.0" layoutY="651.0" mnemonicParsing="false" onAction="#giveUp" style="-fx-background-color: #3f454a; -fx-text-fill: #bbbdd0#bbbdd0 #bbbdd0#bbbdd0;" text="Give up" />
-         <Label fx:id="currentPlayerlbl" alignment="CENTER" contentDisplay="CENTER" layoutX="599.0" layoutY="274.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="110.0" text="Current player:" textAlignment="CENTER" textFill="WHITE">
+         <Label fx:id="currentPlayerlbl" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="274.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="26.0" prefWidth="300.0" text="Current player:" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font name="System Italic" size="17.0" />
             </font></Label>
          <Label fx:id="availlbl" layoutX="476.0" layoutY="655.0" text="seconds" textFill="WHITE" />
          <Label fx:id="orderlbl" layoutX="262.0" layoutY="14.0" prefHeight="17.0" prefWidth="390.0" textFill="WHITE" />
          <Label fx:id="sandwichDisplay" layoutX="876.0" layoutY="23.0" prefHeight="17.0" prefWidth="205.0" textFill="WHITE" />
+         <Rectangle fill="#4e8a8b" height="15.0" layoutY="48.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="1100.0" />
          <Label fx:id="scorefld" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="0.0" layoutX="520.0" layoutY="656.0" prefHeight="17.0" prefWidth="205.0" text="0" textFill="WHITE" />
-         <Rectangle fill="#5c9d9f" height="50.0" layoutY="-2.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="1093.0" />
-         <Rectangle fill="#4e8a8b" height="15.0" layoutY="48.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="1093.0" />
          <Polygon fill="#4e8a8b" layoutX="873.0" layoutY="661.0" points="-65, 40, 0.0, 40.0, 0.0, -25" stroke="TRANSPARENT" strokeType="INSIDE" />
-         <Rectangle fill="#4e8a8b" height="65.0" layoutX="873.0" layoutY="636.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="221.0" />
+         <Rectangle fill="#4e8a8b" height="65.0" layoutX="873.0" layoutY="636.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="228.0" />
          <Polygon fill="#5c9d9f" layoutX="880.0" layoutY="661.0" points="-50.0, 40.0, 0, 40.0, 0, -10" stroke="TRANSPARENT" strokeType="INSIDE" />
-         <Rectangle fill="#5c9d9f" height="50.0" layoutX="880.0" layoutY="651.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="213.0" />
+         <Rectangle fill="#5c9d9f" height="50.0" layoutX="880.0" layoutY="651.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="220.0" />
          <Rectangle fill="#4e8a8b" height="65.0" layoutX="-1.0" layoutY="636.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="378.3" />
          <Rectangle fill="#5c9d9f" height="50.0" layoutX="-1.0" layoutY="651.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="371.0" />
          <Polygon fill="#4e8a8b" layoutX="442.0" layoutY="661.0" points="-65.0, 40.0, 0.0, 40.0, -65.0, -25" stroke="TRANSPARENT" strokeType="INSIDE" />
          <Polygon fill="#5c9d9f" layoutX="420.0" layoutY="661.0" points="-50.0, 40.0, 0.0, 40.0, -50.0, -10" stroke="TRANSPARENT" strokeType="INSIDE" />
+         <ImageView fx:id="sandwich" fitHeight="50.0" fitWidth="100.0" layoutX="620.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@Sandwich%20Clipart%2025444.png" />
+            </image>
+         </ImageView>
+         <Rectangle fill="#5c9d9f" height="50.0" layoutY="-2.0" smooth="false" stroke="TRANSPARENT" strokeType="INSIDE" width="1100.0" />
+         <Label layoutX="14.0" layoutY="-2.0" prefHeight="26.0" prefWidth="903.0" text=" MULTIPLAYER MODE" textFill="#202b2e">
+            <font>
+               <Font name="System Bold" size="40.0" />
+            </font>
+         </Label>
         </children>
     </AnchorPane>
 </VBox>

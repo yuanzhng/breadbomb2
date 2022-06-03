@@ -11,9 +11,11 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
@@ -22,6 +24,7 @@ import java.util.*;
 import static java.lang.Integer.decode;
 
 public class multiplayerController {
+    Timeline sandwichScaleTimeline;
 
     Timeline autoPlayTimeline;
     Timeline updateTimerTimeline;
@@ -29,7 +32,8 @@ public class multiplayerController {
     private double startAngle=180;
     private static Scene winScene;
 
-
+    @FXML
+    private Shape circle;
     @FXML
     private Label promptlbl;
     @FXML
@@ -73,7 +77,8 @@ public class multiplayerController {
     private ArrayList<Label> namelbls = new ArrayList<Label>();
     private ArrayList<Label> liveslbls = new ArrayList<Label>();
     private ArrayList<Label> prevlbls = new ArrayList<Label>();
-
+    @FXML
+    private ImageView sandwich;
     @FXML
     private ImageView arrow;
     @FXML
@@ -92,7 +97,9 @@ public class multiplayerController {
     private ArrayList<String> dictionary = new ArrayList<String>();
 
     private ArrayList<Player> activePlayers = new ArrayList<Player>();
+    private ScaleTransition scaleUp=new ScaleTransition(Duration.millis(500),sandwich);
 
+    private ScaleTransition scaleDown=new ScaleTransition(Duration.millis(500),sandwich);
     private String order;
 
     private boolean breadMode;
@@ -168,6 +175,8 @@ public class multiplayerController {
         path.setRadiusX(98);
         path.setRadiusY(98);
 
+
+
         if(activePlayers.get(currentTurn).getId()==0)
             startAngle=180;
         if(activePlayers.get(currentTurn).getId()==1)
@@ -200,8 +209,34 @@ public class multiplayerController {
             newPrompt();
             newOrder();
             startTimer();
+            pump(sandwich);
         }
+    public void scaleSandwich() {
 
+
+    }
+    public void pump(ImageView sandwich)
+    {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(0.4), sandwich);
+        scaleTransition.setFromX(1);
+        scaleTransition.setFromY(1);
+
+        scaleTransition.setToX(1.3);
+        scaleTransition.setToY(1.3);
+
+        scaleTransition.setInterpolator(Interpolator.EASE_OUT);
+        scaleTransition.setAutoReverse(true);
+        scaleTransition.setCycleCount(Animation.INDEFINITE);
+        scaleTransition.play();
+    }
+
+    public void rotateSandwich()
+    {
+        RotateTransition rotate=new RotateTransition(Duration.millis(500),sandwich);
+        rotate.setByAngle(360);
+        rotate.setInterpolator(Interpolator.EASE_OUT);
+        rotate.play();
+    }
     public void rotateArrow()
     {
         double angle = 0;
@@ -253,6 +288,7 @@ public class multiplayerController {
         rt.setInterpolator(Interpolator.LINEAR);
         rt.play();
         move.play();
+        rotateSandwich();
         startAngle=angle;
     }
         public void startTimer () {
@@ -272,11 +308,14 @@ public class multiplayerController {
         public void giveUp () {
             timeAvailable = 30000;
             currentPlayer().removeLives(1);
+            currentPlayer().removeLives(1);
+            lifeLossAnimation();
             updateLives();
             System.out.println(currentPlayer().getName() + " Lives: " + currentPlayer().getLives());
             if (checkZeroLives()) {
                 giveDeath();
             }
+
             cycleTurn();
         }
 
@@ -291,6 +330,13 @@ public class multiplayerController {
         public boolean checkGameOver () {
             if (activePlayers.size() == 1) {
                 currentPlayerlbl.setText(currentPlayer().getName() + " wins!");
+
+                liveslbl1.setText("Game Over!");
+                liveslbl2.setText("Game Over!");
+                liveslbl3.setText("Game Over!");
+                liveslbl4.setText("Game Over!");
+
+
                 giveupbtn.setDisable(true);
                 return true;
             }
@@ -358,12 +404,42 @@ public class multiplayerController {
 
     public void damageCurrent(int i) {
         currentPlayer().removeLives(i);
+        lifeLossAnimation();
+
         cycleTurn();
+    }
+    public void lifeLossAnimation()
+    {
+        Color start=Color.web("ff3d3d");
+        Color end=Color.web("5c9b9f");
+
+        FillTransition fill=new FillTransition(Duration.millis(300),circle);
+        fill.setInterpolator(Interpolator.EASE_OUT);
+        fill.setFromValue(start);
+        fill.setToValue(end);
+        fill.setAutoReverse(true);
+      fill.setCycleCount(1);
+        fill.play();
+
+    }
+    public void lifeGainAnimation()
+    {
+        Color start=Color.web("4cff3d");
+        Color end=Color.web("5c9b9f");
+
+        FillTransition fill=new FillTransition(Duration.millis(300),circle);
+        fill.setInterpolator(Interpolator.EASE_OUT);
+        fill.setFromValue(start);
+        fill.setToValue(end);
+        fill.setAutoReverse(true);
+        fill.setCycleCount(1);
+        fill.play();
+
     }
 
     public void updateLives() {
         for (int i = 0; i < activePlayers.size(); i++) {
-            liveslbls.get(i).setText(Integer.toString(activePlayers.get(i).getLives()));
+            liveslbls.get(i).setText("Lives: "+Integer.toString(activePlayers.get(i).getLives()));
         }
     }
     public void updateCurrentPlayerLabel () {
@@ -372,6 +448,7 @@ public class multiplayerController {
 
     public void cycleTurn() {
         rotateArrow();
+
         if (!checkGameOver()) {
             turns++;
             currentTurn++;
@@ -521,6 +598,7 @@ public class multiplayerController {
                                 scorefld.setText("Sandwich complete! +1 life");
                                 sandwichDone = true;
                                 currentPlayer().addLives(1);
+                                lifeGainAnimation();
                                 idealSandwichLength++;
                                 newOrder();
                                 updateLives();
