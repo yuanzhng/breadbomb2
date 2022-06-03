@@ -27,10 +27,10 @@ public class AddPlayerController {
 
     public void start() {
         int pCount = 0;
-        players[0] = new Player(playerOneName.getText(), 3);
-        players[1] = new Player(playerTwoName.getText(), 3);
-        players[2] = new Player(playerThreeName.getText(), 3);
-        players[3] = new Player(playerFourName.getText(), 3);
+        players[0] = new Player(playerOneName.getText(), 3,0);
+        players[1] = new Player(playerTwoName.getText(), 3,1);
+        players[2] = new Player(playerThreeName.getText(), 3,2);
+        players[3] = new Player(playerFourName.getText(), 3,3);
 
         for (Player p : players) {
             if (!p.getName().replace(" ", "").equals("")) {
