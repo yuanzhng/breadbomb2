@@ -23,6 +23,9 @@ public class Player {
     public int getLives() {
         return lives;
     }
+    public void setLives(int i) {
+        lives = i;
+    }
     public void addLives(int i) {
         lives += i;
     }

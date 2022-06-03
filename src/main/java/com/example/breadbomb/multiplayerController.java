@@ -20,6 +20,8 @@ public class multiplayerController {
     Timeline sandwichShowTime;
 
     @FXML
+    private Button restartbtn;
+    @FXML
     private Label promptlbl;
     @FXML
     private Label prevlbl1;
@@ -419,6 +421,23 @@ public class multiplayerController {
         return false;
     }
 
+    public void restartGame() {
+        for (Player p : activePlayers) {
+            p.setLives(3);
+        }
+        restartbtn.setDisable(true);
+        inputfld.setDisable(false);
+        giveupbtn.setDisable(false);
+
+
+        infolbl.setText("");
+        startGameTime = System.currentTimeMillis();
+        typed.clear();
+        currentTurn = 0;
+        updateLives();
+        newPrompt();
+        newOrder();
+    }
     public String rawIpt(String s) {
         String j;
         j = s.replaceAll("[^A-Za-z]+", "");

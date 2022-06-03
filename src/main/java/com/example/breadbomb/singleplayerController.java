@@ -291,7 +291,6 @@ public class singleplayerController {
         }
         return false;
     }
-
     public void giveGameOver() {
         updateTimerTimeline.stop();
         scorefld.setText("");
@@ -304,7 +303,6 @@ public class singleplayerController {
         restartbtn.setDisable(false);
         return;
     }
-
     public void restartGame() {
         score = 0;
         lives = 3;
