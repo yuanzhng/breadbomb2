@@ -137,12 +137,16 @@ public class multiplayerController {
         for (Label l : orderlbls) {
             l.setText("");
         }
+
         for (int i = 0; i < players.length; i++) {
             if (!players[i].getName().replaceAll(" ", "").equals("")) {
                 activePlayers.add(players[i]);
             }
         }
-
+        namelbl1.setText(players[0].getName());
+        namelbl2.setText(players[1].getName());
+        namelbl3.setText(players[2].getName());
+        namelbl4.setText(players[3].getName());
         updateLives();
         try {
             File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
@@ -281,9 +285,6 @@ public class multiplayerController {
             liveslbls.get(i).setText(Integer.toString(activePlayers.get(i).getLives()));
         }
     }
-    public void updateCurrentPlayerLabel() {
-        currentPlayerlbl.setText(currentPlayer().getName());
-    }
 
     public void updateOrders() {
         if (breadMode) {
@@ -302,7 +303,7 @@ public class multiplayerController {
             if (currentTurn >= activePlayers.size()) {
                 currentTurn = 0;
             }
-            updateCurrentPlayerLabel();
+
         }
         cycleOrder();
         startTime = System.currentTimeMillis();
