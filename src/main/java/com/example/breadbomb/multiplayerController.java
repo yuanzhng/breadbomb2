@@ -1,13 +1,22 @@
 package com.example.breadbomb;
 
+import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Arc;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Shape;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 import java.util.*;
@@ -15,10 +24,16 @@ import java.util.*;
 import static java.lang.Integer.decode;
 
 public class multiplayerController {
+    Timeline sandwichScaleTimeline;
+
     Timeline autoPlayTimeline;
     Timeline updateTimerTimeline;
     Timeline sandwichShowTime;
+    private double startAngle=180;
+    private static Scene winScene;
 
+    @FXML
+    private Shape circle;
     @FXML
     private Button restartbtn;
     @FXML
@@ -80,6 +95,10 @@ public class multiplayerController {
     private ArrayList<Label> namelbls = new ArrayList<Label>();
     private ArrayList<Label> liveslbls = new ArrayList<Label>();
     private ArrayList<Label> prevlbls = new ArrayList<Label>();
+    @FXML
+    private ImageView sandwich;
+    @FXML
+    private ImageView arrow;
     private ArrayList<Label> orderlbls = new ArrayList<Label>();
 
     @FXML
@@ -98,7 +117,9 @@ public class multiplayerController {
     private ArrayList<String> dictionary = new ArrayList<String>();
 
     private ArrayList<Player> activePlayers = new ArrayList<Player>();
+    private ScaleTransition scaleUp=new ScaleTransition(Duration.millis(500),sandwich);
 
+    private ScaleTransition scaleDown=new ScaleTransition(Duration.millis(500),sandwich);
     private String order;
 
     private boolean breadMode;
@@ -174,12 +195,123 @@ public class multiplayerController {
             readFile("orders.txt", possibleOrders);
         }
         startTime = System.currentTimeMillis();
+        Arc path= new Arc();
+        path.setCenterX(175);
+        path.setCenterY(29);
+        path.setRadiusX(98);
+        path.setRadiusY(98);
+
+
+
+        if(activePlayers.get(currentTurn).getId()==0)
+            startAngle=180;
+        if(activePlayers.get(currentTurn).getId()==1)
+            startAngle=90;
+        if(activePlayers.get(currentTurn).getId()==2)
+            startAngle=0;
+        if(activePlayers.get(currentTurn).getId()==3)
+            startAngle=270;
+
+        path.setStartAngle(startAngle);
+        path.setLength(0.0001);
+        PathTransition move= new PathTransition();
+        move.setPath(path);
+        move.setInterpolator(Interpolator.LINEAR);
+        move.setNode(arrow);
+        move.setDuration(Duration.seconds(0.001));
+        //move.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        RotateTransition rt = new RotateTransition(Duration.millis(5), arrow);
+
+        rt.setByAngle(.0001);
+        rt.setInterpolator(Interpolator.LINEAR);
+        /*RotateTransition initial= new RotateTransition(Duration.millis(5),arrow);
+        initial.setByAngle(startAngle);
+        initial.setInterpolator(Interpolator.LINEAR);
+        initial.play();
+
+         */
+        rt.play();
+        move.play();
         newPrompt();
         newOrder();
         startTimer();
-        infolbl.setText("");
+        pump(sandwich);
     }
+    public void pump(ImageView sandwich)
+    {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(0.4), sandwich);
+        scaleTransition.setFromX(1);
+        scaleTransition.setFromY(1);
 
+        scaleTransition.setToX(1.3);
+        scaleTransition.setToY(1.3);
+
+        scaleTransition.setInterpolator(Interpolator.EASE_OUT);
+        scaleTransition.setAutoReverse(true);
+        scaleTransition.setCycleCount(Animation.INDEFINITE);
+        scaleTransition.play();
+    }
+    public void rotateSandwich()
+    {
+        RotateTransition rotate=new RotateTransition(Duration.millis(500),sandwich);
+        rotate.setByAngle(360);
+        rotate.setInterpolator(Interpolator.EASE_OUT);
+        rotate.play();
+    }
+    public void rotateArrow()
+    {
+        double angle = 0;
+        if (nextPlayer().getId()==0)
+            angle=180;
+        if (nextPlayer().getId()==1)
+            angle=90;
+        if (nextPlayer().getId()==2)
+            angle=0;
+        if (nextPlayer().getId()==3)
+            angle=270;
+        /*Rotate rotate = new Rotate();
+        rotate.setPivotX(170);
+        rotate.setPivotY(29);
+        rotate.setAngle(90);
+        arrow.getTransforms().addAll(rotate);*/
+        Arc path= new Arc();
+        path.setCenterX(175);
+        path.setCenterY(29);
+        path.setRadiusX(98);
+        path.setRadiusY(98);
+       /* double startAngle=45;
+        if(activePlayers.get(currentTurn).getId()==0)
+            startAngle=180;
+        if(activePlayers.get(currentTurn).getId()==1)
+            startAngle=90;
+        if(activePlayers.get(currentTurn).getId()==2)
+            startAngle=0;
+        if(activePlayers.get(currentTurn).getId()==3)
+            startAngle=270;
+
+
+        */
+
+        path.setStartAngle(startAngle);
+        double length=angle-startAngle;
+        if (length>0)
+            length=length-360;
+
+        path.setLength(length);
+        PathTransition move= new PathTransition();
+        move.setPath(path);
+        move.setInterpolator(Interpolator.LINEAR);
+        move.setNode(arrow);
+        move.setDuration(Duration.seconds(0.25));
+//move.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
+        RotateTransition rt = new RotateTransition(Duration.millis(250), arrow);
+        rt.setByAngle(-length);
+        rt.setInterpolator(Interpolator.LINEAR);
+        rt.play();
+        move.play();
+        rotateSandwich();
+        startAngle=angle;
+    }
         public void startTimer () {
             updateTimer();
             if (updateTimerTimeline == null) {
@@ -197,12 +329,14 @@ public class multiplayerController {
         public void giveUp () {
             timeAvailable = 30000;
             currentPlayer().removeLives(1);
+            lifeLossAnimation();
             updateLives();
             updateOrders();
             System.out.println(currentPlayer().getName() + " Lives: " + currentPlayer().getLives());
             if (checkZeroLives()) {
                 giveDeath();
             }
+
             showInfo();
             newPrompt();
             cycleTurn();
@@ -219,6 +353,7 @@ public class multiplayerController {
         public boolean checkGameOver () {
             if (activePlayers.size() == 1) {
                 currentPlayerlbl.setText(currentPlayer().getName() + " wins!");
+
                 giveupbtn.setDisable(true);
                 return true;
             }
@@ -245,7 +380,7 @@ public class multiplayerController {
             Optional<String> b = in.showAndWait();
             String out = b.get();
             if (!out.equals("")) {
-                Player n = new Player(out, 3);
+                Player n = new Player(out, 3, i);
                 activePlayers.add(n);
             }
             namelbls.get(i).setText(out);
@@ -291,12 +426,42 @@ public class multiplayerController {
     public void damageCurrent(int i) {
         currentPlayer().removeLives(i);
         timeAvailable = 30000;
+        lifeLossAnimation();
+
         cycleTurn();
+    }
+    public void lifeLossAnimation()
+    {
+        Color start=Color.web("ff3d3d");
+        Color end=Color.web("5c9b9f");
+
+        FillTransition fill=new FillTransition(Duration.millis(300),circle);
+        fill.setInterpolator(Interpolator.EASE_OUT);
+        fill.setFromValue(start);
+        fill.setToValue(end);
+        fill.setAutoReverse(true);
+      fill.setCycleCount(1);
+        fill.play();
+
+    }
+    public void lifeGainAnimation()
+    {
+        Color start=Color.web("4cff3d");
+        Color end=Color.web("5c9b9f");
+
+        FillTransition fill=new FillTransition(Duration.millis(300),circle);
+        fill.setInterpolator(Interpolator.EASE_OUT);
+        fill.setFromValue(start);
+        fill.setToValue(end);
+        fill.setAutoReverse(true);
+        fill.setCycleCount(1);
+        fill.play();
+
     }
 
     public void updateLives() {
         for (int i = 0; i < activePlayers.size(); i++) {
-            liveslbls.get(i).setText(Integer.toString(activePlayers.get(i).getLives()));
+            liveslbls.get(i).setText("Lives: "+Integer.toString(activePlayers.get(i).getLives()));
         }
     }
     public void updateCurrentPlayerLabel() {
@@ -314,6 +479,8 @@ public class multiplayerController {
     }
 
     public void cycleTurn() {
+        rotateArrow();
+
         if (!checkGameOver()) {
             turns++;
             currentTurn++;
@@ -324,6 +491,7 @@ public class multiplayerController {
         }
         cycleOrder();
         startTime = System.currentTimeMillis();
+
         startTimer();
     }
 
@@ -586,6 +754,8 @@ public class multiplayerController {
                             sandwichDone = true;
                             currentPlayer().addLives(1);
                             idealSandwichLength++;
+                            lifeGainAnimation();
+                            updateLives();
                         }
                     } else {
                         scorefld.setText("Order complete! +1 life");
@@ -615,4 +785,10 @@ public class multiplayerController {
             }
         }
     }
+    public void win()
+    {
+        //endscreen
+
+    }
+
 }

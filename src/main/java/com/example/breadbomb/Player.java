@@ -1,6 +1,7 @@
 package com.example.breadbomb;
 
 public class Player {
+    private int turn;
     private String name;
     private int lives;
     private String order;
@@ -11,10 +12,12 @@ public class Player {
         name = n;
     }
 
-    public Player(String n, int i) {
+    public Player(String n, int i, int id) {
         name = n;
         lives = i;
+        turn = id;
     }
+
 
     public String getName() {
         return name;
@@ -39,6 +42,11 @@ public class Player {
     }
 
     public void setOrder(String o) {order=o;}
+
+    public int getId()
+    {
+        return turn;
+    }
 
     public int getScore() {
         return score;

@@ -4,21 +4,22 @@ package com.example.breadbomb;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
+import javafx.scene.*;
 
-
+import javafx.scene.media.*;
 import java.util.*;
-
+import javafx.scene.*;
 public class singleplayerController {
     private int confirmQuit = 0;
     Timeline quitTime;
+    Timeline autoPlayTimeline;
     Timeline updateTimerTimeline;
     Timeline sandwichShowTime;
 
@@ -91,6 +92,7 @@ public class singleplayerController {
     private long startTime;
     private long totalSeconds;
     private long startGameTime = System.currentTimeMillis();
+
     private boolean startSandwich;
     private boolean sandwichDone;
     private boolean breadMode;
@@ -291,6 +293,7 @@ public class singleplayerController {
         }
         return false;
     }
+
     public void giveGameOver() {
         updateTimerTimeline.stop();
         scorefld.setText("");
@@ -303,10 +306,10 @@ public class singleplayerController {
         restartbtn.setDisable(false);
         return;
     }
+
     public void restartGame() {
         score = 0;
         lives = 3;
-        gameCombo = (gameCombo - 1)/2 + 1;
         restartbtn.setDisable(true);
         inputfld.setDisable(false);
         giveUpBtn.setDisable(false);
@@ -394,7 +397,7 @@ public class singleplayerController {
             }
             score += calcScore(ipt);
             if (breadMode) {
-                moneyAdded = (int) (calcScore(ipt) * combo * gameCombo);
+                moneyAdded = (int) (calcScore(ipt) * combo);
                 money += moneyAdded;
                 money += sandwichMoney;
                 serializeMoney();
@@ -406,9 +409,7 @@ public class singleplayerController {
                 timeAvailable *= 0.90;
             }
             newPrompt();
-            combo += 0.02;
-            gameCombo += 0.005;
-            gameComboDisplay.setText("Overarching multiplier: x" + gameCombo);
+            combo += 0.01;
             typed.add(ipt);
         } else if (typed.contains(ipt)) {
             inputfld.setText("");
@@ -444,7 +445,7 @@ public class singleplayerController {
         if (totalSeconds <= 0) {
             check();
         } else {
-            availlbl.setText("Time Remaining: " + totalSeconds);
+            availlbl.setText("" + totalSeconds);
         }
         if (checkGameOver()) {
             giveGameOver();
@@ -497,20 +498,10 @@ public class singleplayerController {
         }
     }
 
-    public String optfirst4(double d) {
-        if (String.valueOf(d).length() > 4) {
-            return String.valueOf(d).substring(0, 3);
-        } else {
-            return String.valueOf(d);
-        }
-    }
-
     public void serializeMoney() {
-        moneyDisplay.setText("Money (Combo: x" + combo + "):" + "\n" + "$" + money + "\n" + "+$" + moneyAdded);
+        moneyDisplay.setText("Money (Combo x" + combo + "):" + "\n" + "$" + money + "\n" + "+$" + moneyAdded);
         if (sandwichDone) {
             moneyDisplay.setText(moneyDisplay.getText() + "\n" + "+$" + sandwichMoney + " (Sandwich finished!) x" + (idealSandwichLength - 1));
-            gameComboDisplay.setText(gameComboDisplay.getText() + "\n+5% Multiplier");
-            gameCombo += 0.05;
             sandwichDone = false;
         }
         try {

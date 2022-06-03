@@ -20,7 +20,11 @@ public class breadApplication extends Application {
     private static FXMLLoader modeLoader = new FXMLLoader(breadApplication.class.getResource("mode-view.fxml"));
     private static FXMLLoader menuLoader = new FXMLLoader(breadApplication.class.getResource("menu-view.fxml"));
     private static FXMLLoader addPlayerLoader = new FXMLLoader(breadApplication.class.getResource("addplayer-view.fxml"));
+
+    private static FXMLLoader winLoader = new FXMLLoader(breadApplication.class.getResource("winScreen.fxml"));
     private static Scene menuScene;
+
+    private static Scene winScene;
     private static Scene modeScene;
     private static Scene singleScene;
     private static Scene multiScene;
@@ -43,6 +47,11 @@ public class breadApplication extends Application {
         }
         try {
             multiScene = new Scene(multiLoader.load(), 1080, 700);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            winScene = new Scene(winLoader.load(), 1080, 700);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -89,7 +98,7 @@ public class breadApplication extends Application {
     public static void switchToGame(ArrayList<Player> players) throws IOException {
         if (!multiMode) {
             singleplayerController controller = singleLoader.getController();
-            controller.initialize(breadMode, money);
+            controller.initialize(breadMode);
             stage.setScene(singleScene);
         } else {
             multiplayerController controller = multiLoader.getController();
@@ -98,6 +107,7 @@ public class breadApplication extends Application {
                 stage.setScene(multiScene);
             }
         }
+
     }
     public static void switchToMain() throws IOException {
         MenuController controller = menuLoader.getController();
@@ -122,6 +132,11 @@ public class breadApplication extends Application {
     public static void switchToAddPlayer() throws IOException {
         stage.setScene(addPlayerScene);
     }
+
+    public static void win() {
+        stage.setScene(winScene);
+    }
+
 
     public static void setSingle() {
         multiMode = false;
