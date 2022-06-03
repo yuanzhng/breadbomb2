@@ -21,6 +21,8 @@ public class AddPlayerController {
     private TextField playerFourName;
     @FXML
     private Button startButton;
+    @FXML
+    private Button backButton;
     private Timeline buttonTimeline;
 
     public void start() {
@@ -47,6 +49,13 @@ public class AddPlayerController {
                     Duration.seconds(0.5),
                     ae -> startButton.setText("Start")));
             buttonTimeline.play();
+        }
+    }
+    public void back() {
+        try {
+            breadApplication.switchToMode();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
