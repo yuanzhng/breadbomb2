@@ -461,7 +461,7 @@ public class multiplayerController {
 
     public void updateLives() {
         for (int i = 0; i < activePlayers.size(); i++) {
-            liveslbls.get(i).setText("Lives: "+Integer.toString(activePlayers.get(i).getLives()));
+            liveslbls.get(i).setText("Lives: "+ Integer.toString(activePlayers.get(i).getLives()));
         }
     }
     public void updateCurrentPlayerLabel() {

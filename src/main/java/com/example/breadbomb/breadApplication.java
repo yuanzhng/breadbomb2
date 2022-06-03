@@ -98,7 +98,7 @@ public class breadApplication extends Application {
     public static void switchToGame(ArrayList<Player> players) throws IOException {
         if (!multiMode) {
             singleplayerController controller = singleLoader.getController();
-            controller.initialize(breadMode);
+            controller.initialize(breadMode, money);
             stage.setScene(singleScene);
         } else {
             multiplayerController controller = multiLoader.getController();

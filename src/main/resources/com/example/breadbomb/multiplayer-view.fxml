@@ -104,6 +104,32 @@
                <Font name="System Bold" size="40.0" />
             </font>
          </Label>
+         <Button fx:id="restartbtn" layoutX="20.0" layoutY="76.0" mnemonicParsing="false" onAction="#restartGame" style="-fx-background-color: #3f454a; -fx-text-fill: #bbbdd0#bbbdd0 #bbbdd0#bbbdd0;" text="Restart" />
+         <Label fx:id="infolbl" alignment="CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="115.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="268.0" text="infolbl" textAlignment="CENTER" textFill="WHITE">
+            <font>
+               <Font name="System Italic" size="17.0" />
+            </font>
+         </Label>
+         <Label fx:id="orderlbl2" alignment="CENTER" contentDisplay="CENTER" layoutX="515.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives2" textAlignment="CENTER" textFill="#ffadad">
+            <font>
+               <Font name="System Bold" size="20.0" />
+            </font>
+         </Label>
+         <Label fx:id="orderlbl1" alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="382.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives1" textAlignment="CENTER" textFill="#ffadad">
+            <font>
+               <Font name="System Bold" size="20.0" />
+            </font>
+         </Label>
+         <Label fx:id="orderlbl3" alignment="CENTER" contentDisplay="CENTER" layoutX="740.0" layoutY="379.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives3" textAlignment="CENTER" textFill="#ffadad">
+            <font>
+               <Font name="System Bold" size="20.0" />
+            </font>
+         </Label>
+         <Label fx:id="orderlbl4" alignment="CENTER" contentDisplay="CENTER" layoutX="515.0" layoutY="595.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives4" textAlignment="CENTER" textFill="#ffadad">
+            <font>
+               <Font name="System Bold" size="20.0" />
+            </font>
+         </Label>
         </children>
     </AnchorPane>
 </VBox>
