@@ -95,7 +95,7 @@ public class breadApplication extends Application {
         stage.setScene(modeScene);
     }
 
-    public static void switchToGame(ArrayList<Player> players) throws IOException {
+    public static void switchToGame(Player[] players) throws IOException {
         if (!multiMode) {
             singleplayerController controller = singleLoader.getController();
             controller.initialize(breadMode, money);
@@ -103,9 +103,7 @@ public class breadApplication extends Application {
         } else {
             multiplayerController controller = multiLoader.getController();
             controller.initialize(breadMode, players);
-            if (controller.playerCheck()) {
-                stage.setScene(multiScene);
-            }
+            stage.setScene(multiScene);
         }
 
     }

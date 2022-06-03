@@ -1,6 +1,5 @@
 package com.example.breadbomb;
 
-import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,7 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
-
+import javafx.animation.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Arc;
@@ -18,7 +17,8 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Shape;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
-
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import java.util.*;
 
 import static java.lang.Integer.decode;
@@ -139,7 +139,7 @@ public class multiplayerController {
 
     private static boolean enoughPlayers;
 
-    public void initialize(boolean bread, ArrayList <Player> players) {
+    public void initialize(boolean bread, Player[] players) {
         startSandwich = true;
         sandwichDone = false;
         sandwichLength = 0;
@@ -170,10 +170,15 @@ public class multiplayerController {
         for (Label i : liveslbls) {
             i.setText("");
         }
-
-        for (int i = 0; i < players.size(); i++) {
-            activePlayers.add(players.get(i));
+        for (int i = 0; i < players.length; i++) {
+            if (!players[i].getName().replaceAll(" ", "").equals("")) {
+                activePlayers.add(players[i]);
+            }
         }
+        namelbl1.setText(players[0].getName());
+        namelbl2.setText(players[1].getName());
+        namelbl3.setText(players[2].getName());
+        namelbl4.setText(players[3].getName());
         updateLives();
         try {
             File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
@@ -235,6 +240,7 @@ public class multiplayerController {
         newPrompt();
         newOrder();
         startTimer();
+        infolbl.setText("");
         pump(sandwich);
     }
     public void pump(ImageView sandwich)
@@ -336,7 +342,6 @@ public class multiplayerController {
             if (checkZeroLives()) {
                 giveDeath();
             }
-
             showInfo();
             newPrompt();
             cycleTurn();
@@ -353,7 +358,6 @@ public class multiplayerController {
         public boolean checkGameOver () {
             if (activePlayers.size() == 1) {
                 currentPlayerlbl.setText(currentPlayer().getName() + " wins!");
-
                 giveupbtn.setDisable(true);
                 return true;
             }
@@ -491,7 +495,6 @@ public class multiplayerController {
         }
         cycleOrder();
         startTime = System.currentTimeMillis();
-
         startTimer();
     }
 
