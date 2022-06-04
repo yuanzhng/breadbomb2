@@ -101,6 +101,7 @@ public class multiplayerController {
     private boolean isGrace;
     private int currentTurn = 0;
     private int turns = 0;
+    private boolean deathTurn;
 
     private long timeAvailable = 30000;
     private long startTime;
@@ -137,16 +138,26 @@ public class multiplayerController {
         for (Label l : orderlbls) {
             l.setText("");
         }
-
-        for (int i = 0; i < players.length; i++) {
-            if (!players[i].getName().replaceAll(" ", "").equals("")) {
-                activePlayers.add(players[i]);
-            }
-        }
         namelbl1.setText(players[0].getName());
         namelbl2.setText(players[1].getName());
         namelbl3.setText(players[2].getName());
         namelbl4.setText(players[3].getName());
+
+        for (int i = 0; i < players.length; i++) {
+            if (!players[i].getName().replaceAll(" ", "").equals("")) {
+                activePlayers.add(players[i]);
+                activePlayers.get(i).setOrder("abcdefghijklmnopqrstuvwxyz");
+            }
+        }
+        updateOrders();
+        for (int i = 4; i > activePlayers.size(); i--) {
+            namelbls.remove(i - 1);
+            prevlbls.remove(i - 1);
+            liveslbls.get(i - 1).setText("");
+            liveslbls.remove(i - 1);
+            orderlbls.remove(i - 1);
+        }
+
         updateLives();
         try {
             File dictionaryObj = new File(breadApplication.class.getResource("dict.txt").getFile());
@@ -246,14 +257,20 @@ public class multiplayerController {
         }
 
     public void giveDeath() {
+        deathTurn = true;
         activePlayers.remove(currentTurn);
+        namelbls.get(currentTurn).setText("");
+        namelbls.remove(currentTurn);
+        liveslbls.get(currentTurn).setText("");
         liveslbls.remove(currentTurn);
-        if (currentTurn == 0) {
-            currentTurn = activePlayers.size() - 1;
+        orderlbls.get(currentTurn).setText("");
+        orderlbls.remove(currentTurn);
+        prevlbls.get(currentTurn).setText("");
+        currentPlayerlbl.setText("Time's up!");
+        if (currentTurn > activePlayers.size() - 1) {
+            currentTurn = 0;
             return;
         }
-        currentTurn--;
-        currentPlayerlbl.setText("Time's up!");
         makeGrace();
         return;
     }
@@ -299,7 +316,10 @@ public class multiplayerController {
     public void cycleTurn() {
         if (!checkGameOver()) {
             turns++;
-            currentTurn++;
+            if (!deathTurn) {
+                currentTurn++;
+            }
+            deathTurn = false;
             if (currentTurn >= activePlayers.size()) {
                 currentTurn = 0;
             }
@@ -369,9 +389,6 @@ public class multiplayerController {
                 System.out.println("Order: bread");
                 startSandwich = true;
             }
-            for (Label l : orderlbls) {
-                l.setText(order);
-            }
             for (Player p : activePlayers) {
                 p.setOrder(order);
             }
@@ -384,13 +401,13 @@ public class multiplayerController {
             System.out.println("Order: " + currentPlayer().getOrder());
             orderlbl.setText("Order: " + currentPlayer().getOrder());
         }
+        for (Label l : orderlbls) {
+            l.setText(order);
+        }
         updateOrders();
     }
 
     public void cycleOrder() {
-        if (!breadMode && turns < 4) {
-            newOrder();
-        }
         System.out.println("Order: " + currentPlayer().getOrder());
         orderlbl.setText("Order: " + currentPlayer().getOrder().toUpperCase());
     }
@@ -489,7 +506,7 @@ public class multiplayerController {
                     newOrder();
                     updateLives();
                 }
-                orderlbl.setText("Order: " + currentPlayer().getOrder().toUpperCase());
+
                 currentPlayer().addScore(1);
                 typed.add(ipt);
                 prevlbls.get(currentTurn).setText(ipt.toUpperCase());
