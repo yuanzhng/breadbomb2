@@ -142,7 +142,9 @@ public class multiplayerController {
 
     private static boolean enoughPlayers;
 
+    private static Player[] cache;
     public void initialize(boolean bread, Player[] players) {
+        cache = players;
         startSandwich = true;
         sandwichDone = false;
         sandwichLength = 0;
@@ -240,6 +242,8 @@ public class multiplayerController {
         newPrompt();
         newOrder();
         startTimer();
+        restartbtn.setDisable(true);
+        masterorderlbl.setText("");
         infolbl.setText("");
         pump(sandwich);
     }
@@ -358,6 +362,8 @@ public class multiplayerController {
         public boolean checkGameOver () {
             if (activePlayers.size() == 1) {
                 currentPlayerlbl.setText(currentPlayer().getName() + " wins!");
+                pauseTimer();
+                restartbtn.setDisable(false);
                 giveupbtn.setDisable(true);
                 return true;
             }
@@ -504,14 +510,10 @@ public class multiplayerController {
         infolbl.setText("");
 
         cycleOrder();
-        showOrder();
         startTime = System.currentTimeMillis();
         startTimer();
     }
 
-    public void showOrder() {
-        grandorderlbl.setText(currentPlayer().getOrder());
-    }
 
     public void newPrompt() {
         inputfld.setText("");
@@ -602,24 +604,6 @@ public class multiplayerController {
             }
         }
         return false;
-    }
-
-    public void restartGame() {
-        for (Player p : activePlayers) {
-            p.setLives(3);
-        }
-        restartbtn.setDisable(true);
-        inputfld.setDisable(false);
-        giveupbtn.setDisable(false);
-
-
-        infolbl.setText("");
-        startGameTime = System.currentTimeMillis();
-        typed.clear();
-        currentTurn = 0;
-        updateLives();
-        newPrompt();
-        newOrder();
     }
     public String rawIpt(String s) {
         String j;
@@ -806,6 +790,7 @@ public class multiplayerController {
                 scorefld.setText("Invalid word!");
             }
         }
+
     }
     public void win()
     {
