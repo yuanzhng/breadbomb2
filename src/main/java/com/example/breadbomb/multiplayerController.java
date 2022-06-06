@@ -31,7 +31,8 @@ public class multiplayerController {
     Timeline sandwichShowTime;
     private double startAngle=180;
     private static Scene winScene;
-
+    @FXML
+    private Label masterorderlbl;
     @FXML
     private Shape circle;
     @FXML
@@ -419,7 +420,7 @@ public class multiplayerController {
             updateLives();
             showInfo();
         } else {
-            availlbl.setText("Time Remaining: " + totalSeconds);
+            availlbl.setText(totalSeconds + "s");
         }
         if (checkZeroLives()) {
             giveDeath();
@@ -465,7 +466,11 @@ public class multiplayerController {
 
     public void updateLives() {
         for (int i = 0; i < activePlayers.size(); i++) {
-            liveslbls.get(i).setText("Lives: "+ Integer.toString(activePlayers.get(i).getLives()));
+            String s = "";
+            for (int j = 0; j < activePlayers.get(i).getLives(); j++) {
+                s += "❤";
+            }
+            liveslbls.get(i).setText(s);
         }
     }
     public void updateCurrentPlayerLabel() {
@@ -477,6 +482,10 @@ public class multiplayerController {
             for (Player p : activePlayers) {
                 p.setOrder(order);
             }
+            for (Label l : orderlbls) {
+                l.setText("");
+            }
+            masterorderlbl.setText(order);
         } else {
             orderlbls.get(currentTurn).setText(currentPlayer().getOrder());
         }
@@ -741,8 +750,12 @@ public class multiplayerController {
                     if (order.contains(ipt.substring(i, i + 1))) {
                         if (breadMode) {
                             order = order.replaceFirst(ipt.substring(i, i + 1), "");
-                            for (Label l : orderlbls) {
-                                l.setText(order);
+                            if (breadMode) {
+                                masterorderlbl.setText(order);
+                            } else {
+                                for (Label l : orderlbls) {
+                                    l.setText(order);
+                                }
                             }
                         } else {
                             currentPlayer().setOrder(currentPlayer().getOrder().replaceFirst(ipt.substring(i, i + 1), ""));

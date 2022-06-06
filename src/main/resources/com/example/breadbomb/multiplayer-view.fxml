@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="860.0" maxWidth="1093.0" minHeight="700.0" minWidth="1080.0" prefHeight="693.0" prefWidth="1093.0" spacing="20.0" style="-fx-background-color: #222c31; -fx-border-radius: 15;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.multiplayerController">
+<VBox alignment="CENTER" maxHeight="860.0" maxWidth="1093.0" minHeight="700.0" minWidth="1080.0" prefHeight="693.0" prefWidth="1093.0" spacing="20.0" style="-fx-background-color: #222c31; -fx-border-radius: 15;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.breadbomb.multiplayerController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -110,22 +110,27 @@
                <Font name="System Italic" size="17.0" />
             </font>
          </Label>
-         <Label fx:id="orderlbl2" alignment="CENTER" contentDisplay="CENTER" layoutX="515.0" layoutY="164.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives2" textAlignment="CENTER" textFill="#ffadad">
+         <Label fx:id="orderlbl2" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="183.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives2" textAlignment="CENTER" textFill="#ffadad">
             <font>
                <Font name="System Bold" size="20.0" />
             </font>
          </Label>
-         <Label fx:id="orderlbl1" alignment="CENTER" contentDisplay="CENTER" layoutX="290.0" layoutY="382.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives1" textAlignment="CENTER" textFill="#ffadad">
+         <Label fx:id="masterorderlbl" alignment="CENTER" contentDisplay="CENTER" layoutX="-8.0" layoutY="121.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="bread" textAlignment="CENTER" textFill="#ffadad">
             <font>
                <Font name="System Bold" size="20.0" />
             </font>
          </Label>
-         <Label fx:id="orderlbl3" alignment="CENTER" contentDisplay="CENTER" layoutX="740.0" layoutY="379.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives3" textAlignment="CENTER" textFill="#ffadad">
+         <Label fx:id="orderlbl3" alignment="CENTER" contentDisplay="CENTER" layoutX="730.0" layoutY="394.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives3" textAlignment="CENTER" textFill="#ffadad">
             <font>
                <Font name="System Bold" size="20.0" />
             </font>
          </Label>
-         <Label fx:id="orderlbl4" alignment="CENTER" contentDisplay="CENTER" layoutX="515.0" layoutY="595.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives4" textAlignment="CENTER" textFill="#ffadad">
+         <Label fx:id="orderlbl4" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="608.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives4" textAlignment="CENTER" textFill="#ffadad">
+            <font>
+               <Font name="System Bold" size="20.0" />
+            </font>
+         </Label>
+         <Label fx:id="orderlbl1" alignment="CENTER" contentDisplay="CENTER" layoutX="280.0" layoutY="400.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="300.0" text="lives1" textAlignment="CENTER" textFill="#ffadad">
             <font>
                <Font name="System Bold" size="20.0" />
             </font>
