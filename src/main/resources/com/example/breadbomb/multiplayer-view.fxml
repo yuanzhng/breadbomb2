@@ -32,7 +32,7 @@
          </ImageView>
          <Label layoutX="-5.0" prefHeight="700.0" prefWidth="300.0" style="-fx-background-color: #202b2e;" />
             <Label layoutX="963.0" prefHeight="700.0" prefWidth="127.0" style="-fx-background-color: #202b2e;" />
-            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="580.0" layoutY="309.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="150.0" text="Type a word containing:" textAlignment="CENTER" textFill="WHITE" />
+            <Label fx:id="asklbl" alignment="CENTER" contentDisplay="CENTER" layoutX="580.0" layoutY="309.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="17.0" prefWidth="150.0" text="Type a word containing:" textAlignment="CENTER" textFill="WHITE" />
             <Label fx:id="promptlbl" alignment="CENTER" contentDisplay="CENTER" layoutX="505.0" layoutY="334.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="38.0" prefWidth="300.0" text="Label" textAlignment="CENTER" textFill="#4e8a8b">
                 <font>
                     <Font name="System Bold" size="26.0" />
@@ -104,7 +104,7 @@
                <Font name="System Bold" size="40.0" />
             </font>
          </Label>
-         <Button fx:id="restartbtn" layoutX="20.0" layoutY="76.0" mnemonicParsing="false" onAction="#restartGame" style="-fx-background-color: #3f454a; -fx-text-fill: #bbbdd0#bbbdd0 #bbbdd0#bbbdd0;" text="Restart" />
+         <Button fx:id="restartbtn" layoutX="20.0" layoutY="76.0" mnemonicParsing="false" onAction="#restart" style="-fx-background-color: #3f454a; -fx-text-fill: #bbbdd0#bbbdd0 #bbbdd0#bbbdd0;" text="Quit" />
          <Label fx:id="infolbl" alignment="CENTER" contentDisplay="CENTER" layoutX="8.0" layoutY="115.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="492.0" prefWidth="268.0" text="infolbl" textAlignment="CENTER" textFill="WHITE">
             <font>
                <Font name="System Italic" size="17.0" />

@@ -109,6 +109,8 @@ public class multiplayerController {
 
     private String prompt;
 
+    @FXML
+    private Label asklbl;
     private ArrayList<String> currentSandwich = new ArrayList<String>();
 
     private ArrayList<String> typed = new ArrayList<String>();
@@ -242,6 +244,7 @@ public class multiplayerController {
         newPrompt();
         newOrder();
         startTimer();
+        asklbl.setText("Type a word containing: ");
         restartbtn.setDisable(true);
         masterorderlbl.setText("");
         infolbl.setText("");
@@ -723,6 +726,10 @@ public class multiplayerController {
                             ae -> confirmQuit--));
             quitTime.play();
         }
+    }
+
+    public void restart() throws IOException {
+        breadApplication.switchToMode();
     }
     public void check () {
         if (isGrace) {
