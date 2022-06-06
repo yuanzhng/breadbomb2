@@ -64,6 +64,8 @@ public class multiplayerController {
     @FXML
     private Label orderlbl4;
 
+    @FXML
+    private Label grandorderlbl;
     private int confirmQuit = 0;
     Timeline quitTime;
     @FXML
@@ -163,9 +165,6 @@ public class multiplayerController {
         orderlbls.add(orderlbl3);
         orderlbls.add(orderlbl4);
         for (Label l : prevlbls) {
-            l.setText("");
-        }
-        for (Label l : orderlbls) {
             l.setText("");
         }
         for (Label i : liveslbls) {
@@ -502,9 +501,16 @@ public class multiplayerController {
             }
             updateCurrentPlayerLabel();
         }
+        infolbl.setText("");
+
         cycleOrder();
+        showOrder();
         startTime = System.currentTimeMillis();
         startTimer();
+    }
+
+    public void showOrder() {
+        grandorderlbl.setText(currentPlayer().getOrder());
     }
 
     public void newPrompt() {
@@ -565,9 +571,6 @@ public class multiplayerController {
                 order = "bread";
                 System.out.println("Order: bread");
                 startSandwich = true;
-            }
-            for (Label l : orderlbls) {
-                l.setText(order);
             }
             for (Player p : activePlayers) {
                 p.setOrder(order);
@@ -780,7 +783,10 @@ public class multiplayerController {
                     newOrder();
                     updateLives();
                 }
-                orderlbl.setText("Order: " + currentPlayer().getOrder().toUpperCase());
+                if (!breadMode) {
+                    orderlbl.setText("Order: " + currentPlayer().getOrder().toUpperCase());
+                }
+
                 currentPlayer().addScore(1);
                 typed.add(ipt);
                 prevlbls.get(currentTurn).setText(ipt.toUpperCase());
