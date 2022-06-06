@@ -121,8 +121,7 @@ public class breadApplication extends Application {
         stage.setScene(addPlayerScene);
     }
 
-    public static void setSingle() {
-        multiMode = false;
+    public static void setSingle() {multiMode = false;
     }
 
     public static void setMulti() {

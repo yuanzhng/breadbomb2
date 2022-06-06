@@ -19,6 +19,8 @@ public class ModeController {
     public void initialize(boolean multiplayer) {
         if (multiplayer) {
             multi = true;
+        } else {
+            multi = false;
         }
     }
 
